@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>🌍 各国文化禁忌速查 · 入境游销售工具</title>
+<style>
+:root{
+  --bg:#fdf4f8; --panel:#ffffff; --ink:#33252e; --muted:#8a6f7a; --line:#f1dde7;
+  --brand:#e64980; --brand-soft:#fde7f0;
+  --green:#1a7f37; --green-soft:#e7f4ea;
+  --amber:#bf8700; --amber-soft:#fff7e0;
+  --red:#b42318; --red-soft:#fce8e6;
+  --purple:#9c36b5; --purple-soft:#f4e9f7;
+  --blue:#0969da; --blue-soft:#e7f0fb;
+  --shadow:0 1px 3px rgba(27,31,36,.06),0 8px 24px rgba(27,31,36,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Roboto,Helvetica,Arial,sans-serif;line-height:1.65;}
+a{color:var(--brand);text-decoration:none}
+header{background:linear-gradient(135deg,#e64980,#c2256b);color:#fff;padding:28px 20px 24px}
+header .inner{max-width:1180px;margin:0 auto}
+header h1{margin:0;font-size:25px;font-weight:700;letter-spacing:.5px;display:flex;align-items:center;gap:10px}
+header .role{margin-top:6px;font-size:14px;opacity:.92}
+header .meta{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+header .pill{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);padding:4px 11px;border-radius:999px;font-size:12px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px 80px}
+.searchbar{position:sticky;top:0;z-index:30;background:rgba(253,244,248,.92);backdrop-filter:blur(8px);padding:14px 0 10px}
+.searchbar .box{display:flex;gap:10px;align-items:center}
+.searchbar input{flex:1;padding:13px 16px;font-size:15px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);box-shadow:var(--shadow)}
+.searchbar input:focus{outline:2px solid var(--brand);border-color:var(--brand)}
+.searchbar .vbtn{font:inherit;font-size:13px;padding:11px 14px;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:12px;cursor:pointer;white-space:nowrap;box-shadow:var(--shadow)}
+.searchbar .vbtn.on{background:var(--brand);color:#fff;border-color:var(--brand);font-weight:600}
+.region{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.region .chip{font-size:12.5px;padding:5px 12px;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:999px;cursor:pointer;user-select:none}
+.region .chip.on{background:var(--brand-soft);color:var(--brand);border-color:var(--brand);font-weight:600}
+.hint{font-size:12.5px;color:var(--muted);margin:14px 2px 0}
+/* ===== card ===== */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;margin-top:14px;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.chead{display:flex;align-items:center;gap:14px;padding:18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#fff5fa,#fff)}
+.chead .flag{font-size:40px;line-height:1}
+.chead .names{flex:1;min-width:0}
+.chead h2{margin:0;font-size:21px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.chead h2 .en{font-size:13px;color:var(--muted);font-weight:500}
+.chead .facts{margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.chead .facts span{background:var(--brand-soft);color:var(--brand);padding:3px 9px;border-radius:999px}
+.clock{text-align:right;font-size:12px;color:var(--muted);flex:none;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 12px;min-width:148px}
+.clock b{font-size:17px;color:var(--ink);display:block}
+.clock .win{margin-top:2px;font-weight:600}
+.win.ok{color:var(--green)} .win.sleep{color:var(--red)}
+.tabs{display:flex;gap:4px;padding:12px 16px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tab{padding:9px 14px;font-size:13.5px;color:var(--muted);cursor:pointer;border-radius:10px 10px 0 0;user-select:none}
+.tab.on{color:var(--brand);font-weight:700;background:var(--brand-soft);box-shadow:inset 0 -3px 0 var(--brand)}
+.tbody{padding:16px 20px 22px}
+.block{margin-bottom:18px}
+.block:last-child{margin-bottom:0}
+.block h3{font-size:14px;margin:0 0 9px;display:flex;align-items:center;gap:8px;color:var(--ink)}
+.block h3 .ic{width:22px;height:22px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;flex:none}
+.ic-s{background:var(--brand)} .ic-r{background:var(--red)} .ic-d{background:var(--amber)} .ic-c{background:var(--purple)} .ic-f{background:var(--blue)} .ic-g{background:var(--green)} .ic-n{background:#6b7280}
+ul.tips{margin:0;padding-left:0;list-style:none}
+ul.tips li{position:relative;padding:7px 10px 7px 30px;font-size:13px;margin-bottom:6px;background:var(--bg);border-radius:9px;border-left:3px solid var(--line)}
+ul.tips li::before{content:"⚠";position:absolute;left:9px;top:7px;color:var(--brand);font-size:12px;font-weight:700}
+ul.good li::before{content:"✓";color:var(--green)}
+ul.neutral li::before{content:"•";color:var(--muted)}
+.quote{font-size:13px;background:var(--brand-soft);border-radius:10px;padding:11px 13px;color:var(--ink);line-height:1.7}
+.fest{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:10px}
+.fest .f{background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:11px 13px}
+.fest .f .fn{font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:7px}
+.fest .f .fd{font-size:11.5px;color:var(--brand);margin:3px 0 4px}
+.fest .f .fi{font-size:12px;color:var(--muted);line-height:1.5}
+.fest .f .tag{font-size:10px;padding:1px 6px;border-radius:5px;font-weight:700}
+.tag-go{background:var(--green-soft);color:var(--green)} .tag-avoid{background:var(--red-soft);color:var(--red)} .tag-peak{background:var(--amber-soft);color:var(--amber)}
+.src{font-size:11.5px;color:var(--muted);border-top:1px dashed var(--line);margin-top:16px;padding-top:12px}
+.empty{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty .big{font-size:46px}
+/* ===== matrix ===== */
+.matrix{margin-top:14px;overflow:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:12.5px;min-width:1180px}
+th,td{border-bottom:1px solid var(--line);border-right:1px solid var(--line);padding:9px 11px;vertical-align:top;text-align:left}
+th{background:var(--brand-soft);color:var(--brand);font-weight:700;position:sticky;top:0;white-space:nowrap}
+td.c{background:#fff;white-space:nowrap;font-weight:600}
+td.c .fl{font-size:18px}
+td.c .ab{font-size:10.5px;color:var(--muted);display:block;font-weight:400}
+.cell ul{margin:0;padding-left:16px}
+.cell li{margin-bottom:3px;line-height:1.5}
+footer{font-size:11.5px;color:var(--muted);text-align:center;margin-top:30px;line-height:1.7}
+@media(max-width:640px){.chead{flex-wrap:wrap}.clock{width:100%;text-align:left}.chead h2{font-size:18px}}
+@media print{
+  header{background:#e64980 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .searchbar,.region,.hint,.vbtn{display:none}
+  .card,.matrix{box-shadow:none;border:1px solid #ccc}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <h1>🌍 各国文化禁忌速查</h1>
+    <div class="role">面向入境游销售 / 导游 / 客服 —— 30 秒查清楚和 X 国客人打交道时「哪些是雷区」</div>
+    <div class="meta">
+      <span class="pill">携程客服版 4 列 → 升级 9 维</span>
+      <span class="pill">中文 / English / 简写 / 别名 一查即出</span>
+      <span class="pill" id="cntPill">已覆盖 — 国</span>
+      <span class="pill">数据取自各国官方旅游局 / 外交部 / 领事服务 / 文化礼仪指南</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="searchbar">
+    <div class="box">
+      <input id="q" list="cl" placeholder="输入国家（中国/英文/简写/别名）：韩国 Korea KOR / 日本 JP / 泰国 TH / 美国 USA / 阿联酋 UAE / 沙特 KSA …" autocomplete="off">
+      <button class="vbtn on" id="vCard" data-view="card">卡片详情</button>
+      <button class="vbtn" id="vTable" data-view="table">矩阵对照</button>
+    </div>
+    <datalist id="cl"></datalist>
+    <div class="region" id="regions"></div>
+  </div>
+  <div class="hint" id="hint">提示：输入任意关键字（支持中文、English、ISO 简写、常见别名如「美/英国/韩」）即可定位国家；下方可切换「卡片详情 / 矩阵对照」两种视图。</div>
+  <div id="result"></div>
+  <footer>
+    数据综合自各国官方旅游局（如 VisitBritain、KTO、Tourism Thailand、Singapore Tourism Board 等）、各国外交部与领事服务官网、以及 Culture Crossing / Commisceo Global 等文化礼仪指南整理，仅供业务参考；习俗随时代演变，重要行程请以官方最新公告为准。<br>
+    最后更新 / Last updated 2026-08-17 · 本工具为「入境游销售工作台」配套速查组件。
+  </footer>
+</div>
+
+<script>
+/* ============ 国家数据（AI 整理自官方旅游局 / 外交部 / 领事服务 / 礼仪指南）============ */
+const DATA = {
+"South Korea":{"zh":"韩国","flag":"🇰🇷","region":"东亚","abbr":["kr","kor","rok","韩"],"religion":"无国教（佛教约23%、基督新教/天主教约29%）","language":"韩语","currency":"KRW 韩元","tz":"Asia/Seoul",
+ greeting:"안녕하세요（安宁哈塞哟）+ 点头鞠躬；对长辈/客户用敬语，双手接物递物。",
+ social:["拍照、拍视频前务必先征得本人同意，尤其拍老人、小孩","避免‘OK’手势（拇指食指圈圆）——在韩国含贬义、不雅","不称陌生人‘大叔/大妈’代指，易显不敬；用‘先生/女士’更得体","公共场合不宜高声谈笑、搂抱亲吻","地铁‘保卫战’（爱心座）勿占，不让座给老弱孕会被侧目"],
+ religious:["佛教寺院入殿脱鞋、顺时针绕佛，不指佛像、不拍佛像头部","不踩门槛；佛前不喧哗","军政设施、总统府、使馆区严禁拍照，违者可被拘"],
+ dietary:["与长辈同桌忌先动筷、忌端碗离桌吃饭（碗放桌上）","忌把筷子竖直插在米饭上（形似祭奠）","忌用筷子指人、敲碗","点餐多按‘人份’计，不宜强行劝酒，但长辈敬酒要双手接"],
+ dining:"长辈先举筷；饮酒侧身避长辈；喝汤尽量不出声；餐后筷子放桌上；结账常争抢（一方请或各自付，忌当场分币AA）。",
+ customs:"长幼有序的‘询礼’文化：对年长者用敬语、让座、让其先行；生日/节令喝海带汤（生日）、年糕汤（春节）。",
+ numcol:"数字忌‘4’（与‘死’谐音，电梯常无4层）；丧事用白、喜事用红。",
+ gifts:"双手递接；忌送日本品牌、忌送4件或4的倍数；钟、鞋、绿帽不送；包装喜红/金忌黑。",
+ festivals:[
+  {n:"설날 春节（农历新年）",d:"农历正月初一，连休3天",t:"avoid",i:"全家团聚、祭祖，出行/回乡双高峰；销售约行需避开，也是韩国人集中出境游旺季"},
+  {n:"추석 秋夕（中秋）",d:"农历八月十五，连休3天",t:"avoid",i:"回乡祭祖扫墓，国内交通爆满，同春节为出游双高峰"},
+  {n:"어린이날 儿童节",d:"5月5日",t:"go",i:"家庭亲子游高峰，亲子/研学产品可重点推"},
+  {n:"광복절 光复节",d:"8月15日",t:"peak",i:"法定假日，短途周边游增多"}],
+ tips:["韩国客对‘低价购物团’极其敏感，强调‘无购物纯玩’最能打动","韩国人多用 KakaoTalk，可引导加 Kakao 而非微信","春节/秋夕前1-2周是报名旺季，节中是出行高峰"],
+ src:"韩国观光公社 KTO、韩国文化体育观光部、大韩民国驻华使馆领事服务"},
+
+"Japan":{"zh":"日本","flag":"🇯🇵","region":"东亚","abbr":["jp","jpn","日"],"religion":"神道教与佛教并存（多无特定信仰，节庆参拜）","language":"日语","currency":"JPY 日元","tz":"Asia/Tokyo",
+ greeting:"‘こんにちは’（你好）+ 鞠躬（15°~45°）；商务场合交换名片双手递接、字朝对方。",
+ social:["极其重视‘不给他人添麻烦’（迷惑をかけない）；公共场合低声、排队、不插队","不边走边吃（除节庆摊点）；电车上面前饮食、化妆不雅","指人用整只手‘招呼’手势而非单指指点","避免身体过度接触、公开拥抱；对陌生人保持距离","忌脚踏鞋入屋（进门脱鞋，鞋头朝外摆齐）"],
+ religious:["神社：参拜前在‘手水舍’漱口洗手，不走过鸟居中央（中央为神道）","不拍神体、不踩榻榻米边缘线、不踩‘躙り鴨居’","佛寺入殿脱鞋、不喧哗、不指佛像"],
+ dietary:["筷子不插饭、不横放碗上、不吮筷、不用筷传菜（形似火葬）","不把骨刺直接放桌上，放碟边；吃面可轻声吸溜（表示好吃）","忌过度劝酒；倒酒时为他人斟、自己杯由他人斟"],
+ dining:"入座前说‘いただきます’（我开动了），餐后‘ごちそうさま’（多谢款待）；长辈/主人先动筷；分食用小碟；结账各付（割り勘）很常见，不抢单。",
+ customs:"暧昧委婉文化：说‘考えておきます’（我考虑下）常等于拒绝；重季节性（樱花、红叶、初雪）。",
+ numcol:"忌数字‘4’（死）与‘9’（苦）；丧事白、喜事红白金；礼物忌送2个或成双有时反而不吉（视情境）。",
+ gifts:"‘お土产’伴手礼文化重；忌送梳子（谐音‘苦’）、百合（葬礼花）、荷花（祭奠）；包装喜素雅、忌大红大绿刺眼。",
+ festivals:[
+  {n:"お正月 正月（元旦）",d:"1月1日，连休约1周",t:"avoid",i:"全家团聚、初诣，出行高峰，约行避开"},
+  {n:"ゴールデンウィーク 黄金周",d:"4月底~5月初",t:"peak",i:"连休最长，国内/出境游爆满，价格高"},
+  {n:"お盆 盂兰盆节",d:"8月中旬",t:"peak",i:"回乡祭祖，交通高峰，也是出游旺季"},
+  {n:"シルバーウィーク 白银周",d:"9月近秋分前后",t:"peak",i:"短连休，周边游增多"}],
+ tips:["日本客重‘细节与守时’，行程准时率直接影响好评","对‘干净、安静、秩序’敏感度极高，导游控场要稳","樱花季（3-4月）、红叶季（11月）是刚需旺季，需提前锁房锁车"],
+ src:"日本政府观光局 JNTO、外务省、日本国驻华使馆领事服务"},
+
+"Mongolia":{"zh":"蒙古国","flag":"🇲🇳","region":"东亚","abbr":["mn","mng","蒙古"],"religion":"藏传佛教（格鲁派）为主，萨满遗存","language":"蒙古语","currency":"MNT 图格里克","tz":"Asia/Ulaanbaatar",
+ greeting:"握手+微躬；遇长者双手握；传统以‘鼻烟壶’互致，现代多简化为握手。",
+ social:["忌脚踏门槛、忌以鞭/棍指人","不拍他人肩头（尤其僧人）","公共场合忌高声、忌用手指直指","主人敬茶/奶食品要双手接，忌拒绝"],
+ religious:["寺院脱帽、不喧哗、不指佛像、不拍圣物","绕佛/敖包顺时针；忌踩经幡、玛尼堆","不跨越火塘、不踩灶"],
+ dietary:["主人敬酒（马奶酒/白酒）要接杯、以无名指蘸酒弹天/地/火三下谢神","忌筷子插饭；忌倒扣碗；左手不递食","羊肉手把肉为待客主菜，忌浪费"],
+ dining:"围坐同食，长者先切肉先尝；敬酒歌（长调）是礼遇，量力而饮但不宜露怯拒饮。",
+ customs:"游牧‘好客’文化：远客至必献哈达、奶茶、奶豆腐；重诺、重口头约定。",
+ numcol:"无强数字禁忌；偏爱奇数（如敬酒三巡）。",
+ gifts:"哈达（蓝/白）为尊礼；可赠小刀（回赠一钱/针意为‘买下’避忌）；忌送黑、忌空手登门。",
+ festivals:[
+  {n:"Наадам 那达慕",d:"7月11-13日",t:"peak",i:"国庆级盛会（摔跤/赛马/射箭），全民出游，交通住宿紧张"},
+  {n:"Цагаан сар 白月（春节）",d:"农历正月初一",t:"avoid",i:"蒙古族新年，家庭团聚，约行避开"}],
+ tips:["蒙古客多经二连/满洲里陆路口岸入境，行程宜含草原/戈壁/历史线","对‘马、鹰、狼’等图腾敏感，忌调侃","多为家庭/小团，重自然与自由，购物点要少而精"],
+ src:"蒙古国旅游局、蒙古国外交部领事服务、驻华使馆"},
+
+"Thailand":{"zh":"泰国","flag":"🇹🇭","region":"东南亚","abbr":["th","tha","泰"],"religion":"佛教（上座部）国教约93%","language":"泰语","currency":"THB 泰铢","tz":"Asia/Bangkok",
+ greeting:"‘สวัสดี’（Sawasdee）+ 合十礼（双手合掌于胸前，指尖越高越敬）；遇僧侣/王室不握手。",
+ social:["绝对不摸他人头顶（头为最圣洁）；不脚底对人、不脚指物/指人","公共场合不批评王室（冒犯君主罪可重刑）","不大声争执、不公开示爱过度","不踩门槛；不踩钱币（上有国王像）"],
+ religious:["入寺遮肩膝、脱鞋、不指佛像、不背对佛像拍照","女性不触碰僧侣/不递物直接给僧（可经‘中介’男子）","王室肖像前庄重，不踩、不指、不评论"],
+ dietary:["筷子不插饭；不拿脚边之物示人；左手视为不洁，递物用右手或双手","不吃狗肉、不食过量牛肉（部分信众）","僧人不晚六点后进食，勿在此时供餐"],
+ dining:"围坐分食，长辈先取；合十致谢；结账不抢（多由请客方付）；小费给纸币（硬币给乞丐不敬）。",
+ customs:"‘微笑国度’重‘面子’与平和（จริงใจ 真诚）；重等级与对国王/僧侣的尊崇。",
+ numcol:"无强数字禁忌；颜色按星期（如周一黄、周二粉），避讳以脚示人。",
+ gifts:"僧侣不受金钱直赠；可赠佛像（需恭敬）；忌送鞋、钟（送钟=送终）；包装喜金/红。",
+ festivals:[
+  {n:"สงกรานต์ 宋干节（泼水节）",d:"4月13-15日",t:"peak",i:"全民泼水狂欢，也是家庭团聚；赴泰游爆满，行程防湿防闹"},
+  {n:"ลอยกระทง 水灯节",d:"泰历十二月十五（约11月）",t:"go",i:"放灯祈福，浪漫观光高峰，情侣/摄影客多"},
+  {n:"ปีใหม่ 元旦",d:"1月1日连休",t:"peak",i:"短途出游高峰"}],
+ tips:["泰国客多走‘清凉/海岛/佛教文化’线，忌过度赶行程","对王室话题零容忍，话术里绝不调侃","华人潮裔多，春节、中秋也有出游习惯"],
+ src:"泰国国家旅游局 TAT、泰国驻华使馆领事服务、外交部旅行提示"},
+
+"Singapore":{"zh":"新加坡","flag":"🇸🇬","region":"东南亚","abbr":["sg","sgo","新","星"],"religion":"多元：佛教/道教/伊斯兰教/基督教/印度教并存","language":"英语（官方）、华语、马来语、淡米尔语","currency":"SGD 新元","tz":"Asia/Singapore",
+ greeting:"握手为主；华人微躬、马来/印度裔可点头；多元族群间以英语沟通最稳妥。",
+ social:["法治极严：公共场合禁烟区吸烟、乱丢垃圾、地铁饮食均重罚","忌嚼口香糖（禁售）、忌插队、忌高声","不轻易触碰他人（尤其异性间保守）","对族群/宗教玩笑零容忍，政治与种族话题敏感"],
+ religious:["清真寺脱鞋、女士包头入；印度庙脱鞋、不踩门槛","佛寺/道观安静、不指神像","尊重各教节庆，不干扰"],
+ dietary:["多元饮食：清真（Halal）、素食、印度教不食牛、华人不食猪肉者众","递物/进食用右手（马来/印度习俗）","忌浪费食物，小贩中心（Hawker）自行归还餐盘"],
+ dining:"族群分桌或混食皆可，但需标注清真/素食；AA分账普遍；小费非必须（已含服务费）。",
+ customs:"‘Kiasu’（怕输）文化：重效率、守时、排队；多元但彼此界限分明。",
+ numcol:"无强数字禁忌；华裔避‘4’，喜‘8’（发）。",
+ gifts:"华人喜红色礼盒、忌钟/梨（离）；马来/印度裔避酒、避皮制品（部分）；包装中性为宜。",
+ festivals:[
+  {n:"Chinese New Year 华人新年",d:"农历正月初一",t:"peak",i:"华人家庭团聚，牛车水灯会观光热；也是出境游高峰"},
+  {n:"Hari Raya Puasa 开斋节",d:"伊斯兰历10月1日（变日）",t:"peak",i:"马来族群团圆、逛市集，甘榜格南热闹"},
+  {n:"Deepavali 屠妖节",d:"印度历8月（约10-11月）",t:"go",i:"小印度灯饰游行，观光好时节"},
+  {n:"National Day 国庆",d:"8月9日",t:"peak",i:"连休短途游，滨海湾活动密集"}],
+ tips:["新加坡客素质高、重规则，行程‘准时+无隐形消费’是好评关键","英语沟通无障碍，可推深度/小众/亲子线","多经樟宜机场中转，常组合马来/印尼或中国多地"],
+ src:"新加坡旅游局 STB、外交部领事服务、移民局旅行提示"},
+
+"Malaysia":{"zh":"马来西亚","flag":"🇲🇾","region":"东南亚","abbr":["my","mys","马"],"religion":"伊斯兰教为国教（约61%），佛教/基督教/印度教并存","language":"马来语（官方）、华语、英语","currency":"MYR 林吉特","tz":"Asia/Kuala_Lumpur",
+ greeting:"穆斯林握手（同性）轻触即分，异性间点头/微笑即可；华裔握手/微躬；印度裔合十。",
+ social:["以右手递物、进食（左手视为不洁）","公共场合忌过度亲昵；忌评论宗教/种族/王室","斋月期间日间公共场合避免当众饮食（对非穆斯林亦为礼）","不指人、不高声"],
+ religious:["清真寺脱鞋、女士包头、非穆斯林一般不入内殿","印度庙脱鞋、不踩门槛、不指神像","农历节庆寺庙安静"],
+ dietary:["清真（Halal）为要：禁猪肉、禁酒精、禁非清真屠宰肉","递物/进食用右手；不用左手递食","华人食猪肉、印度教徒不食牛"],
+ dining:"多元分食；注明清真/素食；AA普遍；斋月夜间开斋饭（Buka Puasa）是社交盛事。",
+ customs:"族群三分（马来/华/印），彼此节庆互庆但界限清晰；重‘面子’与家庭。",
+ numcol:"无强数字禁忌；华裔避‘4’喜‘8’。",
+ gifts:"避酒、避猪皮制品赠穆斯林；避牛皮赠印度教徒（部分）；包装中性。",
+ festivals:[
+  {n:"Hari Raya Aidilfitri 开斋节",d:"伊斯兰历10月1日（变日）",t:"peak",i:"穆斯林最大节庆，家庭团聚、开放门户，国内交通爆满"},
+  {n:"Chinese New Year 华人新年",d:"农历正月初一",t:"peak",i:"华人团聚、舞狮，也是出境游高峰"},
+  {n:"Deepavali 屠妖节",d:"约10-11月",t:"go",i:"印度裔灯节，小印度观光热"},
+  {n:"National Day 国庆",d:"8月31日",t:"peak",i:"独立日庆典，短途游增多"}],
+ tips:["马来客多为华人/马来/印度裔，需按其习俗分别对待","清真饮食是硬约束，团餐必须确认 Halal","多经吉隆坡/槟城，常组合新泰或中国多地"],
+ src:"马来西亚旅游局 Tourism Malaysia、外交部领事服务、伊斯兰发展局"},
+
+"Indonesia":{"zh":"印度尼西亚","flag":"🇮🇩","region":"东南亚","abbr":["id","idn","印尼"],"religion":"伊斯兰教为主（约87%），亦有基督教/印度教/佛教","language":"印尼语","currency":"IDR 印尼盾","tz":"Asia/Jakarta",
+ greeting:"‘Selamat’+合十或握手（穆斯林轻触即分）；尊重长辈，微躬。",
+ social:["以右手递物进食（左手不洁）","不摸他人头顶；不用食指指人（用拇指握拳示意）","公共场合不拥抱亲吻；对宗教/政治话题谨慎","爪哇文化重等级与含蓄，避免当面冲突"],
+ religious:["清真寺脱鞋、女士包头、非穆斯林一般止步；巴厘印度庙脱鞋、不踩门槛","不指神像、不喧哗；进入他人家脱鞋","尊重斋月"],
+ dietary:["清真为主：禁猪肉、禁酒精；用右手进食","巴厘印度教徒不食牛；部分禁牛肉","忌浪费"],
+ dining:"围坐分食，长辈先取；右手抓饭（部分族群）或以勺筷；AA或请客皆可。",
+ customs:"‘Gotong Royong’互助文化；重亲情与社区；巴厘重祭祀与神灵。",
+ numcol:"无强数字禁忌。",
+ gifts:"避酒、避猪皮制品；巴厘可赠手工品；包装中性。",
+ festivals:[
+  {n:"Lebaran / Idul Fitri 开斋节",d:"伊斯兰历10月1日（变日）",t:"peak",i:"全国最大返乡潮（Mudik），交通瘫痪，出行避开或提前锁票"},
+  {n:"Nyepi 静居日（巴厘）",d:"巴厘历新年（约3月）",t:"avoid",i:"全岛静默一日，机场关闭、禁出门，行程须避开"},
+  {n:"Christmas 圣诞/新年",d:"12月-1月",t:"peak",i:"基督教裔出游+海岛旺季，巴厘价高"}],
+ tips:["印尼客多为穆斯林，清真饮食与礼拜安排是刚需","巴厘线重‘慢度假’，勿过度赶点","开斋节前是返乡/出游双高峰，机票酒店紧"],
+ src:"印尼旅游局、外交部领事服务、宗教事务部礼仪指引"},
+
+"Vietnam":{"zh":"越南","flag":"🇻🇳","region":"东南亚","abbr":["vn","vnm","越"],"religion":"佛教为主，天主教约7%，民间信仰并存","language":"越南语","currency":"VND 越南盾","tz":"Asia/Ho_Chi_Minh",
+ greeting:"握手+微躬；对长辈用‘anh/chị’（哥/姐）尊称；传统有合十遗风。",
+ social:["重等级与辈分，对年长者用尊称","不以脚指人、不踩门槛、不拍他人头顶","公共场合不高声争执；对政治/历史话题敏感","勿随意拍军事/政府设施"],
+ religious:["佛寺脱鞋、不指佛像、不喧哗","祠堂/祖厝庄重，不踩门槛","尊重民间信仰（城隍、祖先）"],
+ dietary:["筷不插饭、不敲碗；长辈先动筷","不食狗肉者渐多（部分城市禁售）","喜米粉、清淡，少油"],
+ dining:"围坐共食，长辈先取；分食小碟；结账争抢或AA皆可，不强行劝酒。",
+ customs:"家庭与宗族观念强；春节（Tết）为全年最重要节庆。",
+ numcol:"受华文化影响避‘4’喜‘8’；红为吉色。",
+ gifts:"春节赠橘（吉）、红包；忌钟、忌白花（丧）；包装喜红金。",
+ festivals:[
+  {n:"Tết Nguyên Đán 春节（元旦节）",d:"农历正月初一，连休约1周",t:"avoid",i:"全家团聚、祭祖，举国返乡，交通爆满，约行必须避开"},
+  {n:"Tết Trung Thu 中秋节",d:"农历八月十五",t:"go",i:"儿童节庆，亲子游/灯会观光热"},
+  {n:"Quốc Khánh 国庆",d:"9月2日",t:"peak",i:"连休短途游"}],
+ tips:["越南客近年经陆路/航空大量入境，重‘性价比+无购物’","春节前是报名旺季、节中是出行高峰，需提前锁资源","话术忌涉及南海等敏感议题"],
+ src:"越南国家旅游局、外交部领事服务、驻华使馆"},
+
+"Philippines":{"zh":"菲律宾","flag":"🇵🇭","region":"东南亚","abbr":["ph","phl","菲"],"religion":"天主教约80%，伊斯兰教南部 minority","language":"英语、菲律宾语（Tagalog）","currency":"PHP 比索","tz":"Asia/Manila",
+ greeting:"握手（含微笑+轻拍肩，熟人间）；‘Kumusta’（你好）；天主教徒见面可额手十字。",
+ social:["热情外向，但忌当面批评、忌说‘No’太硬（重‘保面子’）","不指人、不拍头顶；公共场合不喧哗过度","忌贬损天主教/家庭（极重家庭）","勿评论南海争议"],
+ religious:["教堂脱帽、安静、不穿无袖短裤；弥撒庄重","南部穆斯林区入寺脱鞋、女士包头","不指圣像"],
+ dietary:["不食狗肉（多数）；部分禁猪肉（穆斯林南部）","左手不洁，递物用右手","重米饭，喜甜咸搭配"],
+ dining:"家庭共食（Kamayan 手抓饭部分保留）；长辈先取；AA或请客皆可；小费给纸币。",
+ customs:"‘Bayanihan’互助、重家庭与宗教；英语沟通无障碍。",
+ numcol:"无强数字禁忌；受西化重节日。",
+ gifts:"可赠甜点/小礼；避酒赠穆斯林；包装随意。",
+ festivals:[
+  {n:"Christmas 圣诞季",d:"12月-1月6日（最长圣诞季）",t:"peak",i:"天主教举国欢庆，家庭团聚，出游/返乡双高峰"},
+  {n:"Sinulog / Ati-Atihan 等圣周节庆",d:"1月/4月（变日）",t:"go",i:"色彩狂欢节，观光摄影热"},
+  {n:"Independence Day 独立日",d:"6月12日",t:"peak",i:"连休短途游"}],
+ tips:["菲律宾客英语流利、重服务体验，行程‘轻松+好拍照’为王","多经香港/内地中转，常组合中国多地或日韩","宗教节日出行密集，机票紧"],
+ src:"菲律宾旅游局、外交部领事服务、驻华使馆"},
+
+"Myanmar":{"zh":"缅甸","flag":"🇲🇲","region":"东南亚","abbr":["mm","bmn","缅"],"religion":"上座部佛教约88%","language":"缅甸语","currency":"MMK 缅元","tz":"Asia/Yangon",
+ greeting:"合十微躬；对长辈双手合掌于胸前；现代也握手。",
+ social:["忌摸头顶、忌脚底对人、忌以脚指物","不拍僧人（尤女性不触碰僧）","公共场合不喧哗、不公开亲昵","不踩门槛、不踩僧人影子"],
+ religious:["佛寺脱鞋袜、着遮肩膝、不指佛像、不背对佛像","绕佛顺时针；不喧哗；女性不近僧","不踩经幡"],
+ dietary:["右手进食、递物；忌左手","不食牛肉（多数佛教徒）；部分禁猪肉（穆斯林）","僧人不晚六点后进餐"],
+ dining:"托钵乞食为圣事；共食分碟；不劝酒；长者先取。",
+ customs:"极重佛教与布施；‘缅甸微笑’含蓄温和，重等级。",
+ numcol:"无强数字禁忌。",
+ gifts:"可赠僧用袈裟/日用品（恭敬）；避酒肉赠僧；包装中性。",
+ festivals:[
+  {n:"Thingyan 泼水节（新年）",d:"4月中旬（约4月13-16）",t:"peak",i:"全国泼水狂欢，也是家庭团聚，出行高峰"},
+  {n:"Ka htein 点灯节",d:"缅历7月（约10-11月）",t:"go",i:"佛寺布施点灯，观光宁静"}],
+ tips:["缅甸客多走佛教文化/蒲甘线，节奏要慢","对僧侣与王室话题庄重","近年入境量小但增长快，宜做特色小众线"],
+ src:"缅甸旅游局、外交部领事服务"},
+
+"Cambodia":{"zh":"柬埔寨","flag":"🇰🇭","region":"东南亚","abbr":["kh","khm","柬"],"religion":"上座部佛教国教约97%","language":"高棉语","currency":"KHR 瑞尔 / USD 通用","tz":"Asia/Phnom_Penh",
+ greeting:"‘Jom reap suor’+合十（吴哥式礼拜，双手举高更敬）；微躬。",
+ social:["忌摸头顶、忌脚底对人、忌以脚指人/指物","不拍僧人（女性不触僧）","不踩门槛；公共场合不喧哗","不评论王室（西哈努克家族受尊崇）"],
+ religious:["吴哥窟等圣殿脱鞋、着遮肩膝、不爬禁区、不背对佛像","绕佛顺时针；不指神像；女性不近僧","不踩经幡/石雕头部"],
+ dietary:["右手进食/递物；忌左手","清真饮食（穆斯林 minority）；多数不食牛肉","不劝酒"],
+ dining:"共食分碟；长者先取；托钵为圣；不浪费。",
+ customs:"‘高棉微笑’含蓄恭顺，重等级与佛教；头部最圣、脚最贱。",
+ numcol:"无强数字禁忌。",
+ gifts:"可赠小礼（恭敬）；避酒肉赠僧；包装中性。",
+ festivals:[
+  {n:"Bon Om Touk 送水节",d:"11月（变日）",t:"peak",i:"金边龙舟赛举国欢庆，交通/住宿紧张"},
+  {n:"Khmer New Year 柬新年",d:"4月13-16日",t:"peak",i:"全国休假，家庭出游，吴哥客流高"}],
+ tips:["柬埔寨客重吴哥文化线，导游需能讲历史与佛教","对‘地雷/贫困’话题避免猎奇调侃","多经暹粒/金边，常组合泰国或中国多地"],
+ src:"柬埔寨旅游局、外交部领事服务"},
+
+"Laos":{"zh":"老挝","flag":"🇱🇦","region":"东南亚","abbr":["la","lao","老"],"religion":"上座部佛教约66%","language":"老挝语","currency":"LAK 基普","tz":"Asia/Vientiane",
+ greeting:"合十微躬；对长辈双手合掌；现代握手亦常见。",
+ social:["忌摸头顶、忌脚底对人、忌以脚指物","不拍僧人（女性不触僧）","不踩门槛；公共场合不喧哗","不评论政治"],
+ religious:["佛寺脱鞋、着遮肩膝、不指佛像、不背对佛像","绕佛顺时针；不喧哗；女性不近僧"],
+ dietary:["右手进食/递物；忌左手","不食牛肉（多数佛教徒）；糯米为主食","不劝酒"],
+ dining:"共食分碟；长者先取；糯米饭手捏成团蘸菜。",
+ customs:"‘老挝慢生活’（Jai Yen 心静），重温和与佛教；节奏极慢。",
+ numcol:"无强数字禁忌。",
+ gifts:"可赠小礼（恭敬）；避酒肉赠僧；包装中性。",
+ festivals:[
+  {n:"Pi Mai 老挝新年（泼水）",d:"4月13-16日",t:"peak",i:"全国泼水狂欢，家庭团聚，出行高峰"},
+  {n:"Boun Ok Phansa 出雨节",d:"10月（变日）",t:"go",i:"点灯放灯船，观光宁静"}],
+ tips:["老挝客节奏慢，行程忌赶；多走琅勃拉邦文化线","对僧侣/王室庄重","多经磨憨陆路口岸，常组合云南"],
+ src:"老挝新闻文化旅游部、外交部领事服务"},
+
+"Brunei":{"zh":"文莱","flag":"🇧🇳","region":"东南亚","abbr":["bn","brn","文莱"],"religion":"伊斯兰教（逊尼派）国教约83%","language":"马来语（官方）、英语","currency":"BND 文莱元","tz":"Asia/Brunei",
+ greeting:"穆斯林握手（同性轻触），异性点头/微笑；对王室极敬。",
+ social:["以右手递物进食；公共场合保守，忌亲昵","不评论王室（苏丹受尊崇）","斋月日间避免当众饮食","不指人、不高声"],
+ religious:["清真寺脱鞋、女士包头（清真寺备罩袍）；非穆斯林一般止步","不指神像、不喧哗"],
+ dietary:["清真为要：禁猪肉、禁酒精","右手进食；左手不洁"],
+ dining:"共食分碟；长者先取；不劝酒；清真餐是硬约束。",
+ customs:"马来伊斯兰文化，重礼与保守；‘MIB’马来伊斯兰君主制价值观。",
+ numcol:"无强数字禁忌。",
+ gifts:"避酒、避猪皮制品；包装中性。",
+ festivals:[
+  {n:"Hari Raya Aidilfitri 开斋节",d:"伊斯兰历10月1日（变日）",t:"peak",i:"最大节庆，家庭团聚，国内出游"},
+  {n:"His Majesty's Birthday 苏丹诞辰",d:"7月15日",t:"peak",i:"全国庆典，短途游"}],
+ tips:["文莱客保守重清真，行程与餐饮必须 Halal","多经新加坡/马来西亚中转","体量小但客单高，宜做高端小众线"],
+ src:"文莱旅游局、外交部领事服务"},
+
+"India":{"zh":"印度","flag":"🇮🇳","region":"南亚","abbr":["in","ind","印"],"religion":"印度教约80%，伊斯兰教约14%，锡克/基督/佛教并存","language":"印地语、英语（官方）及多语种","currency":"INR 卢比","tz":"Asia/Kolkata",
+ greeting:"‘Namaste’+合十（双手胸前）；不主动握手（尤异性）；对长辈微躬。",
+ social:["以右手递物进食（左手不洁）；不用左手递食/接物","不触摸他人（尤女性）；不公开亲昵","头为圣洁，不拍头顶；脚为卑，不脚底对人","避免当众批评、避免争论宗教/种姓/克什米尔"],
+ religious:["印度庙脱鞋、不穿皮制品入、不踩门槛、不指神像","牛为圣物（印度教），不食牛肉、不贬牛","锡克庙入内需包头、不穿鞋"],
+ dietary:["印度教徒不食牛肉；穆斯林不食猪肉；多素食者众","忌用左手进食/递物；忌浪费","不劝酒（多禁酒）"],
+ dining:"手抓饭（右手）为主；分食小碟；长者先取；素食标记需明确。",
+ customs:"重家庭与节庆；种姓虽废但隐性存在；‘Atithi Devo Bhava’（客人即神）。",
+ numcol:"忌数字‘13’部分西化回避；颜色：红/黄吉，黑丧。",
+ gifts:"避皮制品赠印度教徒、避酒；可赠甜点/织物；包装喜庆色。",
+ festivals:[
+  {n:"Diwali 排灯节",d:"印度历8月（约10-11月，变日）",t:"go",i:"最盛大灯节，观光摄影热，家庭团聚"},
+  {n:"Holi 胡里节",d:"印度历12月（约3月，变日）",t:"go",i:"色彩泼洒节，年轻客热衷参与"},
+  {n:"Eid 开斋节",d:"伊斯兰历10月（变日）",t:"peak",i:"穆斯林团聚出游"},
+  {n:"Republic Day 国庆",d:"1月26日",t:"peak",i:"阅兵庆典，短途游"}],
+ tips:["印度客素食比例高，团餐务必标注素/非素","重‘灵性+历史+拍照’，泰姬陵/瓦拉纳西线是刚需","对牛、种姓、宗教话题零调侃"],
+ src:"印度旅游局 Incredible India、外交部领事服务、驻华使馆"},
+
+"Pakistan":{"zh":"巴基斯坦","flag":"🇵🇰","region":"南亚","abbr":["pk","pak","巴"],"religion":"伊斯兰教约96%（逊尼为主）","language":"乌尔都语、英语","currency":"PKR 卢比","tz":"Asia/Karachi",
+ greeting:"穆斯林握手（同性）；异性间点头/手触胸致意；对长辈尊称。",
+ social:["以右手递物进食；异性间保守不接触","不公开亲昵；不评论宗教/印巴关系","斋月日间避免当众饮食","不指人、不高声"],
+ religious:["清真寺脱鞋、女士包头；非穆斯林一般止步","不指神像、不喧哗"],
+ dietary:["清真为要：禁猪肉、禁酒精","右手进食；左手不洁"],
+ dining:"共食分碟；长者先取；不劝酒；清真餐硬约束。",
+ customs:"重宗族与好客（Mehmanawazi）；等级与长辈尊崇。",
+ numcol:"无强数字禁忌。",
+ gifts:"避酒、避猪皮制品；包装中性喜庆。",
+ festivals:[
+  {n:"Eid ul-Fitr 开斋节",d:"伊斯兰历10月（变日）",t:"peak",i:"最大节庆，家庭团聚，国内出游"},
+  {n:"Eid ul-Adha 古尔邦节",d:"伊斯兰历12月（变日）",t:"peak",i:"宰牲节，团聚出行，交通紧"},
+  {n:"Independence Day 独立日",d:"8月14日",t:"peak",i:"庆典短途游"}],
+ tips:["巴基斯坦客重清真与宗族，行程+餐饮须 Halal","多经伊斯兰堡/拉合尔，常组合中国多地（中巴经济走廊关联）","对华友好度高，重‘人情’与信任"],
+ src:"巴基斯坦旅游局、外交部领事服务、驻华使馆"},
+
+"Sri Lanka":{"zh":"斯里兰卡","flag":"🇱🇰","region":"南亚","abbr":["lk","lka","斯"],"religion":"佛教（上座部）约70%，印度教/伊斯兰/基督并存","language":"僧伽罗语、泰米尔语、英语","currency":"LKR 卢比","tz":"Asia/Colombo",
+ greeting:"合十‘Ayubowan’（愿你长寿）+微躬；对长辈双手合掌。",
+ social:["忌摸头顶、忌脚底对人、忌以脚指物","不拍僧人（女性不触僧）","不踩门槛；公共场合不喧哗","不评论内战/族群"],
+ religious:["佛寺脱鞋袜、着遮肩膝、不指佛像、不背对佛像","绕佛顺时针；印度庙脱鞋不踩门槛","不踩经幡"],
+ dietary:["右手进食/递物；忌左手","佛教徒不食牛肉；穆斯林不食猪肉","不劝酒"],
+ dining:"共食分碟；长者先取；椰饭咖喱为特色。",
+ customs:"‘Sinhala’温和含蓄，重佛教与家庭；头圣脚贱。",
+ numcol:"无强数字禁忌。",
+ gifts:"可赠小礼（恭敬）；避酒肉赠僧；包装中性。",
+ festivals:[
+  {n:"Sinhala & Tamil New Year 僧泰新年",d:"4月13-14日",t:"peak",i:"全国休假，家庭出游"},
+  {n:"Vesak 卫塞节",d:"5月（变日）",t:"go",i:"佛诞灯节，观光宁静"},
+  {n:"Esala Perahera 康提佛牙节",d:"7-8月（变日）",t:"go",i:"盛大巡游，观光摄影热"}],
+ tips:["斯里兰卡客重佛教文化/茶园/海岸线，节奏慢","对僧侣与族群话题庄重","多经科伦坡，常组合马尔代夫或中国多地"],
+ src:"斯里兰卡旅游局、外交部领事服务"},
+
+"Nepal":{"zh":"尼泊尔","flag":"🇳🇵","region":"南亚","abbr":["np","npl","尼"],"religion":"印度教国教化约81%，佛教约9%","language":"尼泊尔语、英语","currency":"NPR 卢比","tz":"Asia/Kathmandu",
+ greeting:"合十‘Namaste’+微躬；对长辈双手合掌。",
+ social:["忌摸头顶、忌脚底对人、忌以脚指物","不拍僧人；公共场合不喧哗不亲昵","不踩门槛；勿评论王室（历史敏感）"],
+ religious:["印度庙/佛寺脱鞋、不穿皮制品、不踩门槛、不指神像","牛为圣（印度教），不食牛肉、不贬牛","绕佛顺时针"],
+ dietary:["印度教徒不食牛肉；穆斯林不食猪肉","右手进食；左手不洁","多素食"],
+ dining:"手抓饭（右手）；共食分碟；长者先取；不劝酒。",
+ customs:"‘Guest is God’好客；重印度教节庆与雪山。",
+ numcol:"无强数字禁忌。",
+ gifts:"避皮制品赠印度教徒、避酒；包装中性。",
+ festivals:[
+  {n:"Dashain 德赛节",d:"9-10月（变日，约15天）",t:"peak",i:"全国最大节庆，家庭团聚，交通紧"},
+  {n:"Tihar 灯节",d:"10-11月（变日）",t:"go",i:"敬拜动物点灯，观光热"},
+  {n:"Buddha Jayanti 佛诞",d:"5月（变日）",t:"go",i:"蓝毗尼佛诞，朝圣热"}],
+ tips:["尼泊尔客重雪山/徒步/佛教线，节奏慢","对牛、王室、宗教零调侃","多经加德满都/樟木陆路口岸，常组合西藏"],
+ src:"尼泊尔旅游局、外交部领事服务"},
+
+"Bangladesh":{"zh":"孟加拉国","flag":"🇧🇩","region":"南亚","abbr":["bd","bng","孟"],"religion":"伊斯兰教约91%","language":"孟加拉语、英语","currency":"BDT 塔卡","tz":"Asia/Dhaka",
+ greeting:"穆斯林握手（同性）；异性点头/手触胸；对长辈尊称。",
+ social:["以右手递物进食；异性保守不接触","斋月日间避免当众饮食；不公开亲昵","不评论宗教/政治"],
+ religious:["清真寺脱鞋、女士包头；非穆斯林止步","不指神像、不喧哗"],
+ dietary:["清真为要：禁猪肉、禁酒精","右手进食；左手不洁"],
+ dining:"共食分碟；长者先取；不劝酒。",
+ customs:"重家庭与好客；等级与长辈尊崇。",
+ numcol:"无强数字禁忌。",
+ gifts:"避酒、避猪皮制品；包装中性。",
+ festivals:[
+  {n:"Eid ul-Fitr 开斋节",d:"伊斯兰历10月（变日）",t:"peak",i:"最大节庆，团聚出游"},
+  {n:"Pohela Boishakh 孟历新年",d:"4月14日",t:"go",i:"文化狂欢，观光热"},
+  {n:"Eid ul-Adha 古尔邦节",d:"伊斯兰历12月（变日）",t:"peak",i:"宰牲节团聚，交通紧"}],
+ tips:["孟加拉客重清真，餐饮 Halal 硬约束","多经达卡，常组合中国多地","对华友好，重人情与信任"],
+ src:"孟加拉国旅游局、外交部领事服务"},
+
+"United Arab Emirates":{"zh":"阿联酋","flag":"🇦🇪","region":"中东","abbr":["ae","uae","阿联酋","阿酋"],"religion":"伊斯兰教国教（逊尼为主）","language":"阿拉伯语（官方）、英语通用","currency":"AED 迪拉姆","tz":"Asia/Dubai",
+ greeting:"‘As-salamu alaykum’+握手；对异性先等对方伸手；对长者微躬。",
+ social:["以右手递物进食；左手不洁","公共场合不公开亲昵、不衣着暴露","斋月日间避免在公共场合饮食/吸烟","不拍照本地女性、不拍军事/政府"],
+ religious:["清真寺脱鞋、女士包头（谢赫扎耶德寺备罩袍）；非穆斯林注意指引","周五主麻日祷告时段勿扰","不指神像、不喧哗"],
+ dietary:["清真为要：禁猪肉、禁酒精（酒店/特许区例外）","右手进食；左手不洁"],
+ dining:"共食分碟（Mezze）；长者先取；不劝酒；周五午宴（Jumu'ah）常见。",
+ customs:"贝都因好客+现代奢华；重等级、重面子；‘Inshallah’表意愿非承诺。",
+ numcol:"无强数字禁忌；忌‘13’部分西化回避。",
+ gifts:"避酒、避猪皮/狗皮制品；可赠甜点/香水（恭敬）；包装精致。",
+ festivals:[
+  {n:"Eid al-Fitr 开斋节",d:"伊斯兰历10月（变日）",t:"peak",i:"全国长假，家庭出游，酒店价高"},
+  {n:"Eid al-Adha 古尔邦节",d:"伊斯兰历12月（变日）",t:"peak",i:"最长公共假期，出行爆满"},
+  {n:"National Day 国庆",d:"12月2日",t:"peak",i:"庆典+购物节，短途游密集"}],
+ tips:["阿联酋客（尤其迪拜/阿布扎比）消费力强，重‘私密+尊享+无穆斯林禁忌’","清真餐饮与礼拜安排是刚需，行程避周五午祷冲突","多经迪拜中转，常组合中国多地或欧洲"],
+ src:"阿联酋旅游局 Visit UAE、外交部领事服务、驻华使馆"},
+
+"Saudi Arabia":{"zh":"沙特阿拉伯","flag":"🇸🇦","region":"中东","abbr":["sa","ksa","沙特"],"religion":"伊斯兰教（逊尼派瓦哈比）国教","language":"阿拉伯语","currency":"SAR 里亚尔","tz":"Asia/Riyadh",
+ greeting:"‘As-salamu alaykum’+握手（同性）；异性间极保守，勿主动握手。",
+ social:["以右手递物进食；左手不洁","公共场合男女分席（部分场所）；衣着保守（女罩袍Abaya、男长袍）","斋月日间严格禁公共饮食；不拍照本地人尤其女性","不评论宗教/王室"],
+ religious:["麦加/麦地那非穆斯林禁入；清真寺脱鞋、女士包头","每日五番拜，商务安排避祷告时段","不指神像、不喧哗"],
+ dietary:["清真为要：禁猪肉、禁酒精（全国禁酒）","右手进食；左手不洁"],
+ dining:"共食分碟；长者先取；不劝酒；男宾女宾常分餐。",
+ customs:"极重宗教与家族；‘Wasta’（关系）文化；守时性较弹性。",
+ numcol:"无强数字禁忌。",
+ gifts:"避酒、避猪皮/狗皮制品、避香水赠非亲密者；包装庄重。",
+ festivals:[
+  {n:"Eid al-Fitr 开斋节",d:"伊斯兰历10月（变日）",t:"peak",i:"全国长假，家庭出游，机票紧"},
+  {n:"Eid al-Adha 古尔邦节 + 朝觐",d:"伊斯兰历12月（变日）",t:"peak",i:"朝觐季麦加限流，全国长假出行爆满"},
+  {n:"National Day 国庆",d:"9月23日",t:"peak",i:"庆典短途游"}],
+ tips:["沙特客宗教约束极强，行程必须 Halal、安排礼拜、避开禁酒","女性客需尊重罩袍与分席习惯，话术忌冒犯","近年开放旅游签证，高端小团+宗教文化线潜力大"],
+ src:"沙特旅游局 Visit Saudi、外交部领事服务"},
+
+"Turkey":{"zh":"土耳其","flag":"🇹🇷","region":"中东","abbr":["tr","tur","土","突厥"],"religion":"伊斯兰教约99%（逊尼为主），世俗化","language":"土耳其语","currency":"TRY 里拉","tz":"Europe/Istanbul",
+ greeting:"握手+微躬；对长辈手触额至胸（亲昵）；‘Merhaba’你好。",
+ social:["以右手递物进食；左手不洁","不公开过度亲昵；不评论政治/库尔德/宗教敏感","不踩门槛；不拍军事设施"],
+ religious:["清真寺脱鞋、女士包头纱（备罩布）；非穆斯林可入但避礼拜区","不指神像、不喧哗"],
+ dietary:["清真为主：禁猪肉、少酒精（餐厅可售）；右手进食","斋月日间部分场所避饮食"],
+ dining:"共食 Mezze+烤肉；长者先取；红茶/咖啡文化重；不劝酒。",
+ customs:"‘Misafirperverlik’好客；茶桌谈事；重面子与关系。",
+ numcol:"无强数字禁忌。",
+ gifts:"避酒赠严虔者；可赠甜点/茶具；包装中性。",
+ festivals:[
+  {n:"Kurban Bayramı 古尔邦节",d:"伊斯兰历12月（变日）",t:"peak",i:"全国长假，家庭出游，交通紧"},
+  {n:"Ramazan Bayramı 开斋节",d:"伊斯兰历10月（变日）",t:"peak",i:"团聚出游"},
+  {n:"Republic Day 国庆",d:"10月29日",t:"peak",i:"庆典短途游"}],
+ tips:["土耳其客横跨欧亚，重历史/海岛/购物，性价比敏感","清真饮食与祷告需顾及，但世俗客较宽松","多经伊斯坦布尔中转，常组合希腊/欧洲或中国多地"],
+ src:"土耳其文化旅游部、外交部领事服务"},
+
+"Israel":{"zh":"以色列","flag":"🇮🇱","region":"中东","abbr":["il","isr","以"],"religion":"犹太教约74%，伊斯兰约18%，基督约2%","language":"希伯来语、阿拉伯语、英语","currency":"ILS 谢克尔","tz":"Asia/Jerusalem",
+ greeting:"握手（‘Shalom’）；对异性视对方；对宗教人士保守。",
+ social:["直率（‘balagan’混乱但坦率）；不绕弯","安息日（周五日落-周六日落）保守社区停业、勿扰","不公开过度亲昵；不评论巴以/宗教","不拍军事设施（极敏感）"],
+ religious:["安息日与祷告时段庄重；西墙（哭墙）分男女区、勿扰祷告","清真寺/教堂入内庄重脱帽/包头","不指圣物"],
+ dietary:["Kosher（犹太洁食）：不混肉奶、禁猪肉/贝类、不食非 Kosher 肉","部分守安息日不炊","清真饮食（穆斯林）亦需 Halal"],
+ dining:"分肉/奶制品餐具；长者先取；安息日晚宴为家庭圣事。",
+ customs:"直率+重教育；安息日守律；‘Chutzpah’直率文化。",
+ numcol:"无强数字禁忌；避‘13’部分西化回避。",
+ gifts:"避猪肉/非洁食；可赠书/甜点；包装中性。",
+ festivals:[
+  {n:"Rosh Hashanah 犹太新年",d:"犹太历7月（变日，约9-10月）",t:"peak",i:"家庭团聚，短途游"},
+  {n:"Passover 逾越节",d:"犹太历1月（变日，约4月）",t:"peak",i:"长假，家庭出游，交通紧"},
+  {n:"Yom Kippur 赎罪日",d:"犹太历10月（变日）",t:"avoid",i:"全国静止日，无车无业，行程必须避开"},
+  {n:"Independence Day 独立日",d:"犹太历2月（变日，约4-5月）",t:"peak",i:"庆典短途游"}],
+ tips:["以色列客直率重专业，行程‘深度+历史+安全提示’为王","安息日与洁食是硬约束，需提前确认餐厅 Kosher/Halal","对巴以、宗教零调侃，安全提示要专业不恐慌"],
+ src:"以色列旅游局、外交部领事服务、驻华使馆"},
+
+"Iran":{"zh":"伊朗","flag":"🇮🇷","region":"中东","abbr":["ir","irn","伊"],"religion":"伊斯兰教（什叶派）国教约90%","language":"波斯语","currency":"IRR 里亚尔","tz":"Asia/Tehran",
+ greeting:"握手（同性热烈）；异性间保守不接触，点头致意；‘Salam’。",
+ social:["以右手递物进食；左手不洁","公共场合男女分际保守（女需头巾Hijab）；不公开亲昵","不评论政治/宗教领袖；不拍军事设施","极重‘Taarof’客套谦让（礼貌性推辞需识破）"],
+ religious:["清真寺脱鞋、女士包头纱；非穆斯林尊重指引","每日五番拜避商务；不指神像"],
+ dietary:["清真为要：禁猪肉、禁酒精（全国禁酒）","右手进食；左手不洁"],
+ dining:"共食分碟；长者先取；不劝酒；‘Taarof’请客须再三推让方受。",
+ customs:"波斯礼仪之邦；‘Taarof’客套+好客；重诗歌与历史。",
+ numcol:"无强数字禁忌。",
+ gifts:"避酒、避猪皮/狗皮制品；可赠手工艺品/甜点；包装庄重。",
+ festivals:[
+  {n:"Nowruz 波斯新年",d:"春分（约3月21日）",t:"peak",i:"全国最大节庆，家庭团聚出游，交通紧"},
+  {n:"Eid al-Fitr 开斋节",d:"伊斯兰历10月（变日）",t:"peak",i:"团聚出游"},
+  {n:"Ashura 阿舒拉",d:"伊斯兰历1月（变日）",t:"avoid",i:"什叶派哀悼日，庄重肃穆，不宜安排欢庆"}],
+ tips:["伊朗客礼仪极重，行程须 Halal、避酒精、安排礼拜","女性头巾与分际是硬约束，话术庄重","对华友好，重文化历史线（波斯古迹）"],
+ src:"伊朗旅游局、外交部领事服务"},
+
+"Egypt":{"zh":"埃及","flag":"🇪🇬","region":"中东","abbr":["eg","egy","埃"],"religion":"伊斯兰教约90%（逊尼），科普特基督约10%","language":"阿拉伯语、英语/法语通用","currency":"EGP 镑","tz":"Africa/Cairo",
+ greeting:"‘As-salamu alaykum’+握手；对长辈手触额胸；‘Ahlan wa sahlan’欢迎。",
+ social:["以右手递物进食；左手不洁","不公开过度亲昵；不评论宗教/政治","不拍军事设施；讨价还价是文化（市场）","小费（Baksheesh）文化普遍"],
+ religious:["清真寺脱鞋、女士包头；科普特教堂庄重脱帽","不指神像、不喧哗"],
+ dietary:["清真为主：禁猪肉、少酒精；右手进食","斋月日间部分场所避饮食"],
+ dining:"共食分碟（Mezze）；长者先取；红茶/蔗汁文化；不劝酒。",
+ customs:"‘Hospitality’好客+热闹；重家庭与宗教；时间观念较弹性。",
+ numcol:"无强数字禁忌。",
+ gifts:"避酒赠严虔者；可赠甜点/香精；包装中性。",
+ festivals:[
+  {n:"Eid al-Fitr 开斋节",d:"伊斯兰历10月（变日）",t:"peak",i:"全国长假，家庭出游，金字塔区客流高"},
+  {n:"Eid al-Adha 古尔邦节",d:"伊斯兰历12月（变日）",t:"peak",i:"团聚出行，交通紧"},
+  {n:"Coptic Christmas 科普特圣诞",d:"1月7日",t:"go",i:"科普特裔庆典，观光宁静"}],
+ tips:["埃及客重历史/尼罗河/红海线，讨价还价文化要会应对","清真饮食与斋月需顾及","多经开罗/红海，常组合中东或中国多地"],
+ src:"埃及旅游局、外交部领事服务"},
+
+"United Kingdom":{"zh":"英国","flag":"🇬🇧","region":"欧洲","abbr":["uk","gbr","gb","英","英国"],"religion":"基督教（圣公会国教）为主，世俗化高","language":"英语","currency":"GBP 英镑","tz":"Europe/London",
+ greeting:"握手（‘Nice to meet you’）；不拥抱亲吻（熟人间贴面礼限部分地区）；重‘please/thank you/sorry’。",
+ social:["重排队、重隐私、不追问收入/年龄/婚姻","不公开大声喧哗；不轻易身体接触","幽默自嘲可接受，但忌冒犯王室/阶级/苏格兰/北爱话题","左行（交规），过马路注意"],
+ religious:["教堂入内脱帽、安静；圣公会仪式庄重","不指圣物、不喧哗"],
+ dietary:["无强饮食禁忌；但多乳糖不耐/麸质不耐/素食者","忌过度劝酒；Pub 文化但量力"],
+ dining:"AA 分账普遍；小费约10-12%（部分已含）；排队取餐/点餐有序；不吧唧嘴。",
+ customs:"‘Stiff upper lip’克制含蓄；重守时、重预约；阶级与礼貌词敏感。",
+ numcol:"西化避‘13’（部分酒店无13层）；忌‘7’部分无强禁忌。",
+ gifts:"可赠酒/巧克力/花（忌白菊/红玫瑰表爱）；包装随意。",
+ festivals:[
+  {n:"Christmas 圣诞",d:"12月25日连休",t:"peak",i:"家庭团聚最大节，出行/回乡双高峰"},
+  {n:"Easter 复活节",d:"春分后首满月（变日，约3-4月）",t:"peak",i:"连休短途游"},
+  {n:"Bank Holiday 银行假日",d:"多次（5月/8月等）",t:"peak",i:"长周末周边游密集"},
+  {n:"Bonfire Night 篝火夜",d:"11月5日",t:"go",i:"烟花庆典，观光热"}],
+ tips:["英国客重‘礼貌+守时+安静有序’，导游控场要稳","对王室/苏格兰/北爱话题零调侃","多经伦敦中转，常组合欧洲或中国多地"],
+ src:" VisitBritain 英国旅游局、FCDO 旅行提示、驻华使馆"},
+
+"Germany":{"zh":"德国","flag":"🇩🇪","region":"欧洲","abbr":["de","deu","ger","德","德国"],"religion":"基督教（新教/天主）约55%，世俗化高","language":"德语","currency":"EUR 欧元","tz":"Europe/Berlin",
+ greeting:"握手（坚定有力+目光接触）；‘Guten Tag’；熟人间贴面礼（南德/部分）。",
+ social:["重守时（‘pünktlich’）、重规则、重直接","不插队、不喧哗；不追问隐私","忌纳粹相关符号/笑话（违法）","垃圾分类文化重"],
+ religious:["教堂入内脱帽安静；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；多素食/无麸质需求","啤酒文化重但不强劝"],
+ dining:"AA 或各自付；小费约5-10%（凑整）；安静用餐不喧哗；守时是礼。",
+ customs:"‘Ordnung’秩序文化；直接坦率（非粗鲁）；重效率与计划。",
+ numcol:"西化避‘13’；忌‘7’部分无强禁忌。",
+ gifts:"可赠酒/巧克力/花（忌13支、红玫瑰）；包装随意。",
+ festivals:[
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚+圣诞市集，出行高峰"},
+  {n:"Oktoberfest 啤酒节",d:"9-10月（慕尼黑）",t:"peak",i:"全球游客狂欢，慕尼黑住宿紧价高"},
+  {n:"Easter 复活节",d:"变日（约3-4月）",t:"peak",i:"连休短途游"},
+  {n:"Reunification Day 统一日",d:"10月3日",t:"peak",i:"庆典短途游"}],
+ tips:["德国客重‘计划+守时+深度’，行程逻辑要清晰","直接沟通不绕弯，报价透明无隐形消费","多经法兰克福/慕尼黑，常组合欧洲或中国多地"],
+ src:"德国国家旅游局、外交部领事服务、驻华使馆"},
+
+"France":{"zh":"法国","flag":"🇫🇷","region":"欧洲","abbr":["fr","fra","法","法国"],"religion":"天主教为主，世俗化高","language":"法语","currency":"EUR 欧元","tz":"Europe/Paris",
+ greeting:"贴面礼（la bise，熟人；次数因地而异）；握手（商务）；‘Bonjour’必说。",
+ social:["重‘Bonjour’开场白；不先问候直接谈事被视为无礼","不喧哗、不插队；重隐私","忌贬低法语/法国文化；忌过度自夸","用餐时间长，不打包（部分接受）"],
+ religious:["教堂入内脱帽安静；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；多奶酪/红酒文化；素食者渐多","不劝酒但餐酒搭配讲究"],
+ dining:"午餐/晚餐为正餐，节奏慢；小费约5-10%（部分已含）；AA或请客；‘à la carte’点餐。",
+ customs:"‘Art de vivre’生活艺术；重礼貌词（Bonjour/Merci）；含蓄自豪。",
+ numcol:"西化避‘13’；无强数字禁忌。",
+ gifts:"可赠酒/巧克力/花（忌菊花表哀、红玫瑰表爱、13支）；包装考究。",
+ festivals:[
+  {n:"Bastille Day 国庆",d:"7月14日",t:"peak",i:"阅兵焰火，短途游"},
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚+市集，出行高峰"},
+  {n:"August 八月度假",d:"8月全国大休假",t:"peak",i:"全民度假，巴黎反空城，海滨/南法爆满"}],
+ tips:["法国客重‘美感+美食+文化’，行程格调要高","先问候 Bonjour 再谈事是高分之举","多经巴黎中转，常组合欧洲或中国多地"],
+ src:"法国旅游发展署 Atout France、外交部领事服务"},
+
+"Italy":{"zh":"意大利","flag":"🇮🇹","region":"欧洲","abbr":["it","ita","意","意大利"],"religion":"天主教为主，世俗化高","language":"意大利语","currency":"EUR 欧元","tz":"Europe/Rome",
+ greeting:"贴面礼（熟人，右-左-右）；握手（商务）；‘Buongiorno’必说。",
+ social:["重家庭、重表情手势；不喧哗过度但热情","不插队；不贬低意大利/家族","用餐为社交，时间长","教堂着装遮肩膝"],
+ religious:["梵蒂冈/教堂入内脱帽、遮肩膝、安静","不指圣物；周三教皇接见需预约"],
+ dietary:["无强禁忌；意面/披萨/葡萄酒文化；多海鲜不混肉","不劝酒但餐酒搭配"],
+ dining:"慢餐（Slow Food 起源）；小费约10%（部分已含）；AA或请客；午餐至午后、晚餐较晚。",
+ customs:"‘La dolce vita’；重家庭与地域自豪；情感外露。",
+ numcol:"西化避‘13’（餐桌忌17部分地区）；无强禁忌。",
+ gifts:"可赠酒/甜点/花（忌13支、红玫瑰表爱、菊花表哀）；包装考究。",
+ festivals:[
+  {n:"Ferragosto 圣母升天节",d:"8月15日",t:"peak",i:"全国休假，海滨/南意爆满"},
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚+市集，出行高峰"},
+  {n:"Easter 复活节",d:"变日（约3-4月）",t:"peak",i:"连休短途游，罗马庆典"},
+  {n:"Carnevale 狂欢节",d:"变日（2-3月）",t:"go",i:"威尼斯面具节，观光摄影热"}],
+ tips:["意大利客重‘美食+艺术+家族’，行程格调与向导讲述力为王","教堂着装与时段要安排好（周三教皇）","多经罗马/米兰，常组合欧洲或中国多地"],
+ src:"意大利国家旅游局 ENIT、外交部领事服务"},
+
+"Spain":{"zh":"西班牙","flag":"🇪🇸","region":"欧洲","abbr":["es","esp","西","西班牙"],"religion":"天主教为主，世俗化高","language":"西班牙语","currency":"EUR 欧元","tz":"Europe/Madrid",
+ greeting:"贴面礼（熟人，右-左）；握手（商务）；‘Hola/Buenos días’。",
+ social:["热情外向但重礼貌；不喧哗过度","用餐/营业时段晚（午餐14-16、晚餐21-23）","不贬低西/地区（加泰罗尼亚敏感）","Siesta 部分商店午休"],
+ religious:["教堂入内脱帽安静；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；Tapas/海鲜饭文化；少劝酒","斋月不吃（非伊斯兰为主）"],
+ dining:"晚餐极晚；小费约5-10%；AA或请客；Tapas 社交文化。",
+ customs:"‘Mañana’弹性时间；重家庭与节庆（Fiesta）；热情但守大体。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠酒/甜点/花（忌13支、红玫瑰表爱、菊花表哀）；包装随意。",
+ festivals:[
+  {n:"Semana Santa 圣周",d:"复活节前一周（变日）",t:"go",i:"塞维利亚游行，观光摄影热"},
+  {n:"San Fermín 奔牛节",d:"7月6-14日",t:"peak",i:"潘普洛纳狂欢，全球客云集"},
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚，出行高峰"}],
+ tips:["西班牙客重‘节庆+美食+海滩’，节奏晚要适应","加泰/巴斯克话题敏感，勿评论","多经马德里/巴塞罗那，常组合欧洲或中国多地"],
+ src:"西班牙旅游局、外交部领事服务"},
+
+"Russia":{"zh":"俄罗斯","flag":"🇷🇺","region":"欧洲","abbr":["ru","rus","俄","俄罗斯"],"religion":"东正教约71%，世俗化高","language":"俄语","currency":"RUB 卢布","tz":"Europe/Moscow",
+ greeting:"握手（坚定、目光接触；进门槛才握手，不在门外）；‘Здравствуйте’；熟人间贴面礼（三下）。",
+ social:["不微笑示好（‘微笑给朋友’），服务场合面无表情非敌意","不插队但现场较乱；重直接","忌贬低俄/苏联历史；胜利日（5.9）极庄重","送花枝数为奇数（偶数用于丧）"],
+ religious:["东正教堂入内女性包头、男性脱帽；仪式庄重","不指圣物；复活节/圣诞庄重"],
+ dietary:["无强禁忌；喜面包/鱼子酱/伏特加；不强行劝酒但敬酒文化重","部分东正斋期禁肉乳"],
+ dining:"敬酒（За здоровье）多轮；小费约10%；AA或请客；餐时较长。",
+ customs:"重‘灵魂与深度’（Dusha）；好客但外冷内热；礼物文化重。",
+ numcol:"送花忌偶数（丧）；无强数字禁忌。",
+ gifts:"可赠花（奇数）、巧克力、伏特加；忌黄玫瑰（绝交）、忌空手登门。",
+ festivals:[
+  {n:"Новый год 新年",d:"1月1日连休约10天",t:"peak",i:"全家团聚最大节，出行/冰雪游高峰"},
+  {n:"День Победы 胜利日",d:"5月9日",t:"avoid",i:"极庄重阅兵，忌安排娱乐冲突"},
+  {n:"Рождество 东正圣诞",d:"1月7日",t:"go",i:"东正教徒庆典，观光宁静"}],
+ tips:["俄罗斯客外冷内热，建立信任后极忠诚；重‘深度+历史’","胜利日前后勿安排轻佻行程","多经莫斯科/圣彼得堡/海参崴，常组合中国东北或欧洲"],
+ src:"俄罗斯旅游署、外交部领事服务、驻华使馆"},
+
+"Netherlands":{"zh":"荷兰","flag":"🇳🇱","region":"欧洲","abbr":["nl","nld","荷","荷兰"],"religion":"世俗化高，基督新教/天主遗存","language":"荷兰语、英语通用","currency":"EUR 欧元","tz":"Europe/Amsterdam",
+ greeting:"握手（‘Hoi/Hallo’）；熟人贴面礼三下；直接坦率。",
+ social:["直接坦率（非粗鲁）；重隐私、重约定","不喧哗、不插队；骑车文化重规则","忌贬低荷兰/王室","自由开放但守底线"],
+ religious:["教堂入内安静脱帽；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；多素食/乳糖不耐需求","不劝酒"],
+ dining:"AA 普遍（‘going Dutch’源自此）；小费约5-10%；安静有序。",
+ customs:"‘Gezelligheid’温馨聚会；重平等与直接；务实。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠酒/花/巧克力；包装随意。",
+ festivals:[
+  {n:"King's Day 国王日",d:"4月27日",t:"peak",i:"全民橙装狂欢，阿姆斯特丹爆满"},
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚，出行高峰"},
+  {n:"Liberation Day 解放日",d:"5月5日",t:"go",i:"庆典短途游"}],
+ tips:["荷兰客英语好、重‘直接+平等+环保’，行程逻辑清晰","国王日 Orange 主题可蹭热度","多经阿姆斯特丹，常组合欧洲或中国多地"],
+ src:"荷兰旅游局、外交部领事服务"},
+
+"Switzerland":{"zh":"瑞士","flag":"🇨🇭","region":"欧洲","abbr":["ch","che","瑞","瑞士"],"religion":"基督新教/天主约各半，世俗化高","language":"德/法/意/罗曼什语（多语种）","currency":"CHF 瑞郎","tz":"Europe/Zurich",
+ greeting:"握手（‘Grüezi/Bonjour/Buongiorno’依语种）；直接；重目光接触。",
+ social:["极重守时、重规则、重安静；不喧哗","不插队；重隐私与约定","多语种区话题敏感（不偏袒某语区）"],
+ religious:["教堂入内安静脱帽；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；奶酪/巧克力/钟表文化","不劝酒"],
+ dining:"AA 或各自付；小费约5-10%（凑整）；安静有序；守时。",
+ customs:"‘Ordnung’秩序+中立；准时即尊重；分语区文化。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠巧克力/酒/表（慎重）；包装考究。",
+ festivals:[
+  {n:"National Day 国庆",d:"8月1日",t:"peak",i:"篝火庆典，短途游"},
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚+市集，出行高峰"},
+  {n:"Fasnacht 狂欢节",d:"变日（2-3月，巴塞尔）",t:"go",i:"面具游行，观光热"}],
+ tips:["瑞士客重‘准时+精准+品质’，行程零误差是关键","多语种区称呼要对（德区 Grüezi/法区 Bonjour）","多经苏黎世/日内瓦，常组合欧洲或中国多地"],
+ src:"瑞士国家旅游局、外交部领事服务"},
+
+"Sweden":{"zh":"瑞典","flag":"🇸🇪","region":"欧洲","abbr":["se","swe","瑞","瑞典"],"religion":"路德宗国教（已弱化），世俗化高","language":"瑞典语、英语通用","currency":"SEK 克朗","tz":"Europe/Stockholm",
+ greeting:"握手（‘Hej’）；熟人贴面/拥抱；平等直接。",
+ social:["‘Lagom’（恰如其分）文化：不张扬不极端","重隐私、重约定、重安静；不插队","忌自夸、忌层级感强","环保/平权敏感"],
+ religious:["教堂入内安静脱帽；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；多素食/乳糖不耐需求","不劝酒"],
+ dining:"AA 普遍；小费约5-10%；安静有序；守时。",
+ customs:"‘Jantelagen’谦逊法则；重平等与可持续。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠酒/巧克力/手作；包装简约环保。",
+ festivals:[
+  {n:"Midsummer 仲夏节",d:"6月夏至周末",t:"peak",i:"全民花环舞庆，家庭出游，住宿紧"},
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚，出行高峰"},
+  {n:"National Day 国庆",d:"6月6日",t:"go",i:"庆典短途游"}],
+ tips:["瑞典客重‘平等+环保+自然’，行程可持续是加分项","不张扬、不催生硬销","多经斯德哥尔摩，常组合北欧或中国多地"],
+ src:"瑞典旅游局、外交部领事服务"},
+
+"Poland":{"zh":"波兰","flag":"🇵🇱","region":"欧洲","abbr":["pl","pol","波","波兰"],"religion":"天主教约90%","language":"波兰语","currency":"PLN 兹罗提","tz":"Europe/Warsaw",
+ greeting:"握手（坚定）；熟人贴面礼；‘Dzień dobry’必说。",
+ social:["重礼貌、重家庭、重宗教；不喧哗","不插队；不贬低波兰/历史（尤其二战/冷战）","女性优先文化"],
+ religious:["教堂入内脱帽安静；周日弥撒庄重","不指圣物"],
+ dietary:["无强禁忌；天主斋期部分禁肉（周五）","不劝酒但伏特加文化"],
+ dining:"小费约10%；AA或请客；餐时较长；周日部分餐厅休。",
+ customs:"重天主教与家庭；‘Polish hospitality’热情但含蓄。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠花/酒/巧克力（忌13支、菊花表哀）；包装考究。",
+ festivals:[
+  {n:"Boże Narodzenie 圣诞",d:"12月连休",t:"peak",i:"家庭团聚最大节，出行高峰"},
+  {n:"Wielkanoc 复活节",d:"变日（约3-4月）",t:"peak",i:"连休短途游"},
+  {n:"Constitution Day 宪法日",d:"5月3日",t:"go",i:"庆典短途游"}],
+ tips:["波兰客重‘家庭+历史+宗教’，行程讲述力为王","周日教堂时段与餐厅休息要预判","多经华沙/克拉科夫，常组合欧洲或中国多地"],
+ src:"波兰旅游局、外交部领事服务"},
+
+"Greece":{"zh":"希腊","flag":"🇬🇷","region":"欧洲","abbr":["gr","grc","希","希腊"],"religion":"东正教约90%","language":"希腊语、英语通用","currency":"EUR 欧元","tz":"Europe/Athens",
+ greeting:"握手；熟人贴面礼（右-左-右）；‘Yassas’你好。",
+ social:["热情外向、手势多；重家庭与待客","不喧哗过度但随性；时间观念较弹性","不贬低希腊/历史；东正斋期部分禁肉乳"],
+ religious:["教堂入内女性包头、男性脱帽；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；地中海饮食；斋期部分禁肉乳","橄榄油文化"],
+ dining:"晚餐较晚；小费约5-10%；AA或请客；慢餐。",
+ customs:"‘Philoxenia’待客之道；重家庭与东正传统。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠甜点/酒/花（忌13支、菊花表哀）；包装随意。",
+ festivals:[
+  {n:"Easter 复活节",d:"变日（约4-5月）",t:"peak",i:"全年最重要节庆，家庭团聚，出行高峰"},
+  {n:"Assumption 圣母升天",d:"8月15日",t:"peak",i:"连休短途游，海岛爆满"},
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚，出行高峰"}],
+ tips:["希腊客重‘海岛+历史+慢生活’，节奏随性要适应","东正斋期餐饮需顾及","多经雅典/圣托里尼，常组合欧洲或中国多地"],
+ src:"希腊国家旅游局、外交部领事服务"},
+
+"Hungary":{"zh":"匈牙利","flag":"🇭🇺","region":"欧洲","abbr":["hu","hun","匈","匈牙利"],"religion":"天主教/基督新教，世俗化较高","language":"匈牙利语","currency":"HUF 福林","tz":"Europe/Budapest",
+ greeting:"握手（‘Jó napot’）；熟人贴面礼；重目光接触。",
+ social:["重礼貌、重约定；不喧哗","不插队；不贬低匈牙利/历史","直接但含蓄"],
+ religious:["教堂入内脱帽安静；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；重本地菜（汤/炖肉）","不劝酒但帕林卡果酒文化"],
+ dining:"小费约10%；AA或请客；餐时较长。",
+ customs:"重家庭与温泉文化；‘Spa’社交。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠酒/甜点/花（忌13支、菊花表哀）；包装考究。",
+ festivals:[
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚，出行高峰"},
+  {n:"Easter 复活节",d:"变日（约3-4月）",t:"peak",i:"连休短途游"},
+  {n:"Sziget 音乐节",d:"8月",t:"go",i:"布达佩斯音乐节，年轻客云集"}],
+ tips:["匈牙利客重‘历史+温泉+音乐’，行程格调要高","多经布达佩斯，常组合中东欧或中国多地"],
+ src:"匈牙利旅游局、外交部领事服务"},
+
+"Czech Republic":{"zh":"捷克","flag":"🇨🇿","region":"欧洲","abbr":["cz","cze","捷","捷克"],"religion":"世俗化高，天主/新教遗存","language":"捷克语","currency":"CZK 克朗","tz":"Europe/Prague",
+ greeting:"握手（‘Dobrý den’）；熟人贴面礼；直接。",
+ social:["直接坦率；重约定、重安静","不插队；不贬低捷克/历史","啤酒文化重但不强劝"],
+ religious:["教堂入内脱帽安静；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；啤酒/炖菜文化","不劝酒"],
+ dining:"小费约10%；AA或请客；餐时较长。",
+ customs:"‘Pivo’啤酒文化；重历史与城堡。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠啤酒/甜点/花（忌13支、菊花表哀）；包装随意。",
+ festivals:[
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚+市集，出行高峰"},
+  {n:"Easter 复活节",d:"变日（约3-4月）",t:"peak",i:"连休短途游"},
+  {n:"Czech Beer Festival",d:"5月",t:"go",i:"布拉格啤酒节，观光热"}],
+ tips:["捷克客重‘城堡+啤酒+历史’，行程逻辑清晰","多经布拉格，常组合中东欧或中国多地"],
+ src:"捷克旅游局、外交部领事服务"},
+
+"Belgium":{"zh":"比利时","flag":"🇧🇪","region":"欧洲","abbr":["be","bel","比","比利时"],"religion":"天主教为主，世俗化高","language":"荷/法/德三语区","currency":"EUR 欧元","tz":"Europe/Brussels",
+ greeting:"握手（‘Hallo/Bonjour’依语区）；熟人贴面礼（荷区3下、法区2-3下）。",
+ social:["多语区敏感：先认语区再称呼（布鲁塞尔法语区多）","重约定、重安静、不插队","不偏袒某语区"],
+ religious:["教堂入内脱帽安静；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；巧克力/华夫/啤酒文化","不劝酒"],
+ dining:"小费约5-10%；AA或请客；安静有序。",
+ customs:"‘Burgundian’美食文化；重语区平衡。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠巧克力/酒/花；包装考究。",
+ festivals:[
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚+市集，出行高峰"},
+  {n:"National Day 国庆",d:"7月21日",t:"go",i:"庆典短途游"},
+  {n:"Carnival 狂欢节",d:"变日（2-3月，班什）",t:"go",i:"UNESCO 狂欢，观光热"}],
+ tips:["比利时客重‘美食+语区尊重’，先辨法语/荷语区再开口","多经布鲁塞尔，常组合欧洲或中国多地"],
+ src:"比利时旅游局、外交部领事服务"},
+
+"Portugal":{"zh":"葡萄牙","flag":"🇵🇹","region":"欧洲","abbr":["pt","prt","葡","葡萄牙"],"religion":"天主教约81%","language":"葡萄牙语","currency":"EUR 欧元","tz":"Europe/Lisbon",
+ greeting:"握手；熟人贴面礼（右-左-右）；‘Olá/Bom dia’。",
+ social:["热情随和、重礼貌；不喧哗过度","用餐/营业较晚；不贬低葡/历史","时间观念较弹性"],
+ religious:["教堂入内脱帽安静；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；鳕鱼/蛋挞/葡萄酒文化","不劝酒"],
+ dining:"小费约5-10%；AA或请客；晚餐较晚。",
+ customs:"‘Saudade’含蓄深情；重家庭与海洋。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠蛋挞/酒/花（忌13支、菊花表哀）；包装随意。",
+ festivals:[
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚，出行高峰"},
+  {n:"Carnival 狂欢节",d:"变日（2-3月）",t:"go",i:"传统狂欢，观光热"},
+  {n:"São João 圣若昂节",d:"6月24日",t:"peak",i:"波尔图街头庆典，短途游"}],
+ tips:["葡萄牙客重‘海岸+历史+慢生活’，节奏随性","多经里斯本/波尔图，常组合欧洲或中国多地"],
+ src:"葡萄牙旅游局、外交部领事服务"},
+
+"Austria":{"zh":"奥地利","flag":"🇦🇹","region":"欧洲","abbr":["at","aut","奥","奥地利"],"religion":"天主教约55%，世俗化高","language":"德语","currency":"EUR 欧元","tz":"Europe/Vienna",
+ greeting:"握手（‘Grüß Gott’）；熟人贴面礼；重目光接触。",
+ social:["重守时、重规则、重安静；不插队","不喧哗；不贬低奥地利/音乐传统","直接但含蓄"],
+ religious:["教堂入内脱帽安静；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；咖啡/甜点/葡萄酒文化","不劝酒"],
+ dining:"小费约5-10%（凑整）；AA或请客；安静有序。",
+ customs:"‘Gemütlichkeit’舒适惬意；重音乐与礼仪。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠巧克力/酒/花（忌13支、红玫瑰表爱、菊花表哀）；包装考究。",
+ festivals:[
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚+市集，出行高峰"},
+  {n:"Easter 复活节",d:"变日（约3-4月）",t:"peak",i:"连休短途游"},
+  {n:"Summer Solstice 仲夏焰火",d:"6月21日前后",t:"go",i:"维也纳音乐会季，观光热"}],
+ tips:["奥地利客重‘音乐+礼仪+准时’，行程零误差是关键","多经维也纳/萨尔茨堡，常组合欧洲或中国多地"],
+ src:"奥地利旅游局、外交部领事服务"},
+
+"Denmark":{"zh":"丹麦","flag":"🇩🇰","region":"欧洲","abbr":["dk","dnk","丹","丹麦"],"religion":"路德宗国教，世俗化高","language":"丹麦语、英语通用","currency":"DKK 克朗","tz":"Europe/Copenhagen",
+ greeting:"握手（‘Hej’）；熟人贴面/拥抱；平等直接。",
+ social:["‘Janteloven’谦逊法则：不张扬不层级","重约定、重安静、不插队","忌自夸；环保/平权敏感"],
+ religious:["教堂入内安静脱帽；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；多素食/乳糖不耐需求","不劝酒"],
+ dining:"AA 普遍；小费含服务约5-10%；安静有序。",
+ customs:"‘Hygge’温馨惬意；重平等与可持续。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠酒/巧克力/手作；包装简约。",
+ festivals:[
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚，出行高峰"},
+  {n:"Midsummer 仲夏",d:"6月",t:"peak",i:"篝火庆典，短途游"},
+  {n:"National Day 国庆",d:"4月16日（女王诞）",t:"go",i:"庆典短途游"}],
+ tips:["丹麦客重‘平等+环保+舒适’，行程可持续加分","不张扬、不硬销","多经哥本哈根，常组合北欧或中国多地"],
+ src:"丹麦旅游局、外交部领事服务"},
+
+"Finland":{"zh":"芬兰","flag":"🇫🇮","region":"欧洲","abbr":["fi","fin","芬","芬兰"],"religion":"路德宗国教，世俗化高","language":"芬兰语/瑞典语、英语通用","currency":"EUR 欧元","tz":"Europe/Helsinki",
+ greeting:"握手（‘Hei/Moi’）；熟人拥抱；含蓄直接。",
+ social:["极重私人空间与安静；不寒暄过度、不插队","重约定、重守时；忌自夸","桑拿文化神圣不可调侃"],
+ religious:["教堂入内安静脱帽；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；多素食需求","不劝酒"],
+ dining:"AA 普遍；小费含服务约5-10%；安静有序。",
+ customs:"‘Sisu’坚韧；重私人空间与桑拿。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠酒/巧克力/手作；包装简约。",
+ festivals:[
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚，出行高峰"},
+  {n:"Juhannus 仲夏",d:"6月夏至周末",t:"peak",i:"篝火庆典，短途游"},
+  {n:"Independence Day 独立日",d:"12月6日",t:"go",i:"庆典短途游"}],
+ tips:["芬兰客重‘自然+安静+桑拿’，行程不喧闹为高","桑拿是文化，可安排但庄重","多经赫尔辛基，常组合北欧或中国多地"],
+ src:"芬兰旅游局、外交部领事服务"},
+
+"Ukraine":{"zh":"乌克兰","flag":"🇺🇦","region":"欧洲","abbr":["ua","ukr","乌","乌克兰"],"religion":"东正教约66%，世俗化","language":"乌克兰语、俄语","currency":"UAH 格里夫纳","tz":"Europe/Kyiv",
+ greeting:"握手（坚定）；熟人贴面礼；‘Добрий день’。",
+ social:["重家庭、重待客；不喧哗过度","不插队；不贬低乌克兰/历史（尤其当前局势）","送花奇数（偶数丧）"],
+ religious:["东正教堂女性包头男性脱帽；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；面包/罗宋汤/伏特加文化","不强行劝酒但敬酒重"],
+ dining:"小费约10%；AA或请客；餐时较长。",
+ customs:"重家庭与东正传统；好客但外冷。",
+ numcol:"送花忌偶数（丧）；无强数字禁忌。",
+ gifts:"可赠花（奇数）、巧克力、伏特加；忌黄玫瑰、空手登门。",
+ festivals:[
+  {n:"Новий рік 新年",d:"1月1日连休",t:"peak",i:"家庭团聚，出行高峰"},
+  {n:"Різдво 东正圣诞",d:"1月7日",t:"go",i:"东正教徒庆典，观光宁静"},
+  {n:"Independence Day 独立日",d:"8月24日",t:"go",i:"庆典短途游"}],
+ tips:["乌克兰客重‘家庭+历史’，当前局势话题敏感需谨慎","多经基辅/利沃夫，常组合欧洲或中国多地"],
+ src:"乌克兰旅游局、外交部领事服务"},
+
+"United States":{"zh":"美国","flag":"🇺🇸","region":"北美","abbr":["us","usa","america","美","美国"],"religion":"基督新教/天主为主，高度多元世俗","language":"英语","currency":"USD 美元","tz":"America/New_York",
+ greeting:"握手（坚定+微笑目光接触）；熟人拥抱/贴面；‘Hi/How are you’（客套非真问）。",
+ social:["重个人空间、重微笑寒暄、重小费文化","不追问收入/年龄/宗教/政治/体重","不插队；公共场所不喧哗但较外向","种族/移民/枪枝话题敏感"],
+ religious:["教堂入内脱帽安静；仪式庄重","多元信仰包容，不指圣物"],
+ dietary:["高度多元：犹太洁食、清真、素食、无麸质需求并存","不劝酒；餐厅小费15-20%"],
+ dining:"小费15-20%（服务即薪）；AA 各自付普遍；快餐/外带文化重。",
+ customs:"‘Can-do’直接高效；重个人主义与多元；守时（商务）。",
+ numcol:"西化避‘13’；忌‘4’少数无强；黑/紫丧色留意。",
+ gifts:"可赠酒/巧克力/花（忌13支、红玫瑰表爱、白菊表哀）；包装随意。",
+ festivals:[
+  {n:"Thanksgiving 感恩节",d:"11月第4周四",t:"peak",i:"全家团聚最大节，出行/回乡双高峰，机票紧"},
+  {n:"Christmas 圣诞",d:"12月25日连休",t:"peak",i:"家庭团聚+购物季，出行高峰"},
+  {n:"Independence Day 国庆",d:"7月4日",t:"peak",i:"烟花烧烤，短途游"},
+  {n:"Spring Break 春假",d:"3-4月",t:"peak",i:"学生海滨游爆满"}],
+ tips:["美国客重‘效率+个性+无隐形消费’，行程灵活度要高","小费文化要提前说明给导游/司机","多经洛杉矶/纽约/旧金山，常组合中国多地或美洲"],
+ src:"美国旅游推广局 Brand USA、国务院领事服务、驻华使馆"},
+
+"Canada":{"zh":"加拿大","flag":"🇨🇦","region":"北美","abbr":["ca","can","加","加拿大"],"religion":"基督为主，高度多元世俗","language":"英语、法语（魁北克）","currency":"CAD 加元","tz":"America/Toronto",
+ greeting:"握手（‘Hello/Bonjour’）；熟人拥抱；礼貌寒暄。",
+ social:["极重‘Sorry’礼貌、重多元包容、重个人空间","双语区敏感：魁北克用法语优先","不追问收入/宗教/政治；种族话题敏感","不插队、不喧哗"],
+ religious:["教堂入内脱帽安静；仪式庄重","多元包容"],
+ dietary:["高度多元：洁食/清真/素食并存","不劝酒；小费15-20%"],
+ dining:"小费15-20%；AA 各自付普遍；安静有序。",
+ customs:"‘Polite’礼貌文化；重多元与双语平衡。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠酒/巧克力/枫糖/花（忌13支、红玫瑰表爱、白菊表哀）；包装随意。",
+ festivals:[
+  {n:"Canada Day 国庆",d:"7月1日",t:"peak",i:"庆典短途游"},
+  {n:"Thanksgiving 感恩节",d:"10月第2周一",t:"peak",i:"家庭团聚，出行高峰"},
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚，出行高峰"}],
+ tips:["加拿大客重‘礼貌+多元+自然’，魁北克用法语加分","小费文化与美国同；多经多伦多/温哥华，常组合中国多地或美国"],
+ src:"加拿大旅游局 Destination Canada、外交部领事服务"},
+
+"Mexico":{"zh":"墨西哥","flag":"🇲🇽","region":"北美","abbr":["mx","mex","墨","墨西哥"],"religion":"天主教约78%","language":"西班牙语","currency":"MXN 比索","tz":"America/Mexico_City",
+ greeting:"握手（‘Hola’）；熟人贴面礼（男-女、女-女）；重热情。",
+ social:["热情外向、重家庭、重问候；不先问候直接谈事无礼","不喧哗过度但随性；时间观念较弹性","不贬低墨/历史；‘Machismo’性别角色敏感"],
+ religious:["教堂入内脱帽安静；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；玉米/辣椒/塔可文化；斋期周五部分禁肉","不劝酒但龙舌兰文化"],
+ dining:"小费10-15%；AA或请客；餐时较长；周日家庭餐。",
+ customs:"‘Familia’家庭至上；重节日与色彩（亡灵节）。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠酒/甜点/花（忌13支、菊花表哀）；包装随意。",
+ festivals:[
+  {n:"Día de Muertos 亡灵节",d:"11月1-2日",t:"go",i:"全球知名色彩庆典，观光摄影热"},
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚，出行高峰"},
+  {n:"Semana Santa 圣周",d:"复活节前一周（变日）",t:"go",i:"朝圣+度假，出行密集"}],
+ tips:["墨西哥客重‘家庭+色彩+历史’，亡灵节是爆款主题","多经坎昆/墨西哥城，常组合美洲或中国多地"],
+ src:"墨西哥旅游局、外交部领事服务"},
+
+"Brazil":{"zh":"巴西","flag":"🇧🇷","region":"南美","abbr":["br","bra","巴","巴西"],"religion":"天主教约65%，福音派增长，多元","language":"葡萄牙语","currency":"BRL 雷亚尔","tz":"America/Sao_Paulo",
+ greeting:"握手/贴面礼（‘Oi’）；熟人拥抱；热情肢体语言。",
+ social:["极热情、近身社交、重肢体接触；不先问候无礼","不喧哗过度但随性；时间观念弹性（‘Brazilian time’）","不贬低巴西/足球；种族话题敏感","公共场合亲昵较接受"],
+ religious:["教堂入内脱帽安静；仪式庄重","多元信仰包容"],
+ dietary:["无强禁忌；烤肉/豆饭文化；斋期部分禁肉","不劝酒但凯匹林纳酒文化"],
+ dining:"小费10%（部分已含）；AA或请客；餐时较晚较长。",
+ customs:"‘Jeitinho’灵活处世；重足球与家庭庆典。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠酒/甜点/咖啡/花（忌13支、紫表哀部分）；包装随意。",
+ festivals:[
+  {n:"Carnival 狂欢节",d:"变日（2-3月，前40天）",t:"peak",i:"全球最大狂欢，里约/萨尔瓦多爆满，住宿紧价高"},
+  {n:"Christmas 圣诞",d:"12月连休",t:"peak",i:"家庭团聚，出行高峰"},
+  {n:"New Year 元旦（海祭）",d:"1月1日",t:"go",i:"里约海岸白衣祈福，观光热"}],
+ tips:["巴西客重‘狂欢+海滩+足球’，狂欢节是刚需爆款","时间弹性大，行程留出缓冲","多经里约/圣保罗，常组合南美或中国多地"],
+ src:"巴西旅游局 Embratur、外交部领事服务"},
+
+"Argentina":{"zh":"阿根廷","flag":"🇦🇷","region":"南美","abbr":["ar","arg","阿","阿根廷"],"religion":"天主教约66%，世俗化","language":"西班牙语","currency":"ARS 比索","tz":"America/Argentina/Buenos_Aires",
+ greeting:"握手/贴面礼（‘Hola’）；熟人拥抱；热情。",
+ social:["热情、重家庭、重问候；不先问候无礼","时间观念弹性；不贬低阿/马岛话题敏感","公共场合亲昵较接受"],
+ religious:["教堂入内脱帽安静；仪式庄重","不指圣物"],
+ dietary:["无强禁忌；牛肉/马黛茶/红酒文化","不劝酒但马黛茶共饮是礼"],
+ dining:"小费10%（部分已含）；AA或请客；晚餐极晚（21-23）。",
+ customs:"‘Mate’马黛茶共饮表亲近；重探戈与家庭。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠马黛茶具/酒/甜点/花（忌13支、菊花表哀）；包装随意。",
+ festivals:[
+  {n:"Christmas 圣诞",d:"12月连休（南半球夏）",t:"peak",i:"家庭团聚+海滨，出行高峰"},
+  {n:"Tango Festival 探戈节",d:"8月（布宜诺斯艾利斯）",t:"go",i:"探戈盛会，观光热"},
+  {n:"May Revolution 五月革命",d:"5月25日",t:"go",i:"国庆庆典，短途游"}],
+ tips:["阿根廷客重‘探戈+牛肉+红酒’，晚餐极晚要适应","马黛茶共饮是破冰利器","多经布宜诺斯艾利斯，常组合南美或中国多地"],
+ src:"阿根廷旅游局、外交部领事服务"},
+
+"Australia":{"zh":"澳大利亚","flag":"🇦🇺","region":"大洋洲","abbr":["au","aus","澳","澳洲"],"religion":"基督为主，高度世俗多元","language":"英语","currency":"AUD 澳元","tz":"Australia/Sydney",
+ greeting:"握手（‘G'day’）；熟人拍肩/拥抱；随和直率。",
+ social:["‘Mate’平等随和、重自嘲、反感层级与装腔","不插队、不喧哗；重个人空间","不贬低澳洲/原住民；种族话题敏感","防晒与海洋安全提示必备"],
+ religious:["教堂入内脱帽安静；仪式庄重","多元包容"],
+ dietary:["高度多元：清真/素食/无麸质并存","不劝酒；小费非必须（约10%）"],
+ dining:"小费非强制（约10%）；AA 各自付普遍；BBQ 文化。",
+ customs:"‘No worries’随性文化；重平等与户外。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠酒/巧克力/纪念品/花（忌13支、红玫瑰表爱）；包装随意。",
+ festivals:[
+  {n:"Christmas 圣诞",d:"12月25日（南半球夏）",t:"peak",i:"家庭团聚+海滨，出行高峰"},
+  {n:"Australia Day 国庆",d:"1月26日",t:"peak",i:"庆典+海滩，短途游"},
+  {n:"Boxing Day 节礼日",d:"12月26日",t:"peak",i:"购物季+板球，出行高峰"}],
+ tips:["澳洲客重‘平等+户外+无套路’，行程轻松不装腔","防晒与海洋安全提示是高分之举","多经悉尼/墨尔本，常组合新西兰或中国多地"],
+ src:"澳大利亚旅游局 Tourism Australia、外交部领事服务"},
+
+"New Zealand":{"zh":"新西兰","flag":"🇳🇿","region":"大洋洲","abbr":["nz","nzl","新","新西兰"],"religion":"基督为主，高度世俗","language":"英语、毛利语","currency":"NZD 纽元","tz":"Pacific/Auckland",
+ greeting:"握手（‘Kia ora’毛利问候）；熟人拥抱；平等随和。",
+ social:["重平等、重自然、重个人空间；不层级","不插队、不喧哗；种族/原住民（毛利）话题尊重","环保敏感"],
+ religious:["教堂入内安静脱帽；毛利会堂（Marae）入内需礼仪","不指圣物"],
+ dietary:["高度多元：清真/素食并存","不劝酒；小费非必须"],
+ dining:"小费非强制；AA 各自付；BBQ/海鲜文化。",
+ customs:"‘Kiwiana’平等自然；重毛利文化与环境。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠酒/羊毛/蜂蜜/花（忌13支、红玫瑰表爱）；包装随意。",
+ festivals:[
+  {n:"Waitangi Day 怀唐伊日",d:"2月6日",t:"go",i:"建国纪念日，毛利文化庆典，观光热"},
+  {n:"Christmas 圣诞",d:"12月连休（夏）",t:"peak",i:"家庭团聚+海滨，出行高峰"},
+  {n:"ANZAC Day 澳新军团日",d:"4月25日",t:"avoid",i:"庄重纪念日，不宜安排娱乐冲突"}],
+ tips:["新西兰客重‘自然+毛利文化+环保’，行程可持续加分","毛利会堂入内需遵守礼仪","多经奥克兰/皇后镇，常组合澳洲或中国多地"],
+ src:"新西兰旅游局、外交部领事服务"},
+
+"South Africa":{"zh":"南非","flag":"🇿🇦","region":"非洲","abbr":["za","zaf","南","南非"],"religion":"基督为主，多元（含穆斯林/印度教/传统信仰）","language":"11种官方语（英/祖鲁/阿非利卡等）","currency":"ZAR 兰特","tz":"Africa/Johannesburg",
+ greeting:"握手（‘Hello/Sawubona’）；熟人拥抱；重热情。",
+ social:["多元种族，话题谨慎：不评种族隔离史/族群","重问候、重个人空间；不插队","公共场合不喧哗过度"],
+ religious:["教堂/清真寺/印度庙入内庄重脱鞋/包头","不指圣物"],
+ dietary:["多元：清真/印度教不食牛/素食并存","不劝酒"],
+ dining:"小费约10-15%（服务即薪）；AA或请客；BBQ（Braai）文化。",
+ customs:"‘Ubuntu’人道互存；重多元与部落传统。",
+ numcol:"西化避‘13’；无强禁忌。",
+ gifts:"可赠酒/手工艺/花；包装随意。",
+ festivals:[
+  {n:"Heritage Day 传统日",d:"9月24日",t:"go",i:"全民 Braai 烧烤庆典，观光热"},
+  {n:"Christmas 圣诞",d:"12月连休（夏）",t:"peak",i:"家庭团聚+海滨，出行高峰"},
+  {n:"Day of Reconciliation 和解日",d:"12月16日",t:"go",i:"庆典短途游"}],
+ tips:["南非客多元，宗教饮食需分别确认（清真/印度教/素食）","种族与历史话题极敏感，话术中立","多经约翰内斯堡/开普敦，常组合非洲或中国多地"],
+ src:"南非旅游局、外交部领事服务"},
+
+"Kazakhstan":{"zh":"哈萨克斯坦","flag":"🇰🇿","region":"中亚","abbr":["kz","kaz","哈","哈萨克"],"religion":"伊斯兰教（逊尼）约70%，东正教并存","language":"哈萨克语、俄语","currency":"KZT 坚戈","tz":"Asia/Almaty",
+ greeting:"握手（‘Salamatsyzdy’）；熟人贴面/拥抱；对长辈手触胸。",
+ social:["以右手递物进食；左手不洁","重长辈与待客；不公开亲昵","不评论族群/俄哈关系","不拍军事设施"],
+ religious:["清真寺脱鞋、女士包头；东正教堂脱帽","不指圣物"],
+ dietary:["清真为主：禁猪肉、少酒精；右手进食","马肉/马奶（Kymyz）为传统待客"],
+ dining:"共食分碟；长者先取；不劝酒；手抓肉（Beshbarmak）为国菜。",
+ customs:"游牧好客‘Konak’；重等级与东正/伊斯兰并存。",
+ numcol:"无强数字禁忌。",
+ gifts:"避酒赠严虔者；可赠甜点/马奶制品；包装中性。",
+ festivals:[
+  {n:"Nauryz 纳吾肉孜节",d:"3月21-23日",t:"go",i:"波斯历新年，全民庆典，观光热"},
+  {n:"Independence Day 独立日",d:"12月16日",t:"peak",i:"庆典短途游"},
+  {n:"Eid al-Fitr 开斋节",d:"伊斯兰历10月（变日）",t:"peak",i:"团聚出游"}],
+ tips:["哈萨克客重‘游牧文化+历史’，对中哈关系友好度高","清真饮食与俄哈双语称呼要顾及","多经阿拉木图，常组合新疆或中国多地"],
+ src:"哈萨克斯坦旅游国有公司、外交部领事服务"},
+
+"Uzbekistan":{"zh":"乌兹别克斯坦","flag":"🇺🇿","region":"中亚","abbr":["uz","uzb","乌","乌兹"],"religion":"伊斯兰教（逊尼）约88%，东正教并存","language":"乌兹别克语、俄语","currency":"UZS 苏姆","tz":"Asia/Tashkent",
+ greeting:"握手（‘Assalomu alaykum’）；熟人贴面/拥抱；对长辈手触胸。",
+ social:["以右手递物进食；左手不洁","极重待客（‘Mehmon’）；不公开亲昵","不评论族群/历史","不拍军事设施"],
+ religious:["清真寺脱鞋、女士包头；东正教堂脱帽","不指圣物"],
+ dietary:["清真为主：禁猪肉、少酒精；右手进食","抓饭（Plov）为国菜，手抓共食"],
+ dining:"共食分碟；长者先取；不劝酒；抓饭节（Plov Festival）盛大。",
+ customs:"丝路‘好客’极致；重大家庭与伊斯兰传统。",
+ numcol:"无强数字禁忌。",
+ gifts:"避酒赠严虔者；可赠甜点/手工艺；包装中性。",
+ festivals:[
+  {n:"Navruz 纳吾肉孜节",d:"3月21日",t:"go",i:"波斯历新年，全民庆典，观光热"},
+  {n:"Independence Day 独立日",d:"9月1日",t:"peak",i:"庆典短途游"},
+  {n:"Eid al-Fitr 开斋节",d:"伊斯兰历10月（变日）",t:"peak",i:"团聚出游"}],
+ tips:["乌兹别克客重‘丝路古城+抓饭+历史’，对华友好度高","清真饮食与俄语沟通要顾及","多经塔什干/撒马尔罕，常组合新疆或中国多地"],
+ src:"乌兹别克斯坦旅游局、外交部领事服务"},
+
+"Morocco":{"zh":"摩洛哥","flag":"🇲🇦","region":"非洲","abbr":["ma","mar","摩","摩洛哥"],"religion":"伊斯兰教国教约99%","language":"阿拉伯语、柏柏尔语、法语","currency":"MAD 迪拉姆","tz":"Africa/Casablanca",
+ greeting:"‘As-salamu alaykum’+握手（同性）；异性保守不主动握手；‘Salam’。",
+ social:["以右手递物进食；左手不洁","公共场合不公开亲昵；衣着保守","不评论宗教/君主（国王受尊崇）","集市讨价还价是文化"],
+ religious:["清真寺非穆斯林多禁入（哈桑二世寺例外）；脱鞋包头","不指神像、不喧哗"],
+ dietary:["清真为要：禁猪肉、禁酒精（部分酒店）","右手进食；左手不洁"],
+ dining:"共食分碟（Tagine/Couscous）；长者先取；薄荷茶‘三杯’待客礼。",
+ customs:"‘Hospitality’极致好客；重家族与伊斯兰；讨价还价文化。",
+ numcol:"无强数字禁忌。",
+ gifts:"避酒、避猪皮制品；可赠香精/手工艺/甜点；包装中性。",
+ festivals:[
+  {n:"Eid al-Fitr 开斋节",d:"伊斯兰历10月（变日）",t:"peak",i:"全国长假，家庭出游"},
+  {n:"Eid al-Adha 古尔邦节",d:"伊斯兰历12月（变日）",t:"peak",i:"团聚出行，交通紧"},
+  {n:"Independence Day 独立日",d:"11月18日",t:"go",i:"庆典短途游"}],
+ tips:["摩洛哥客重‘古城+沙漠+香料’，清真与君主话题要庄重","讨价还价文化要会应对","多经卡萨布兰卡/马拉喀什，常组合中东或欧洲"],
+ src:"摩洛哥国家旅游局、外交部领事服务"}
+};
+
+/* ============ 索引与交互引擎 ============ */
+const REGIONS = ["东亚","东南亚","南亚","中东","欧洲","北美","南美","大洋洲","非洲","中亚"];
+const EN2ZH = {}; const ZH2EN = {};
+Object.keys(DATA).forEach(en=>{ EN2ZH[en]=DATA[en].zh; ZH2EN[DATA[en].zh]=en; });
+
+// 简写/别名 -> 全名（含中文简称，已在各 abbr 中）
+const cl = document.getElementById('cl');
+Object.keys(DATA).forEach(en=>{
+  const o1=document.createElement('option'); o1.value=DATA[en].zh; cl.appendChild(o1);
+  const o2=document.createElement('option'); o2.value=en; cl.appendChild(o2);
+  DATA[en].abbr.forEach(a=>{ const o=document.createElement('option'); o.value=a; cl.appendChild(o); });
+});
+
+// 地区芯片
+const regionsEl=document.getElementById('regions');
+const allChip=document.createElement('span'); allChip.className='chip on'; allChip.dataset.region='all'; allChip.textContent='全部'; regionsEl.appendChild(allChip);
+REGIONS.forEach(r=>{
+  const c=document.createElement('span'); c.className='chip'; c.dataset.region=r; c.textContent=r; regionsEl.appendChild(c);
+});
+let curRegion='all';
+
+// 视图状态
+let curView='card';
+let curEn=null;
+const q=document.getElementById('q');
+const result=document.getElementById('result');
+
+/* ---- 当地时间 & 联系时段 ---- */
+let curTZ=null, timer=null, workSegs=[[9,18]];
+const PRESETS={std:[[9,18]], lunch:[[9,13],[15,20]], night:[[20,26]]};
+const fmtH=h=>(h<10?'0':'')+h;
+function segLabel(s){return s.map(([a,b])=>{const sh=fmtH(a%24);const eh=b>=24?fmtH(b-24):fmtH(b);const over=(b>24)||(b<=a&&b<24);return sh+':00'+(over?('–次日'+eh+':00'):('–'+eh+':00'));}).join('、');}
+function inWork(lh,s){return s.some(([a,b])=>{if(b>24)return lh>=a||lh<(b-24);if(b<=a)return lh>=a||lh<b;return lh>=a&&lh<b;});}
+function renderClock(){
+  const el=document.getElementById('rClock'); if(!el||!curTZ)return;
+  try{
+    const now=new Date();
+    const utc=new Date(now.toLocaleString('en-US',{timeZone:'UTC'}));
+    const tgt=new Date(now.toLocaleString('en-US',{timeZone:curTZ}));
+    const offMin=Math.round((tgt-utc)/60000);
+    const diff=offMin-480, abs=Math.abs(diff/60);
+    const absStr=Number.isInteger(abs)?String(abs):String(Math.round(abs*100)/100);
+    const rel=diff===0?'与北京同时区':(diff>0?('比北京早 '+absStr+'h'):('比北京晚 '+absStr+'h'));
+    const lt=now.toLocaleTimeString('zh-CN',{timeZone:curTZ,hour:'2-digit',minute:'2-digit',hour12:false});
+    const lh=parseInt(now.toLocaleString('en-US',{timeZone:curTZ,hour:'2-digit',hour12:false}),10);
+    const inw=inWork(lh,workSegs);
+    el.innerHTML='<b>'+lt+'</b><span class="win '+(inw?'ok':'sleep')+'">'+(inw?'✅ 当地工作时段':'🌙 当地非工作时段')+'</span><span style="display:block;margin-top:2px">'+rel+' · 北京联系窗 '+workSegs.map(([a,b])=>{const sh=fmtH(a);const eh=b>=24?fmtH(b-24):fmtH(b);return sh+'–'+(b>24?('次日'+eh):eh);}).join('/')+'</span>';
+  }catch(e){el.textContent='—';}
+}
+function pickPreset(p){ if(PRESETS[p])workSegs=PRESETS[p].map(s=>s.slice()); document.querySelectorAll('.tc-btn').forEach(b=>b.classList.toggle('on',b.dataset.p===p)); renderClock(); }
+function pickCustom(){ const s=parseInt(document.getElementById('tcS').value,10),e=parseInt(document.getElementById('tcE').value,10); if(isNaN(s)||isNaN(e))return; workSegs=(e>s)?[[s,e]]:[[s,e+24]]; document.querySelectorAll('.tc-btn').forEach(b=>b.classList.remove('on')); renderClock(); }
+function setCountry(en){ curEn=en; curTZ=DATA[en].tz; if(timer)clearInterval(timer); renderClock(); timer=setInterval(renderClock,60000); }
+
+/* ---- 渲染辅助 ---- */
+function bullets(arr, cls){ if(!arr||!arr.length)return '<ul class="'+(cls||'tips')+'"><li>暂无特别记录</li></ul>'; return '<ul class="'+(cls||'tips')+'">'+arr.map(x=>'<li>'+x+'</li>').join('')+'</ul>'; }
+function tagOf(t){ return t==='avoid'?'<span class="tag tag-avoid">避</span>': t==='peak'?'<span class="tag tag-peak">峰</span>':'<span class="tag tag-go">推</span>'; }
+function festHTML(f){
+  return f.map(x=>'<div class="f"><div class="fn">'+tagOf(x.t)+x.n+'</div><div class="fd">📅 '+x.d+'</div><div class="fi">'+x.i+'</div></div>').join('');
+}
+
+/* ---- 卡片视图 ---- */
+function cardHTML(en){
+  const d=DATA[en];
+  return ''
+  +'<div class="card">'
+  +'<div class="chead">'
+  +'<div class="flag">'+d.flag+'</div>'
+  +'<div class="names"><h2>'+d.zh+'<span class="en">'+en+' · '+d.region+'</span></h2>'
+  +'<div class="facts"><span>宗教 '+d.religion+'</span><span>语言 '+d.language+'</span><span>货币 '+d.currency+'</span></div></div>'
+  +'<div class="clock" id="rClock">—</div>'
+  +'</div>'
+  +'<div class="tabs">'
+  +'<div class="tab on" data-t="over">概览 · 民族/称呼</div>'
+  +'<div class="tab" data-t="sr">行为 & 宗教</div>'
+  +'<div class="tab" data-t="food">餐饮规范</div>'
+  +'<div class="tab" data-t="fest">节日历法</div>'
+  +'</div>'
+  +'<div class="tbody" id="tbody">'+tabOver(d)+'</div>'
+  +'<div class="src">📚 数据来源：'+d.src+'</div>'
+  +'</div>';
+}
+function tabOver(d){
+  return ''
+  +block('ic-n','称呼 / 问候语','<div class="quote">'+d.greeting+'</div>')
+  +block('ic-c','民族习惯 / 文化底色','<div class="quote">'+d.customs+'</div>')
+  +block('ic-g','数字 · 颜色禁忌','<div class="quote">'+d.numcol+'</div>')
+  +block('ic-f','礼赠偏好','<div class="quote">'+d.gifts+'</div>')
+  +'<div class="block"><div class="block" style="margin:0"><h3><span class="ic ic-s"></span>💡 销售踩坑提示</h3>'+bullets(d.tips,'good')+'</div></div>';
+}
+function tabSR(d){
+  return block('ic-s','社交 / 行为禁忌',bullets(d.social))
+       + block('ic-r','宗教 / 场所禁忌',bullets(d.religious));
+}
+function tabFood(d){
+  return block('ic-d','餐饮禁忌（不吃 / 不碰）',bullets(d.dietary))
+       + block('ic-c','用餐规范（怎么做）','<div class="quote">'+d.dining+'</div>');
+}
+function tabFest(d){
+  return '<div class="block"><h3><span class="ic ic-f"></span>📅 节日历法与出行影响</h3><div class="fest">'+festHTML(d.festivals)+'</div></div>'
+       + '<div class="block"><h3><span class="ic ic-s"></span>💡 销售踩坑提示</h3>'+bullets(d.tips,'good')+'</div>';
+}
+function block(ic,title,inner){ return '<div class="block"><h3><span class="ic '+ic+'"></span>'+title+'</h3>'+inner+'</div>'; }
+
+/* ---- 矩阵视图（携程式 4 列 → 升级 8 列）---- */
+function matrixHTML(){
+  const rows=Object.keys(DATA).filter(en=>curRegion==='all'||DATA[en].region===curRegion);
+  const head='<tr><th>国家/地区</th><th>社交/行为禁忌</th><th>宗教/场所禁忌</th><th>餐饮禁忌</th><th>用餐规范</th><th>民族习惯/称呼</th><th>节日历法</th><th>礼赠·数字·其他</th></tr>';
+  const body=rows.map(en=>{
+    const d=DATA[en];
+    const fests=d.festivals.map(x=>(tagOf(x.t)+x.n+'（'+x.d+'）')).join('；');
+    return '<tr>'
+    +'<td class="c"><span class="fl">'+d.flag+'</span>'+d.zh+'<span class="ab">'+en+'</span></td>'
+    +'<td class="cell">'+mini(d.social)+'</td>'
+    +'<td class="cell">'+mini(d.religious)+'</td>'
+    +'<td class="cell">'+mini(d.dietary)+'</td>'
+    +'<td class="cell"><div class="quote" style="font-size:11.5px;padding:6px 8px">'+d.dining+'</div></td>'
+    +'<td class="cell"><div class="quote" style="font-size:11.5px;padding:6px 8px">'+d.customs+'</div><div style="font-size:11px;color:var(--muted);margin-top:4px">'+d.greeting+'</div></td>'
+    +'<td class="cell"><div style="font-size:11.5px">'+fests+'</div></td>'
+    +'<td class="cell"><div style="font-size:11px">🎁 '+d.gifts+'<br>🔢 '+d.numcol+'</div></td>'
+    +'</tr>';
+  }).join('');
+  return '<div class="matrix"><table>'+head+body+'</table></div>';
+}
+function mini(arr){ if(!arr||!arr.length)return '<div style="color:var(--muted);font-size:11px">—</div>'; return '<ul class="cell">'+arr.map(x=>'<li>'+x+'</li>').join('')+'</ul>'; }
+
+/* ---- 渲染主流程 ---- */
+function render(){
+  if(curView==='table'){
+    result.innerHTML=matrixHTML();
+    return;
+  }
+  if(!curEn){
+    result.innerHTML='<div class="empty"><div class="big">🔎</div><p>在上方输入框输入国家（中文 / English / 简写 / 别名）<br>例如：韩国 · Korea · KOR · 泰国 · TH · 美国 · USA · 阿联酋 · UAE</p></div>';
+    return;
+  }
+  result.innerHTML=cardHTML(curEn);
+  setCountry(curEn);
+  document.querySelectorAll('#result .tab').forEach(t=>t.addEventListener('click',()=>{
+    document.querySelectorAll('#result .tab').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    const d=DATA[curEn], tb=document.getElementById('tbody');
+    const m={'over':tabOver(d),'sr':tabSR(d),'food':tabFood(d),'fest':tabFest(d)};
+    tb.innerHTML=m[t.dataset.t];
+  }));
+}
+
+/* ---- 搜索匹配 ---- */
+function findCountry(t){
+  t=(t||'').trim(); if(!t)return null;
+  const tl=t.toLowerCase();
+  if(DATA[t])return t;
+  if(ZH2EN[t])return ZH2EN[t];
+  for(const en of Object.keys(DATA)) if(en.toLowerCase()===tl) return en;
+  for(const en of Object.keys(DATA)) if(DATA[en].abbr.some(a=>a.toLowerCase()===tl)) return en;
+  const hits=Object.keys(DATA).filter(en=>DATA[en].zh.includes(t)||en.toLowerCase().includes(tl)||DATA[en].abbr.some(a=>a.toLowerCase().includes(tl)));
+  return hits[0]||null;
+}
+
+q.addEventListener('input',()=>{
+  const en=findCountry(q.value);
+  if(en){ curEn=en; curRegion='all'; syncRegion(); result.dataset.mode='card'; render(); }
+  else if(!q.value.trim()){ curEn=null; render(); }
+  else { // 未命中：若当前为表格视图则保留，否则提示
+    if(curView==='table'){ render(); } else { result.innerHTML='<div class="empty"><div class="big">🤔</div><p>没找到「'+q.value.trim()+'」。<br>支持中文 / 英文 / 简写 / 别名，例如：韩·Korea·KOR，英·UK，美·USA，沙·KSA。<br>也可点上方地区芯片浏览全部国家。</p></div>'; }
+  }
+});
+q.addEventListener('change',()=>q.dispatchEvent(new Event('input')));
+
+/* 视图切换 */
+document.getElementById('vCard').addEventListener('click',()=>{ curView='card'; document.getElementById('vCard').classList.add('on'); document.getElementById('vTable').classList.remove('on'); render(); });
+document.getElementById('vTable').addEventListener('click',()=>{ curView='table'; document.getElementById('vTable').classList.add('on'); document.getElementById('vCard').classList.remove('on'); render(); });
+
+/* 地区筛选 */
+function syncRegion(){ document.querySelectorAll('#regions .chip').forEach(c=>c.classList.toggle('on',c.dataset.region===curRegion)); }
+regionsEl.addEventListener('click',e=>{ const c=e.target.closest('.chip'); if(!c)return; curRegion=c.dataset.region; syncRegion(); if(curView!=='table'){ curView='table'; document.getElementById('vTable').classList.add('on'); document.getElementById('vCard').classList.remove('on'); } render(); });
+
+/* 初始化 */
+document.getElementById('cntPill').textContent='已覆盖 '+Object.keys(DATA).length+' 国';
+render();
+</script>
+</body>
+</html>
