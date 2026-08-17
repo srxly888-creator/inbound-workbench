@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lisa 入境游销售工作台 · 按工作模块与流程搭建</title>
+<style>
+:root{
+  --bg:#fdf4f8; --panel:#ffffff; --ink:#33252e; --muted:#8a6f7a; --line:#f1dde7;
+  --brand:#e64980; --brand-soft:#fde7f0; --green:#1a7f37; --amber:#bf8700; --red:#b42318; --purple:#9c36b5;
+  --shadow:0 1px 3px rgba(27,31,36,.06),0 8px 24px rgba(27,31,36,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Roboto,Helvetica,Arial,sans-serif;line-height:1.6;}
+a{color:var(--brand);text-decoration:none}
+a:hover{text-decoration:underline}
+.shell{display:flex;align-items:flex-start;gap:18px;max-width:1240px;margin:0 auto;padding:0 18px 80px}
+.sidebar{position:sticky;top:16px;flex:none;width:212px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:var(--shadow)}
+.sidebar .sitem{display:flex;align-items:center;gap:10px;padding:11px 12px;border-radius:10px;cursor:pointer;font-size:13.5px;color:var(--muted);margin-bottom:3px;transition:.15s;user-select:none}
+.sidebar .sitem:hover{background:var(--brand-soft);color:var(--brand)}
+.sidebar .sitem.active{background:var(--brand);color:#fff;font-weight:600}
+.sidebar .sitem .ic{font-size:15px;flex:none}
+.content{flex:1;min-width:0}
+.panel{display:none}
+.panel.active{display:block;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(max-width:820px){.shell{flex-direction:column}.sidebar{position:static;width:100%;display:flex;gap:6px;overflow-x:auto}.sidebar .sitem{margin-bottom:0;white-space:nowrap}}
+
+header{background:linear-gradient(135deg,#e64980,#c2256b);color:#fff;padding:34px 20px 30px;margin-bottom:26px}
+header .inner{max-width:1120px;margin:0 auto}
+header h1{margin:0;font-size:26px;font-weight:700;letter-spacing:.5px}
+header .role{margin-top:6px;font-size:14px;opacity:.92}
+header .meta{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+header .pill{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);padding:5px 12px;border-radius:999px;font-size:12px}
+
+nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-bottom:26px}
+nav .inner{max-width:1120px;margin:0 auto;display:flex;gap:4px;overflow-x:auto;padding:10px 20px}
+nav a{padding:7px 13px;border-radius:8px;font-size:13px;color:var(--muted);white-space:nowrap}
+nav a:hover{background:var(--brand-soft);color:var(--brand);text-decoration:none}
+
+section{margin-bottom:36px}
+h2.sec{font-size:18px;margin:0 0 4px;display:flex;align-items:center;gap:9px}
+h2.sec .tag{font-size:11px;font-weight:600;color:#fff;background:var(--brand);padding:2px 8px;border-radius:6px}
+.sec-sub{color:var(--muted);font-size:13px;margin:0 0 16px}
+
+/* flow stepper */
+.flow{display:flex;gap:0;overflow-x:auto;padding:4px 0 10px}
+.stage{flex:1;min-width:172px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin-right:10px;cursor:pointer;transition:.15s;box-shadow:var(--shadow);position:relative}
+.stage:last-child{margin-right:0}
+.stage:hover{border-color:var(--brand);transform:translateY(-2px)}
+.stage .num{width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;margin-bottom:8px}
+.stage h3{margin:0 0 4px;font-size:14px}
+.stage p{margin:0;font-size:12px;color:var(--muted)}
+.stage .mods{margin-top:9px;font-size:11px;color:var(--brand)}
+.stage .mods a{margin-right:5px}
+.stage .arrow{position:absolute;right:-14px;top:50%;transform:translateY(-50%);color:var(--line);font-size:18px;z-index:2}
+.stage:last-child .arrow{display:none}
+.detail{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-top:12px;box-shadow:var(--shadow);display:none}
+.detail.open{display:block}
+.detail h4{margin:0 0 8px;font-size:14px;color:var(--brand)}
+.detail ul{margin:0;padding-left:18px;font-size:13px}
+.detail li{margin-bottom:5px}
+.detail .tip{margin-top:10px;font-size:12px;color:var(--muted);background:var(--brand-soft);padding:9px 12px;border-radius:8px}
+
+/* module chain */
+.modmap{display:flex;gap:0;overflow-x:auto;padding:6px 0 14px}
+.modnode{flex:1;min-width:118px;text-align:center;padding:0 4px}
+.modnode .box{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 6px;box-shadow:var(--shadow);position:relative}
+.modnode .no{font-size:11px;font-weight:700;color:var(--brand)}
+.modnode .nm{font-size:12px;margin-top:2px;line-height:1.3}
+.modnode .arr{color:var(--line);font-size:16px;margin-top:4px}
+.modgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;margin-top:6px}
+.modcard{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--brand);border-radius:12px;padding:16px 17px;box-shadow:var(--shadow)}
+.modcard h3{margin:0 0 3px;font-size:15px;display:flex;align-items:center;gap:8px}
+.modcard .mno{font-size:11px;background:var(--brand);color:#fff;padding:1px 8px;border-radius:6px;font-weight:700}
+.modcard .serves{font-size:11px;color:var(--muted);margin-bottom:10px}
+.modcard .files{display:flex;flex-direction:column;gap:6px}
+.modcard .f{font-size:12px;display:flex;align-items:baseline;gap:7px}
+.modcard .f a{word-break:break-all}
+.modcard .f .ext{font-size:9px;padding:1px 6px;border-radius:5px;flex:none;color:#fff}
+.ext-md{background:var(--purple)} .ext-html{background:var(--brand)} .ext-xlsx{background:var(--green)} .ext-dir{background:var(--amber)}
+.modcard.feat{border-top-color:var(--green)}
+.modcard.feat .mno{background:var(--green)}
+
+/* featured visa tool */
+.feature{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;margin-top:14px}
+.feature .bar{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);background:linear-gradient(135deg,#fde7f0,#fff5fa)}
+.feature .bar .t{font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+.feature .bar .new{font-size:10px;background:var(--green);color:#fff;padding:2px 7px;border-radius:6px;font-weight:700}
+.feature .bar a{font-size:13px}
+.feature iframe{width:100%;height:620px;border:0;background:#fff}
+
+/* optimization */
+.opt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.opt{background:var(--panel);border:1px solid var(--line);border-left-width:4px;border-radius:10px;padding:13px 15px;box-shadow:var(--shadow)}
+.opt.red{border-left-color:var(--red)} .opt.amber{border-left-color:var(--amber)} .opt.purple{border-left-color:var(--purple)}
+.opt .oh{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;margin-bottom:5px}
+.opt .sev{font-size:10px;padding:1px 7px;border-radius:5px;color:#fff}
+.sev-red{background:var(--red)} .sev-amber{background:var(--amber)} .sev-purple{background:var(--purple)}
+.opt .od{font-size:12px;color:var(--muted);margin-bottom:9px}
+.opt label{display:flex;align-items:flex-start;gap:8px;font-size:12px;cursor:pointer}
+.opt input{margin-top:3px;width:15px;height:15px;accent-color:var(--green)}
+.opt .done{text-decoration:line-through;color:var(--muted)}
+
+/* checklist */
+.check-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.check{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;box-shadow:var(--shadow)}
+.check h4{margin:0 0 8px;font-size:13px}
+.check label{display:flex;gap:8px;font-size:12px;align-items:flex-start;cursor:pointer;margin-bottom:5px}
+.check input{margin-top:3px;accent-color:var(--brand)}
+
+.note{font-size:12px;color:var(--muted);background:#fff8e6;border:1px solid #f0e0b0;border-radius:8px;padding:10px 13px;margin-top:12px}
+footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;padding-top:18px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="inner">
+    <h1>Lisa 入境游销售工作台</h1>
+    <div class="role">officialchinatravel.com · WhatsApp 客资承接岗 · 按「工作模块 + 流程」组织</div>
+    <div class="meta">
+      <span class="pill">版本 2026-08-17</span>
+      <span class="pill">模块 00–07 体系</span>
+      <span class="pill">核心战场：WhatsApp</span>
+      <span class="pill">本地离线可用</span>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar">
+    <div class="sitem active" data-page="flow"><span class="ic">📊</span><span>流程总览</span></div>
+    <div class="sitem" data-page="modules"><span class="ic">🗂️</span><span>工作模块 00–07</span></div>
+    <div class="sitem" data-page="visa"><span class="ic">🌏</span><span>签证查询工具</span></div>
+    <div class="sitem" data-page="opt"><span class="ic">✅</span><span>优化看板</span></div>
+    <div class="sitem" data-page="routine"><span class="ic">🗒️</span><span>每日例行</span></div>
+  </aside>
+  <div class="content">
+
+  <!-- 1. FLOW -->
+  <section id="flow" class="panel active">
+    <h2 class="sec"><span class="tag">01</span>流程总览 · 从进线到成交（点阶段看动作+对应模块）</h2>
+    <p class="sec-sub">漏斗主线来自《张家界进线话术评估》+《实战手册》SOP。每个阶段都标了它调用的工作模块。</p>
+    <div class="flow">
+      <div class="stage" onclick="toggle('d1')"><div class="num">1</div><h3>广告询接</h3><p>官网/广告进线</p><div class="mods"><a href="#mod00">00</a><a href="#mod03">03</a></div><div class="arrow">→</div></div>
+      <div class="stage" onclick="toggle('d2')"><div class="num">2</div><h3>有效询盘</h3><p>首响≤2h·需求五问</p><div class="mods"><a href="#mod03">03</a><a href="#mod02">02</a></div><div class="arrow">→</div></div>
+      <div class="stage" onclick="toggle('d3')"><div class="num">3</div><h3>签证/异议</h3><p>第一关·信任顾虑</p><div class="mods"><a href="#mod04">04</a><a href="#mod03">03</a></div><div class="arrow">→</div></div>
+      <div class="stage" onclick="toggle('d4')"><div class="num">4</div><h3>报价方案</h3><p>匹配产品·出报价</p><div class="mods"><a href="#mod01">01</a><a href="#mod03">03</a></div><div class="arrow">→</div></div>
+      <div class="stage" onclick="toggle('d5')"><div class="num">5</div><h3>跟进逼单</h3><p>1/3/7天·促成交</p><div class="mods"><a href="#mod03">03</a><a href="#mod02">02</a></div><div class="arrow">→</div></div>
+      <div class="stage" onclick="toggle('d6')"><div class="num">6</div><h3>成交交付</h3><p>定金·建群·行前</p><div class="mods"><a href="#mod02">02</a><a href="#mod07">07</a></div><div class="arrow">→</div></div>
+    </div>
+
+    <div class="detail" id="d1"><h4>阶段 1 · 广告询接 → 接住流量</h4><ul>
+      <li>官网每个咨询/签证按钮都跳 WhatsApp，客资几乎全从 WA 来。</li>
+      <li>确认成交号跑在 <b>WhatsApp Business</b> 上（普通号狂发模板会被风控限流）。</li>
+      <li>用「标签」区分阶段，用「快捷回复」存高频话术。</li>
+    </ul><div class="tip">📌 红线：个人号跑业务且狂发模板 → 触发风控，号没了客资全丢。参考 <a href="#mod00">模块00 卖点</a> + <a href="#mod03">模块03 话术</a>。</div></div>
+
+    <div class="detail" id="d2"><h4>阶段 2 · 有效询盘 → 首响≤2小时</h4><ul>
+      <li><b>破冰</b>：模板化但个性化，带称呼、带 emoji、三问抛出去。</li>
+      <li><b>需求五问</b>：人数 / 日期或月份 / 天数 / 目的地 / 预算或风格。</li>
+      <li>有效询盘即问<b>邮箱/微信</b>备用联系方式（WA 消息易丢，高客单必须留邮箱发报价 PDF）。</li>
+      <li>当天在 <b><a href="#mod02">模块02 客资跟踪</a></b> 建档。</li>
+    </ul><div class="tip">📌 卡欧美时差：用 World Time Buddy 看客户当地上午发。</div></div>
+
+    <div class="detail" id="d3"><h4>阶段 3 · 签证/异议 → 第一道门槛</h4><ul>
+      <li>客户第一句往往是「我能不能进？怎么进？」——<b>签证是入境客第一门槛</b>。</li>
+      <li>用 <b><a href="#mod04">模块04 签证查询工具</a></b> 30 秒判断：免签 / 240h 过境 / 需 L 签，按国籍分支话术。</li>
+      <li>信任三钩子：可退款 / 无购物 / 英文向导 + 24/7，主动打消安全顾虑。</li>
+      <li>不承诺签证结果，只说「可协助 + 提供邀请函」。</li>
+    </ul><div class="tip">📌 红线：一套话术通发不同国籍 → 对 A 国正确、对 B 国违规。必须按国籍分支（见 <a href="#mod03">模块03</a> 张家界分国家准备）。</div></div>
+
+    <div class="detail" id="d4"><h4>阶段 4 · 报价方案 → 匹配产品</h4><ul>
+      <li>从 <b><a href="#mod01">模块01 产品矩阵</a></b> 先甩 1–2 条现成线路「钩住」，再说明可定制；附官网链接 + 景点图。</li>
+      <li>报价单含/不含写清楚（USD 标价），顺带提示定金与退款政策。</li>
+      <li>用 <a href="#mod03">模块03</a> 的 <code>/quote</code> 快捷回复发标准报价说明。</li>
+    </ul><div class="tip">📌 价格锚点：首次接触给「2人X天约 $XXX 起」能过滤羊毛党。</div></div>
+
+    <div class="detail" id="d5"><h4>阶段 5 · 跟进逼单 → 临门一脚</h4><ul>
+      <li>逼单：档期紧张 / 限时优惠，引导付 <b>30% 定金锁档期</b>。</li>
+      <li>按 A/B/C 客户类型设计 3 套跟进（C 类长线客户做多城联动交叉销售）。</li>
+      <li>每次跟进在 <b><a href="#mod02">模块02 客资表</a></b> 更新阶段/记录，别漏记。</li>
+    </ul><div class="tip">📌 标★口径（收款/退款/签证协助）先问主管确认再对外发。</div></div>
+
+    <div class="detail" id="d6"><h4>阶段 6 · 成交交付</h4><ul>
+      <li>收定金 → 建群 / 拉导游 → 行前 48h 提醒。</li>
+      <li><b>境内联络方案</b>写进行前模板：中国境内 WhatsApp 受限，引导装微信 + 买 eSIM，行中切微信。</li>
+      <li>行前素材从 <b><a href="#mod07">模块07 素材库</a></b> 取景点图/好评截图。</li>
+    </ul><div class="tip">📌 最易翻车点：客户一落地就联系不上你。行前必须讲清境内联络方案。</div></div>
+  </section>
+
+  <!-- 2. MODULES -->
+  <section id="modules" class="panel">
+    <h2 class="sec"><span class="tag">02</span>工作模块 00–07 · 你已有的资料体系</h2>
+    <p class="sec-sub">按《销售资料库》编号排列：00 公司 → 01 产品 → 02 客资 → 03 话术FAQ → 04 签证 → 05 案例 → 06 竞品 → 07 素材。每个模块标注它服务哪个流程环节。</p>
+    <div class="modmap">
+      <div class="modnode"><div class="box"><div class="no">00</div><div class="nm">公司卖点</div></div><div class="arr">→</div></div>
+      <div class="modnode"><div class="box"><div class="no">01</div><div class="nm">产品库</div></div><div class="arr">→</div></div>
+      <div class="modnode"><div class="box"><div class="no">02</div><div class="nm">客资跟踪</div></div><div class="arr">→</div></div>
+      <div class="modnode"><div class="box"><div class="no">03</div><div class="nm">话术FAQ</div></div><div class="arr">→</div></div>
+      <div class="modnode"><div class="box"><div class="no">04</div><div class="nm">签证政策</div></div><div class="arr">→</div></div>
+      <div class="modnode"><div class="box"><div class="no">05</div><div class="nm">案例库</div></div><div class="arr">→</div></div>
+      <div class="modnode"><div class="box"><div class="no">06</div><div class="nm">竞品行情</div></div><div class="arr">→</div></div>
+      <div class="modnode"><div class="box"><div class="no">07</div><div class="nm">素材</div></div></div>
+    </div>
+
+    <div class="modgrid">
+      <div class="modcard" id="mod00">
+        <h3><span class="mno">00</span>公司介绍与卖点</h3>
+        <div class="serves">服务：全流程 · 信任建立</div>
+        <div class="files">
+          <div class="f"><span class="ext ext-md">MD</span><a href="入境游销售资料/00_公司介绍与卖点.md" target="_blank">00_公司介绍与卖点.md</a></div>
+        </div>
+      </div>
+
+      <div class="modcard" id="mod01">
+        <h3><span class="mno">01</span>产品知识库 / 矩阵</h3>
+        <div class="serves">服务：阶段4 报价方案</div>
+        <div class="files">
+          <div class="f"><span class="ext ext-md">MD</span><a href="入境游销售资料/01_产品矩阵摘要.md" target="_blank">01_产品矩阵摘要.md（21区域/79线）</a></div>
+          <div class="f"><span class="ext ext-xlsx">XLSX</span><a href="入境游销售资料/01_产品知识库.xlsx" target="_blank">01_产品知识库.xlsx（过渡版）</a></div>
+        </div>
+      </div>
+
+      <div class="modcard" id="mod02">
+        <h3><span class="mno">02</span>客资跟踪表</h3>
+        <div class="serves">服务：阶段2/5/6 · 不丢客的记忆库</div>
+        <div class="files">
+          <div class="f"><span class="ext ext-xlsx">XLSX</span><a href="客资管理表.xlsx" target="_blank">客资管理表.xlsx（主表）</a></div>
+          <div class="f"><span class="ext ext-xlsx">XLSX</span><a href="入境游销售资料/02_客资跟踪表.xlsx" target="_blank">02_客资跟踪表.xlsx</a></div>
+        </div>
+      </div>
+
+      <div class="modcard" id="mod03">
+        <h3><span class="mno">03</span>话术与 FAQ</h3>
+        <div class="serves">服务：全流程 · 话术发射器</div>
+        <div class="files">
+          <div class="f"><span class="ext ext-md">MD</span><a href="入境游销售资料/03_话术与FAQ.md" target="_blank">03_话术与FAQ.md</a></div>
+          <div class="f"><span class="ext ext-md">MD</span><a href="WhatsApp快捷回复谈单实战教学.md" target="_blank">WhatsApp快捷回复谈单实战教学.md（10模板）</a></div>
+          <div class="f"><span class="ext ext-md">MD</span><a href="张家界进线话术评价与分国家准备.md" target="_blank">张家界进线话术评估·分国家准备.md</a></div>
+        </div>
+      </div>
+
+      <div class="modcard feat" id="mod04">
+        <h3><span class="mno">04</span>签证与入境政策 ★</h3>
+        <div class="serves">服务：阶段3 签证/异议（第一关）</div>
+        <div class="files">
+          <div class="f"><span class="ext ext-html">HTML</span><a href="https://srxly888-creator.github.io/visa-lookup/" target="_blank">签证查询工具（NEW，下方内嵌）</a></div>
+          <div class="f"><span class="ext ext-html">HTML</span><a href="https://851303e0e0994de3aff6471af2d0e4c5.bj5.agentos-app.net" target="_blank">各国文化禁忌速查（在线版 · 54国·中英文/简写一查即出）</a></div>
+          <div class="f"><span class="ext ext-md">MD</span><a href="入境游销售资料/04_签证与入境政策.md" target="_blank">04_签证与入境政策.md</a></div>
+          <div class="f"><span class="ext ext-md">MD</span><a href="入境免签判断矩阵.md" target="_blank">入境免签判断矩阵.md</a></div>
+          <div class="f"><span class="ext ext-md">MD</span><a href="入境免签政策销售快查版.md" target="_blank">销售快查版（中文）</a></div>
+          <div class="f"><span class="ext ext-md">MD</span><a href="入境免签政策销售快查版-英文.md" target="_blank">销售快查版（英文）</a></div>
+          <div class="f"><span class="ext ext-html">HTML</span><a href="入境免签速查-可视化.html" target="_blank">免签速查·可视化.html</a></div>
+          <div class="f"><span class="ext ext-md">MD</span><a href="中国互免签证协定国家清单.md" target="_blank">中国互免签证协定国家清单.md</a></div>
+          <div class="f"><span class="ext ext-md">MD</span><a href="中国过境免签政策专页.md" target="_blank">中国过境免签政策专页.md</a></div>
+        </div>
+      </div>
+
+      <div class="modcard" id="mod05">
+        <h3><span class="mno">05</span>案例库</h3>
+        <div class="serves">服务：每周复盘 · 提炼共性</div>
+        <div class="files">
+          <div class="f"><span class="ext ext-dir">DIR</span><a href="入境游销售资料/05_案例库/" target="_blank">05_案例库/（成交/流失，每周沉淀）</a></div>
+        </div>
+      </div>
+
+      <div class="modcard" id="mod06">
+        <h3><span class="mno">06</span>竞品与行情</h3>
+        <div class="serves">服务：比价异议 · 差异话术</div>
+        <div class="files">
+          <div class="f"><span class="ext ext-md">MD</span><a href="入境游销售资料/06_竞品与行情.md" target="_blank">06_竞品与行情.md</a></div>
+        </div>
+      </div>
+
+      <div class="modcard" id="mod07">
+        <h3><span class="mno">07</span>素材库</h3>
+        <div class="serves">服务：阶段4/6 · 插图提升说服力</div>
+        <div class="files">
+          <div class="f"><span class="ext ext-dir">DIR</span><a href="入境游销售资料/07_素材/" target="_blank">07_素材/（景点图/视频/好评/行程示意图）</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="note">📚 <b>上岗与索引</b>：新人先读 <a href="入境游销售新人学习与客资整理实战手册.md" target="_blank">《实战手册》</a>（第一周地图+SOP），再用 <a href="入境游销售资料/README.md" target="_blank">《销售资料库·索引》</a> 按文件地图与必读顺序通盘过一遍。</div>
+  </section>
+
+  <!-- 3. VISA TOOL -->
+  <section id="visa" class="panel">
+    <h2 class="sec"><span class="tag">03</span>签证查询工具 · 模块04 的核心交付（已接入）</h2>
+    <p class="sec-sub">输入国家即出：能否免签、走哪条通道、能待多久、要什么材料。谈单第一关的「发射器」，嵌在模块04里直接可用。</p>
+    <div class="feature">
+      <div class="bar">
+        <div class="t">🌏 China Visa-Free Lookup <span class="new">NEW</span></div>
+        <a href="https://srxly888-creator.github.io/visa-lookup/" target="_blank">↗ 在新标签打开</a>
+      </div>
+      <iframe src="https://srxly888-creator.github.io/visa-lookup/" title="签证查询工具"></iframe>
+    </div>
+    <div class="note">💡 iframe 内嵌即看即用；点右上「在新标签打开」可全屏。配套判断逻辑见模块04 的判断矩阵 / 销售快查版（中/英）。</div>
+  </section>
+
+  <!-- 4. OPTIMIZATION -->
+  <section id="opt" class="panel">
+    <h2 class="sec"><span class="tag">04</span>优化看板 · 哪里还能更好（来自模块03话术评估）</h2>
+    <p class="sec-sub">《张家界进线话术评估》列了 11 个缺口，主要落在模块03（话术）。勾选代表已补/已做，状态存浏览器，下次还在。</p>
+    <div class="opt-grid" id="optGrid">
+      <div class="opt red"><div class="oh"><span class="sev sev-red">红线</span>签证/入境前置</div><div class="od">话术完全没碰签证，而签证是入境客第一门槛。加 240h 过境+L签+邀请函标准块，按国籍分支（模块04）。</div><label><input type="checkbox" data-k="o1"><span>已加签证前置块</span></label></div>
+      <div class="opt red"><div class="oh"><span class="sev sev-red">红线</span>开场信任钩子</div><div class="od">缺品牌/可退款/无购物/24-7/英文向导。欧美客最怕购物团/被骗，开场必须给 reassurance（模块00）。</div><label><input type="checkbox" data-k="o2"><span>已加信任三钩子</span></label></div>
+      <div class="opt red"><div class="oh"><span class="sev sev-red">红线</span>境内联络方案</div><div class="od">中国境内 WA 默认不可访问，客户落地即失联。行前必须讲清：装微信+eSIM/VPN，行中切微信（模块07）。</div><label><input type="checkbox" data-k="o3"><span>已写入行前模板</span></label></div>
+      <div class="opt red"><div class="oh"><span class="sev sev-red">红线</span>备用联系方式</div><div class="od">有效询盘即问邮箱/微信，用于发报价 PDF，否则报价发 WA 被刷走白谈（模块02）。</div><label><input type="checkbox" data-k="o4"><span>已加邮箱/微信收集</span></label></div>
+      <div class="opt amber"><div class="oh"><span class="sev sev-amber">重要</span>公司署名</div><div class="od">中文法律主体英文直译对外国人是噪音/减分，统一用品牌名+官网，法律主体仅对公出现。</div><label><input type="checkbox" data-k="o5"><span>已统一品牌署名</span></label></div>
+      <div class="opt amber"><div class="oh"><span class="sev sev-amber">重要</span>价格锚点</div><div class="od">首次接触给「2人X天约 $XXX 起」软锚，过滤低意向、加速决策（模块01）。</div><label><input type="checkbox" data-k="o6"><span>已补起价锚点</span></label></div>
+      <div class="opt amber"><div class="oh"><span class="sev sev-amber">重要</span>跟进分层</div><div class="od">按 A/B/C 设计 3 套跟进，C 类长线客户推多城联动（上海/北京/西安），别只推单城。</div><label><input type="checkbox" data-k="o7"><span>已做 A/B/C 跟进</span></label></div>
+      <div class="opt amber"><div class="oh"><span class="sev sev-amber">重要</span>季节/安全前置</div><div class="od">张家界国庆人海、夏季高温、天门山冬季结冰缆车停运，主动管理预期。</div><label><input type="checkbox" data-k="o8"><span>已加季节提示</span></label></div>
+      <div class="opt amber"><div class="oh"><span class="sev sev-amber">重要</span>成交 CTA</div><div class="od">高意向段只到「发方案」，缺付 30% 定金锁档期+建群+行前提醒，与 SOP 脱节。</div><label><input type="checkbox" data-k="o9"><span>已补成交 CTA</span></label></div>
+      <div class="opt amber"><div class="oh"><span class="sev sev-amber">重要</span>支付说明</div><div class="od">明确收款方式（卡/PayPal/Wise）、国际机票不含、定金比例。标★口径先问主管。</div><label><input type="checkbox" data-k="o10"><span>已写支付说明</span></label></div>
+      <div class="opt purple"><div class="oh"><span class="sev sev-purple">加分</span>英文母语润色</div><div class="od">opening/objection 段有中式表达瑕疵，找母语者润色过一遍更专业。</div><label><input type="checkbox" data-k="o11"><span>已母语润色</span></label></div>
+      <div class="opt purple"><div class="oh"><span class="sev sev-purple">加分</span>饮食/宗教预案</div><div class="od">清真/素食/过敏未问，是体验翻车高发区。进线即问忌口，预锁餐厅（模块02记）。</div><label><input type="checkbox" data-k="o12"><span>已加忌口一问</span></label></div>
+    </div>
+    <div class="note" id="optStat"></div>
+  </section>
+
+  <!-- 5. ROUTINE -->
+  <section id="routine" class="panel">
+    <h2 class="sec"><span class="tag">05</span>每日 / 每周例行</h2>
+    <p class="sec-sub">来自《实战手册》与资料库 README。勾选后本机保存，每天/每周清零可手动刷新。</p>
+    <div class="check-grid">
+      <div class="check"><h4>🌅 每日最小动作</h4>
+        <label><input type="checkbox" data-r="r1"><span>打开客资跟踪表看今日待跟进</span></label>
+        <label><input type="checkbox" data-r="r2"><span>处理 WA 未读，≤2h 首响</span></label>
+        <label><input type="checkbox" data-r="r3"><span>新客户当天建档（模块02）</span></label>
+        <label><input type="checkbox" data-r="r4"><span>按阶段推进：询盘→需求→报价</span></label>
+        <label><input type="checkbox" data-r="r5"><span>报价后第 1/3/7 天各跟一次</span></label>
+        <label><input type="checkbox" data-r="r6"><span>晚 10 分复盘：新增/转化/流失</span></label>
+      </div>
+      <div class="check"><h4>🗓️ 每周维护（周日 30 分）</h4>
+        <label><input type="checkbox" data-r="r7"><span>把产品知识库按矩阵重构为模块化</span></label>
+        <label><input type="checkbox" data-r="r8"><span>通读本周案例库，提 1 条共性（模块05）</span></label>
+        <label><input type="checkbox" data-r="r9"><span>整理本周用过的素材，好评打码（模块07）</span></label>
+        <label><input type="checkbox" data-r="r10"><span>新高频问题补进话术/FAQ（模块03）</span></label>
+        <label><input type="checkbox" data-r="r11"><span>扫一眼移民管理局官方公告（模块04）</span></label>
+      </div>
+    </div>
+    <div class="note">🧹 想清空勾选重新开始？点这里：<a href="javascript:clearChecks()">重置每日/每周勾选</a>（仅清例行，不清优化看板）。</div>
+  </section>
+
+  <footer>
+    入境游销售工作台 · 本地离线工具 · 政策口径以中国外交部 / 国家移民管理局最新公告及公司内部口径为准<br>
+    数据源：外交部领事服务网《互免签证协定一览表》+ 国家移民管理局过境免签政策（截至 2025-06-12）· 整理 2026-08-17
+  </footer>
+  </div><!--/content-->
+</div><!--/shell-->
+
+<script>
+function toggle(id){document.getElementById(id).classList.toggle('open');}
+const store={opt:{},routine:{}};
+function load(){try{const s=JSON.parse(localStorage.getItem('inboundWB')||'{}');if(s.opt)Object.assign(store.opt,s.opt);if(s.routine)Object.assign(store.routine,s.routine);}catch(e){}}
+function save(){localStorage.setItem('inboundWB',JSON.stringify(store));}
+function bind(){
+  document.querySelectorAll('#optGrid input').forEach(c=>{
+    if(store.opt[c.dataset.k])c.checked=true;
+    c.addEventListener('change',()=>{store.opt[c.dataset.k]=c.checked;save();updateStat();styleDone(c);});
+    styleDone(c);
+  });
+  document.querySelectorAll('.check input').forEach(c=>{
+    if(store.routine[c.dataset.r])c.checked=true;
+    c.addEventListener('change',()=>{store.routine[c.dataset.r]=c.checked;save();});
+  });
+  updateStat();
+}
+function styleDone(c){const s=c.nextElementSibling;if(s)s.classList.toggle('done',c.checked);}
+function updateStat(){
+  const ks=Object.keys(store.opt);const done=ks.filter(k=>store.opt[k]).length;
+  document.getElementById('optStat').textContent='优化看板进度：'+done+' / '+ks.length+' 项已补。红线项优先处理。';
+}
+function clearChecks(){if(confirm('确认清空每日/每周例行勾选？')){store.routine={};save();location.reload();}}
+
+/* sidebar: switch right-side panel */
+function show(page){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sitem').forEach(s=>s.classList.remove('active'));
+  var panel=document.getElementById(page);
+  if(panel)panel.classList.add('active');
+  var item=document.querySelector('.sitem[data-page="'+page+'"]');
+  if(item)item.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.sitem').forEach(s=>{
+  s.addEventListener('click',()=>show(s.dataset.page));
+});
+/* flow → module cross links: jump to modules panel and highlight card */
+document.querySelectorAll('a[href^="#mod"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    var id=a.getAttribute('href').slice(1);
+    show('modules');
+    var t=document.getElementById(id);
+    if(t){setTimeout(function(){t.scrollIntoView({behavior:'smooth',block:'center'});t.style.transition='box-shadow .3s';t.style.boxShadow='0 0 0 3px var(--brand)';setTimeout(function(){t.style.boxShadow='';},1300);},80);}
+  });
+});
+
+load();bind();
+</script>
+</body>
+</html>
