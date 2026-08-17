@@ -125,6 +125,54 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 .grow button:hover{background:#c2256b}
 .gerr{color:#b42318;font-size:12px;min-height:16px;margin:8px 0 0}
 .ghint{font-size:11px;color:#8a6f7a;margin:12px 0 0}
+
+/* ===== 今日作战 / 客资追踪器 ===== */
+.topalert{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:10px;padding:11px 18px;background:linear-gradient(135deg,#fff0f6,#ffe3ee);border-bottom:1px solid var(--line);font-size:13px;cursor:pointer}
+.topalert .dot{width:9px;height:9px;border-radius:50%;background:var(--red);flex:none;box-shadow:0 0 0 3px rgba(180,35,24,.15)}
+.topalert b{color:var(--red)}
+.topalert .go{margin-left:auto;color:var(--brand);font-weight:600;white-space:nowrap}
+@media(max-width:820px){.topalert{font-size:12px;flex-wrap:wrap}}
+
+#today h3.mini{font-size:14px;margin:20px 0 8px;color:var(--ink)}
+#today .urgent{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:6px;box-shadow:var(--shadow);margin-bottom:6px}
+#today .ut{display:flex;align-items:center;gap:10px;padding:10px 12px;font-size:13px}
+#today .ut + .ut{border-top:1px solid var(--line)}
+#today .ut.over{background:#fff1f0;border-radius:8px}
+#today .ut .when{font-weight:600;white-space:nowrap}
+#today .ut.over .when{color:var(--red)}
+#today .ut .who{font-weight:600}
+#today .ut .meta{color:var(--muted);font-size:12px}
+#today .ut .act{margin-left:auto;flex:none}
+#today .empty{color:var(--muted);font-size:13px;padding:16px;text-align:center}
+
+.leadform{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:var(--shadow);margin-bottom:14px}
+.leadform .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.leadform label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+.leadform input,.leadform select{width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:9px;font-size:16px;background:#fff;color:var(--ink);outline:none}
+.leadform input:focus,.leadform select:focus{border-color:var(--brand)}
+.leadform .actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.btn{border:0;border-radius:10px;padding:11px 18px;font-size:14px;font-weight:600;cursor:pointer;min-height:44px}
+.btn.primary{background:var(--brand);color:#fff}
+.btn.primary:hover{background:#c2256b}
+.btn.ghost{background:var(--brand-soft);color:var(--brand)}
+.btn.ghost:hover{background:#fbd6e6}
+.btn.mini{padding:7px 12px;font-size:12px;min-height:36px}
+.btn.danger{background:#fff1f0;color:var(--red)}
+
+.leadtable{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+.leadtable .toolbar{display:flex;gap:8px;flex-wrap:wrap;padding:12px;align-items:center;border-bottom:1px solid var(--line)}
+.leadtable .toolbar .cnt{font-size:12px;color:var(--muted);margin-right:auto}
+.leadtable table{width:100%;border-collapse:collapse;font-size:13px}
+.leadtable th,.leadtable td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.leadtable th{font-size:11px;color:var(--muted);background:#faf5f8;text-transform:uppercase;letter-spacing:.4px}
+.leadtable tr.over{background:#fff1f0}
+.leadtable tr.soon{background:#fff8e6}
+.leadtable .stage{display:inline-block;font-size:11px;padding:2px 8px;border-radius:6px;background:var(--brand-soft);color:var(--brand);font-weight:600}
+.leadtable .lvl{font-weight:700}
+.leadtable .lvl.A{color:var(--green)} .leadtable .lvl.B{color:var(--amber)} .leadtable .lvl.C{color:var(--muted)}
+.leadtable .op{display:flex;gap:6px;flex-wrap:wrap}
+@media(max-width:820px){.leadtable{overflow-x:auto}.leadtable table{min-width:760px}}
+.note.warn{background:#fff1f0;border-color:#f3c2bc}
 </style>
 <meta name="robots" content="noindex, nofollow">
 </head>
@@ -146,7 +194,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
     <h1>Lisa 入境游销售工作台</h1>
     <div class="role">officialchinatravel.com · WhatsApp 客资承接岗 · 按「工作模块 + 流程」组织</div>
     <div class="meta">
-      <span class="pill">版本 2026-08-17</span>
+      <span class="pill">版本 2026-08-18</span>
       <span class="pill">模块 00–07 体系</span>
       <span class="pill">核心战场：WhatsApp</span>
       <span class="pill">本地离线可用</span>
@@ -154,9 +202,16 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
   </div>
 </header>
 
+<div class="topalert" id="topalert" onclick="show('today')">
+  <span class="dot"></span>
+  <span id="topalertText">今日作战：计算中…</span>
+  <span class="go">去处理 →</span>
+</div>
+
 <div class="shell">
   <aside class="sidebar">
-    <div class="sitem active" data-page="flow"><span class="ic">📊</span><span>流程总览</span></div>
+    <div class="sitem active" data-page="today"><span class="ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#e64980" stroke-width="2"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg></span><span>今日作战</span></div>
+    <div class="sitem" data-page="flow"><span class="ic">📊</span><span>流程总览</span></div>
     <div class="sitem" data-page="modules"><span class="ic">🗂️</span><span>工作模块 00–07</span></div>
     <div class="sitem" data-page="visa"><span class="ic">🌏</span><span>签证查询工具</span></div>
     <div class="sitem" data-page="taboo"><span class="ic">🚫</span><span>文化禁忌速查</span></div>
@@ -164,6 +219,59 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
     <div class="sitem" data-page="routine"><span class="ic">🗒️</span><span>每日例行</span></div>
   </aside>
   <div class="content">
+
+  <!-- 0. TODAY · 今日作战（默认面板） -->
+  <section id="today" class="panel active">
+    <h2 class="sec"><span class="tag">行动</span>今日作战 · 打开即看见该跟进谁</h2>
+    <p class="sec-sub">自动从下方「客资追踪器」算出逾期 / 今日 / 即将到期。昨天的未完成会自动顺延显示，不会凭空消失。数据存本机浏览器，可导出 CSV / 备份 JSON。</p>
+
+    <h3 class="mini">今天要处理</h3>
+    <div class="urgent" id="urgentList"></div>
+
+    <h3 class="mini">＋ 快速建档（WhatsApp 进线即记）</h3>
+    <div class="leadform">
+      <div class="row">
+        <div><label>姓名 *</label><input id="f_name" placeholder="客户名"></div>
+        <div><label>国籍</label><input id="f_country" placeholder="如 US / 英国"></div>
+        <div><label>人数</label><input id="f_people" type="number" min="1" placeholder="几人"></div>
+        <div><label>月份/日期</label><input id="f_period" placeholder="如 10月 / 2026-10"></div>
+        <div><label>天数</label><input id="f_days" type="number" min="1" placeholder="几天"></div>
+        <div><label>目的地</label><input id="f_dest" placeholder="如 张家界"></div>
+        <div><label>阶段</label><select id="f_stage">
+          <option>询盘</option><option>需求确认</option><option>报价中</option><option>跟进逼单</option><option>已成交</option><option>已流失</option>
+        </select></div>
+        <div><label>意向</label><select id="f_level"><option>A</option><option>B</option><option>C</option></select></div>
+        <div><label>下次跟进</label><input id="f_next" type="date"></div>
+        <div><label>联系方式</label><input id="f_contact" placeholder="邮箱 / 微信"></div>
+        <div style="grid-column:1/-1"><label>备注（忌口 / 特殊需求）</label><input id="f_note" placeholder="清真 / 素食 / 过敏等"></div>
+      </div>
+      <div class="actions">
+        <button class="btn primary" onclick="addLead()">保存建档</button>
+        <button class="btn ghost" onclick="clearForm()">清空表单</button>
+      </div>
+    </div>
+
+    <div class="leadtable">
+      <div class="toolbar">
+        <span class="cnt" id="leadCnt"></span>
+        <button class="btn ghost mini" onclick="exportCSV()">导出 CSV</button>
+        <button class="btn ghost mini" onclick="exportJSON()">导出备份</button>
+        <button class="btn ghost mini" onclick="importJSON()">导入恢复</button>
+        <button class="btn ghost mini" onclick="clearSamples()">清空示例</button>
+        <button class="btn danger mini" onclick="clearAllLeads()">清空全部</button>
+        <input id="importFile" type="file" accept="application/json" style="display:none" onchange="doImport(event)">
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead><tr>
+            <th>姓名</th><th>国籍</th><th>人数/天数</th><th>目的地</th><th>阶段</th><th>意向</th><th>下次跟进</th><th>联系方式</th><th>备注</th><th>操作</th>
+          </tr></thead>
+          <tbody id="leadBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="note warn" id="backupHint" style="display:none"></div>
+  </section>
 
   <!-- 1. FLOW -->
   <section id="flow" class="panel active">
@@ -390,7 +498,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 
   <footer>
     入境游销售工作台 · 本地离线工具 · 政策口径以中国外交部 / 国家移民管理局最新公告及公司内部口径为准<br>
-    数据源：外交部领事服务网《互免签证协定一览表》+ 国家移民管理局过境免签政策（截至 2025-06-12）· 整理 2026-08-17
+    数据源：外交部领事服务网《互免签证协定一览表》+ 国家移民管理局过境免签政策（截至 2025-06-12）· 整理 2026-08-18
   </footer>
   </div><!--/content-->
 </div><!--/shell-->
@@ -443,13 +551,130 @@ document.querySelectorAll('a[href^="#mod"]').forEach(a=>{
   });
 });
 
-load();bind();
+load();bind();loadLeads();renderAll();
 
 /* access gate: 改下面 WB_PW 为你自己的口令（客户端遮挡，仅挡普通访客，不能当真加密） */
 var WB_PW="lisa888";
 function checkPW(){var v=document.getElementById('pw').value;if(v===WB_PW){document.getElementById('gate').style.display='none';try{localStorage.setItem('wb_ok','1');}catch(e){}}else{document.getElementById('gerr').textContent='口令错误，请重试';}}
 try{if(localStorage.getItem('wb_ok')==='1'){document.getElementById('gate').style.display='none';}}catch(e){}
 document.getElementById('pw').addEventListener('keydown',function(e){if(e.key==='Enter')checkPW();});
+
+/* ===== 今日作战 / 客资追踪器（localStorage 存储） ===== */
+var LEADS_KEY='inboundWB_leads', LEADS_INIT='inboundWB_leads_init', leads=[];
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function todayStr(){var d=new Date();d.setHours(0,0,0,0);return d.toISOString().slice(0,10);}
+function dstr(off){var d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+off);return d.toISOString().slice(0,10);}
+function addDaysStr(s,n){var d=new Date(s+'T00:00:00');d.setDate(d.getDate()+n);return d.toISOString().slice(0,10);}
+function esc(s){return (s==null?'':String(s)).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
+function SAMPLE_LEADS(){return[
+ {id:uid(),_s:true,name:'Tom',country:'US',people:2,period:'2026-10',days:7,dest:'张家界',stage:'报价中',level:'A',next:dstr(-3),contact:'tom@x.com',note:'要英文向导'},
+ {id:uid(),_s:true,name:'María',country:'ES',people:4,period:'11月',days:5,dest:'桂林',stage:'需求确认',level:'B',next:dstr(0),contact:'wa:+34…',note:'清真餐'},
+ {id:uid(),_s:true,name:'Hiroshi',country:'JP',people:2,period:'2026-09',days:6,dest:'北京',stage:'询盘',level:'C',next:dstr(2),contact:'wa:…',note:''},
+ {id:uid(),_s:true,name:'Emma',country:'UK',people:3,period:'12月',days:8,dest:'上海+西安',stage:'跟进逼单',level:'A',next:dstr(6),contact:'emma@x.com',note:'已发报价PDF'},
+ {id:uid(),_s:true,name:'Lucas',country:'BR',people:2,period:'2026-10',days:7,dest:'成都',stage:'报价中',level:'B',next:dstr(11),contact:'wa:…',note:''}
+];}
+function loadLeads(){
+  try{leads=JSON.parse(localStorage.getItem(LEADS_KEY)||'[]');}catch(e){leads=[];}
+  if(!localStorage.getItem(LEADS_INIT)){leads=SAMPLE_LEADS();localStorage.setItem(LEADS_INIT,'1');saveLeads();}
+}
+function saveLeads(){localStorage.setItem(LEADS_KEY,JSON.stringify(leads));}
+function classify(l){
+  if(l.stage==='已成交'||l.stage==='已流失')return 'done';
+  var t=todayStr(),n=l.next||'';
+  if(n && n<t)return 'over';
+  if(n===t)return 'today';
+  if(n>t && n<=addDaysStr(t,2))return 'soon';
+  return 'ok';
+}
+function renderAll(){renderUrgent();renderTable();updateTopAlert();}
+function renderUrgent(){
+  var box=document.getElementById('urgentList');if(!box)return;box.innerHTML='';
+  var list=leads.map(function(l){return{c:classify(l),l:l};})
+    .filter(function(x){return x.c==='over'||x.c==='today'||x.c==='soon';})
+    .sort(function(a,b){var o={over:0,today:1,soon:2};return o[a.c]-o[b.c];});
+  if(!list.length){box.innerHTML='<div class="empty">暂无逾期 / 今日待跟进，状态良好。</div>';return;}
+  list.forEach(function(x){
+    var l=x.l,when=x.c==='over'?'已逾期':x.c==='today'?'今日待跟进':'48h 内到期';
+    var div=document.createElement('div');div.className='ut'+(x.c==='over'?' over':'');
+    div.innerHTML='<span class="when">'+when+'</span>'
+      +'<span class="who">'+esc(l.name)+'（'+esc(l.country||'-')+'）</span>'
+      +'<span class="meta">'+esc(l.dest||'-')+' · '+esc(l.stage)+' · 下次 '+esc(l.next||'-')+'</span>'
+      +'<span class="act"><button class="btn primary mini" onclick="markDone(\''+l.id+'\')">已跟进 +3天</button></span>';
+    box.appendChild(div);
+  });
+}
+function markDone(id){
+  var l=leads.find(function(x){return x.id===id;});if(!l)return;
+  l.next=addDaysStr(todayStr(),3);saveLeads();renderAll();
+}
+function renderTable(){
+  var tb=document.getElementById('leadBody');if(!tb)return;tb.innerHTML='';
+  leads.forEach(function(l){
+    var c=classify(l),tr=document.createElement('tr');
+    if(c==='over')tr.className='over';else if(c==='soon')tr.className='soon';
+    tr.innerHTML='<td>'+esc(l.name)+'</td>'
+      +'<td>'+esc(l.country||'')+'</td>'
+      +'<td>'+(l.people?l.people+'人':'')+(l.days?(' / '+l.days+'天'):'')+'</td>'
+      +'<td>'+esc(l.dest||'')+'</td>'
+      +'<td><span class="stage">'+esc(l.stage)+'</span></td>'
+      +'<td class="lvl '+esc(l.level)+'">'+esc(l.level)+'</td>'
+      +'<td'+(c==='over'?' style="color:var(--red);font-weight:600"':'')+'>'+esc(l.next||'-')+'</td>'
+      +'<td>'+esc(l.contact||'')+'</td>'
+      +'<td>'+esc(l.note||'')+'</td>'
+      +'<td><div class="op"><button class="btn ghost mini" onclick="markDone(\''+l.id+'\')">已跟进</button>'
+      +'<button class="btn ghost mini" onclick="editLead(\''+l.id+'\')">编辑</button>'
+      +'<button class="btn danger mini" onclick="deleteLead(\''+l.id+'\')">删</button></div></td>';
+    tb.appendChild(tr);
+  });
+  var cnt=document.getElementById('leadCnt');if(cnt)cnt.textContent='共 '+leads.length+' 条客资（已成交 / 流失不计入待跟进）';
+}
+function addLead(){
+  var g=function(i){return document.getElementById(i).value.trim();};
+  var name=g('f_name');if(!name){alert('请填写客户姓名');return;}
+  var l={id:uid(),name:name,country:g('f_country'),people:g('f_people'),period:g('f_period'),days:g('f_days'),
+    dest:g('f_dest'),stage:document.getElementById('f_stage').value,level:document.getElementById('f_level').value,
+    next:g('f_next'),contact:g('f_contact'),note:g('f_note')};
+  leads.unshift(l);saveLeads();clearForm();renderAll();
+  var h=document.getElementById('backupHint');h.style.display='block';
+  h.textContent='已建档：'+name+'。建议积累到 30 条时点「导出备份」留底。';
+  show('today');
+}
+function clearForm(){['f_name','f_country','f_people','f_period','f_days','f_dest','f_next','f_contact','f_note'].forEach(function(i){document.getElementById(i).value='';});}
+function deleteLead(id){if(confirm('确认删除这条客资？')){leads=leads.filter(function(x){return x.id!==id;});saveLeads();renderAll();}}
+function editLead(id){
+  var l=leads.find(function(x){return x.id===id;});if(!l)return;
+  document.getElementById('f_name').value=l.name;document.getElementById('f_country').value=l.country||'';
+  document.getElementById('f_people').value=l.people||'';document.getElementById('f_period').value=l.period||'';
+  document.getElementById('f_days').value=l.days||'';document.getElementById('f_dest').value=l.dest||'';
+  document.getElementById('f_stage').value=l.stage;document.getElementById('f_level').value=l.level;
+  document.getElementById('f_next').value=l.next||'';document.getElementById('f_contact').value=l.contact||'';
+  document.getElementById('f_note').value=l.note||'';
+  leads=leads.filter(function(x){return x.id!==id;});saveLeads();
+  window.scrollTo({top:0,behavior:'smooth'});show('today');
+  var h=document.getElementById('backupHint');h.style.display='block';
+  h.textContent='正在编辑 '+l.name+'：表单已预填，改完点「保存建档」即更新。';
+}
+function updateTopAlert(){
+  var o=0,t=0,s=0;leads.forEach(function(l){var c=classify(l);if(c==='over')o++;else if(c==='today')t++;else if(c==='soon')s++;});
+  var el=document.getElementById('topalertText');if(!el)return;
+  el.innerHTML=(o+t+s===0)?'今日作战：暂无待处理，状态良好':'今日作战：<b>'+o+' 逾期</b> · '+t+' 今日待跟进 · '+s+' 即将到期（48h内）';
+}
+function download(content,name,type){var b=new Blob([content],{type:type+';charset=utf-8'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);}
+function exportCSV(){
+  var head=['姓名','国籍','人数','月份/日期','天数','目的地','阶段','意向','下次跟进','联系方式','备注'];
+  var rows=leads.map(function(l){return [l.name,l.country,l.people,l.period,l.days,l.dest,l.stage,l.level,l.next,l.contact,l.note];});
+  var csv='\uFEFF'+head.join(',')+'\n'+rows.map(function(r){return r.map(function(c){c=c==null?'':String(c);if(/[",\n]/.test(c))c='"'+c.replace(/"/g,'""')+'"';return c;}).join(',');}).join('\n');
+  download(csv,'客资追踪_'+todayStr()+'.csv','text/csv');
+}
+function exportJSON(){download(JSON.stringify(leads,null,2),'客资备份_'+todayStr()+'.json','application/json');}
+function importJSON(){document.getElementById('importFile').click();}
+function doImport(e){
+  var f=e.target.files[0];if(!f)return;var r=new FileReader();
+  r.onload=function(){try{var d=JSON.parse(r.result);if(!Array.isArray(d))throw 0;if(confirm('将导入 '+d.length+' 条客资，覆盖现有数据？')){leads=d;saveLeads();renderAll();alert('导入成功：'+d.length+' 条');}}catch(err){alert('文件格式有误，导入失败');}};
+  r.readAsText(f);e.target.value='';
+}
+function clearSamples(){leads=leads.filter(function(x){return !x._s;});saveLeads();renderAll();alert('示例数据已清空，你的真实客资保留。');}
+function clearAllLeads(){if(confirm('确认清空全部客资？此操作不可恢复！')){if(confirm('再确认一次：真的清空所有客资记录？')){leads=[];saveLeads();renderAll();}}}
 </script>
 </body>
 </html>
