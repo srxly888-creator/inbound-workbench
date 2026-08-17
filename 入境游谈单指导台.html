@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>入境游谈单指导台 · 客服谈单 & 全周期维护</title>
+<style>
+:root{
+  --brand:#e64980; --brand-2:#d6336c; --brand-soft:#fce4ef; --brand-line:#f7c9dd;
+  --bg:#fdf4f8; --card:#ffffff; --ink:#2b2330; --ink-2:#6b6470; --ink-3:#9a93a0;
+  --ok:#2f9e44; --ok-soft:#e6f4ea; --warn:#e8590c; --warn-soft:#fff1e6;
+  --line:#f0e3ea; --shadow:0 6px 24px rgba(214,51,108,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,Roboto,sans-serif;
+  background:var(--bg);color:var(--ink);line-height:1.6;padding-bottom:48px}
+a{color:var(--brand);text-decoration:none}
+header{background:linear-gradient(135deg,#fff 0%,var(--brand-soft) 100%);
+  border-bottom:1px solid var(--brand-line);padding:22px 24px 18px}
+.h-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.h-logo{font-size:30px}
+h1{font-size:21px;color:var(--brand-2);letter-spacing:.5px}
+.h-sub{color:var(--ink-2);font-size:13px;margin-top:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px}
+.search{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.search input{flex:1;min-width:240px;border:1.5px solid var(--brand-line);border-radius:12px;
+  padding:12px 16px;font-size:15px;background:#fff;color:var(--ink);outline:none}
+.search input:focus{border-color:var(--brand)}
+.search .cnt{display:flex;align-items:center;font-size:13px;color:var(--ink-2);
+  background:#fff;border:1.5px solid var(--brand-line);border-radius:12px;padding:0 14px;white-space:nowrap}
+.tabs{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap}
+.tab{background:#fff;border:1.5px solid var(--brand-line);color:var(--ink-2);
+  padding:9px 16px;border-radius:999px;font-size:14px;cursor:pointer;transition:.15s;font-weight:600}
+.tab:hover{border-color:var(--brand)}
+.tab.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.sec-title{font-size:16px;color:var(--brand-2);font-weight:800;margin:26px 0 12px;
+  display:flex;align-items:center;gap:8px}
+.sec-title small{font-weight:500;color:var(--ink-3);font-size:12px}
+/* stage stepper */
+.stepper{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 4px}
+.step{flex:1;min-width:150px;background:#fff;border:1.5px solid var(--line);border-radius:14px;
+  padding:14px;cursor:pointer;transition:.15s;position:relative}
+.step:hover{border-color:var(--brand);box-shadow:var(--shadow)}
+.step.on{border-color:var(--brand);background:var(--brand-soft)}
+.step .n{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--brand);
+  color:#fff;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin-right:8px}
+.step h3{font-size:14px;display:inline;color:var(--ink)}
+.step p{font-size:12px;color:var(--ink-3);margin-top:8px}
+/* stage detail */
+.detail{background:#fff;border:1.5px solid var(--brand-line);border-radius:16px;
+  padding:18px 20px;margin-top:14px;box-shadow:var(--shadow)}
+.block{margin-bottom:18px}
+.block:last-child{margin-bottom:0}
+.block h4{font-size:14px;font-weight:800;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.b-adv{border-left:4px solid var(--ok);background:var(--ok-soft);padding:10px 14px;border-radius:0 10px 10px 0}
+.b-cau{border-left:4px solid var(--warn);background:var(--warn-soft);padding:10px 14px;border-radius:0 10px 10px 0}
+ul.tips{list-style:none}
+ul.tips li{position:relative;padding:6px 0 6px 22px;font-size:13.5px;color:var(--ink)}
+ul.tips li:before{content:"›";position:absolute;left:4px;color:var(--brand);font-weight:800;font-size:16px;top:4px}
+.b-adv ul.tips li:before{color:var(--ok)}
+.b-cau ul.tips li:before{color:var(--warn)}
+/* script cards */
+.script{background:#fff;border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:12px}
+.script .top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.cmd{background:var(--brand-soft);color:var(--brand-2);font-family:ui-monospace,Menlo,monospace;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:6px}
+.script .t{font-weight:700;font-size:14px}
+.star{color:#f59f00;font-size:13px;font-weight:700}
+.copy{border:1.5px solid var(--brand-line);background:#fff;color:var(--brand-2);
+  border-radius:8px;padding:4px 12px;font-size:12px;font-weight:700;cursor:pointer;margin-left:auto}
+.copy:hover{background:var(--brand-soft)}
+.copy.done{background:var(--ok);color:#fff;border-color:var(--ok)}
+.script pre{background:#2b2330;color:#f5f0f3;padding:12px 14px;border-radius:10px;
+  font-size:12.5px;white-space:pre-wrap;word-break:break-word;font-family:ui-monospace,Menlo,monospace;line-height:1.55}
+.script .note{font-size:12px;color:var(--ink-2);margin-top:7px;padding-left:2px}
+/* follow-up timeline */
+.timeline{display:flex;gap:0;align-items:stretch;margin:6px 0 4px;flex-wrap:wrap}
+.tl-node{flex:1;min-width:120px;background:var(--brand-soft);border:1px solid var(--brand-line);
+  border-radius:10px;padding:10px 12px;margin:4px;position:relative}
+.tl-node b{color:var(--brand-2);font-size:13px}
+.tl-node span{display:block;font-size:12px;color:var(--ink-2);margin-top:3px}
+/* country grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px;margin-top:8px}
+.ctry{background:#fff;border:1.5px solid var(--line);border-radius:15px;padding:14px 16px;
+  box-shadow:var(--shadow);transition:.15s}
+.ctry:hover{border-color:var(--brand)}
+.ctry .ch{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ctry .fl{font-size:26px}
+.ctry .nm{font-size:16px;font-weight:800}
+.ctry .en{font-size:12px;color:var(--ink-3);font-weight:600}
+.ctry .rg{margin-left:auto;font-size:11px;background:var(--brand-soft);color:var(--brand-2);
+  padding:3px 9px;border-radius:999px;font-weight:700}
+.dim{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:12.5px;margin-top:4px}
+.dim dt{color:var(--brand-2);font-weight:700;white-space:nowrap}
+.dim dd{color:var(--ink);margin:0}
+.ctry .taboo{display:inline-block;margin-top:11px;font-size:12px;font-weight:700;
+  background:var(--brand-soft);color:var(--brand-2);padding:5px 12px;border-radius:8px}
+/* country tips inside stage */
+.ctip{background:var(--brand-soft);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--ink)}
+.ctip b{color:var(--brand-2)}
+.empty{text-align:center;color:var(--ink-3);padding:40px;font-size:14px}
+footer{text-align:center;color:var(--ink-3);font-size:12px;margin-top:34px;padding:0 20px}
+footer b{color:var(--brand-2)}
+@media print{
+  header{box-shadow:none}
+  .search,.tabs,.copy,.tab{display:none}
+  .card,.ctry,.detail{box-shadow:none;break-inside:avoid}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="h-row">
+      <span class="h-logo">💬</span>
+      <div>
+        <h1>入境游 · 谈单指导台</h1>
+        <div class="h-sub">客服谈单注意 · 从「刚加好友」到「谈单中」的全程维护指导 · 与《各国文化禁忌速查》联动</div>
+      </div>
+    </div>
+    <div class="search">
+      <input id="q" placeholder="搜关键词 / 国家 / 话术：如 签证、逼单、拒签、清真、Korea、/visa …" oninput="onSearch()">
+      <div class="cnt" id="cntPill">—</div>
+    </div>
+    <div class="tabs">
+      <div class="tab on" data-m="stage" onclick="setMode('stage')">① 阶段指导</div>
+      <div class="tab" data-m="country" onclick="setMode('country')">② 分国家谈单</div>
+      <div class="tab" data-m="script" onclick="setMode('script')">③ 话术模板库</div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="stageView"></div>
+  <div id="countryView" style="display:none"></div>
+  <div id="scriptView" style="display:none"></div>
+</div>
+
+<footer>
+  <b>谈单指导台</b> · 离线单文件工具 · 数据整合自《实战手册》《WhatsApp话术教学》《张家界分国家准备》<br>
+  标 ★ 口径（收款方式 / 退款阶梯 / 签证协助范围）以主管确认为准；习俗随时代演变，重要行程以官方最新公告为准。
+</footer>
+
+<script>
+/* ============ 数据：5 阶段谈单指导 ============ */
+const STAGES = [
+  {
+    id:"s1", n:1, zh:"刚加好友·破冰首响", icon:"👋", sum:"≤2 小时首响，模板化但个性化",
+    advice:[
+      "首响≤2 小时：带表情+称呼，三问抛出（人数 / 日期或月份 / 想去哪），别一上来就报价。",
+      "卡时差发：客户多在欧美，挑对方当地上午发更易被读（用 World Time Buddy 看时区）。",
+      "必须用 WhatsApp Business 号，个人号狂发模板会触发风控限流、号没了客资全丢。",
+      "入境客第一句常是「我能不能进 / 怎么进」——开场就预埋签证前置，别等客户追问。",
+      "开场即带 3 个信任钩子：品牌名+官网、可退款/灵活取消、无购物+英文向导+24/7。"
+    ],
+    cautions:[
+      "插入必改：至少改 [[姓名]] 和目的地，纯转发 = 客户觉得被敷衍（收到 Hi [[Name]] 直接崩）。",
+      "公司署名用品牌 officialchinatravel.com，勿用中文法律主体英文直译（对外国人是噪音甚至减分）。",
+      "别堆砌：一条客户消息最多插 1 条快捷回复 + 你手写一句，别连发三条模板。",
+      "有效询盘确认后即问邮箱/微信等备用联系方式——WhatsApp 消息易丢，高客单报价 PDF 必须走邮箱。"
+    ],
+    scripts:["first"],
+    countryTips:"日韩极礼貌含蓄，开场别太 pushy；中东/穆斯林客开场先问饮食宗教；欧美家庭多问儿童餐/过敏源；德国/北欧要效率，可更早抛价格锚。"
+  },
+  {
+    id:"s2", n:2, zh:"需求挖掘·五问", icon:"🔍", sum:"控场提问，套出真实人数与意图",
+    advice:[
+      "需求五问：人数 / 日期或月份 / 天数 / 目的地偏好 / 预算或风格（文化·自然·美食·家庭）。",
+      "控场提问术：「想先看行程还是价格？」给选择权拉高开口率；「是两个人还是更多？」用「两人」做锚点诱导客户纠正、套出真实人数。",
+      "进线即问人群结构：带娃家庭（婴儿车可达性）/ 长者（少爬台阶替代）/ solo 女性（安全、女向导选项）。",
+      "进线即问饮食宗教忌口（清真/素食/过敏），别等到了目的地才发现有需求。",
+      "问清备用联系方式（邮箱/微信），写入《客资跟踪表》「备用联系方式」列。"
+    ],
+    cautions:[
+      "别漏问忌口——清真/素食/过敏是体验翻车高发区，话术必须有一句 dietary/religion？",
+      "日韩「我考虑一下」可能就是「不」，需从提问和沉默判断真实意向，别误判为高意向。",
+      "别急着报死价；先钩住再定制，价格锚点用「X人X天约 $XXX 起」过滤羊毛党。",
+      "所有信息只进《客资跟踪表》，不复述脑补、不散落聊天记录。"
+    ],
+    scripts:["ask5"],
+    countryTips:"北欧/德国要事实+价格 upfront，话术早给价格锚与行程细节；南欧/拉美重关系重温度，先聊再买、放慢逼单；日韩需从提问节奏判断真实意向。"
+  },
+  {
+    id:"s3", n:3, zh:"报价·给方案", icon:"💰", sum:"先钩后定，含不含写清，埋好签证与境内通讯",
+    advice:[
+      "先甩 1–2 条现成线路「钩住」，再说明可定制；附官网链接 + 景点图（故宫/熊猫/漓江做成 /pic 快捷回复随手甩）。",
+      "报价单含/不含写清楚（USD 标价）：含私人英文向导·酒店·火车/接送·24/7；不含国际机票·签证费·小费·部分餐。",
+      "给价格锚「X人X天约 $XXX 起」，加速决策、过滤低意向。",
+      "报价段即讲签证（按国籍分支：免签恭喜 / 240h 过境 / L签可发邀请函）与境内通讯方案（微信+eSIM）。",
+      "提示定金比例与退款政策，主动降低决策门槛。"
+    ],
+    cautions:[
+      "不口头随意降价——嫌贵就调套餐不降价，守住利润也守住专业。",
+      "不承诺签证结果——只说「可协助 + 提供邀请函」。",
+      "标 ★ 口径（实际收款方式、退款阶梯、签证协助范围）先问主管确认再对外发。",
+      "国际机票不含要明示；中东/俄罗斯受制裁，Western 卡可能刷不了，备银行电汇/人民币通道/UnionPay 等备用 rail，否则临门一脚丢单。"
+    ],
+    scripts:["quote","visa","pay","cancel"],
+    countryTips:"中东/俄准备备用收款 rail；穆斯林客预锁清真餐厅+酒店清真早餐+无酒精；印度客预锁素食、避免牛肉；欧美家庭行前收集过敏源表。"
+  },
+  {
+    id:"s4", n:4, zh:"跟进·维护", icon:"🔔", sum:"报价后 1/3/7 天节奏跟进，分层+退出机制",
+    advice:[
+      "报价后第 1 / 3 / 7 天各跟一次，内容递进：是否收到 → 档期紧张可锁一下 → 不急随时问。",
+      "按 A/B/C 分层跟进：A 只推本线；B/C 推多城联动（上海/北京/西安）做交叉销售。",
+      "有退出机制：最后一次「递减关注」，避免死缠烂打，保护账号也保护口碑。",
+      "沉默超 14 天转入「沉睡」，低频次月触达（节日/新线路唤醒）。",
+      "每回完一条，立即在《客资跟踪表》更新「阶段 / 最近跟进记录」，别靠记忆。"
+    ],
+    cautions:[
+      "别把「已读」当「已跟」；别连发三条模板；别漏记任何客户。",
+      "跟进完不进表 = 白跟，回完即更阶段。",
+      "日韩需从提问判断真实意向，沉默≠考虑中；南欧/拉美放慢逼单节奏。",
+      "逼单用「档期紧张 / 限时优惠」，不编造、不施压过猛。"
+    ],
+    scripts:["f1","f3","f7","push"],
+    countryTips:"日韩从提问与沉默判断真实意向，别误判高意向猛推；南欧/拉美放慢逼单、多寒暄；欧美家庭可借儿童/长者关怀点切入跟进。"
+  },
+  {
+    id:"s5", n:5, zh:"成交·售后", icon:"🤝", sum:"收定金→建群→行前提醒，境内切微信",
+    advice:[
+      "临门一脚别只发方案没 CTA：收 30% 定金 → 建群/拉导游 → 行前提醒（48h 前）。",
+      "行前务必讲清境内联络方案：中国境内 WhatsApp/Google 默认受限，引导装微信作主联络、买 eSIM/流量卡、自备 VPN。",
+      "成交后维护：回访 + 真实好评截图（对外国人是强信任证） + 转介绍引导。",
+      "主动给 3 个 reassurance：无购物、英文向导全程、可退款保障，化解西方媒体式安全顾虑。"
+    ],
+    cautions:[
+      "定金比例标 ★ 问主管；收定金 CTA 别漏，与手册 SOP 对齐。",
+      "境内 WhatsApp 失联是大坑——行前不引导装微信，落地即联系不上你。",
+      "solo 女性问是否有女向导选项；长者确认少爬台阶替代方案已排。",
+      "确认清真/素食/过敏预案已锁，避免行程中体验翻车。"
+    ],
+    scripts:["deal","worry"],
+    countryTips:"solo 女问女向导；长者少爬台阶替代；穆斯林客确认全程清真+礼拜设施；日本客多用品微信/LINE 落地联络；俄罗斯客备人民币结算便利。"
+  }
+];
+
+/* ============ 数据：话术模板库（来自 WhatsApp 教学） ============ */
+const SCRIPTS = {
+  first:{cmd:"/first",title:"破冰首响（≤2h）",star:false,note:"带表情、带称呼、三问抛出去，别一上来就报价。",
+    text:"Hi [[Name]], this is [[YourName]] from China Travel 😊\nThanks for reaching out! Heard you're planning a trip to China —\nmay I know a bit more so I can tailor the best plan for you?\n👉 How many travelers?  👉 Rough dates / month?  👉 Any must-see places?"},
+  ask5:{cmd:"/ask5",title:"需求五问",star:false,note:"设计私人定制团前必备五问。",
+    text:"To design your private tour, quick 5 questions:\n1. Number of travelers (adults + kids)?\n2. Preferred month / exact dates?\n3. Total days you have?\n4. Destinations you love (Beijing / Chengdu / Guilin...)?\n5. Style & budget: culture / nature / food / family? Rough USD range?"},
+  visa:{cmd:"/visa",title:"签证（客户第一障碍）",star:false,note:"不承诺签证结果，只说可协助+提供邀请函。",
+    text:"Good news — many visitors qualify for China's 240-hour visa-free transit\nif you fly via eligible ports and have an onward ticket to a 3rd country/region.\nOtherwise a standard L visa is straightforward; we provide a visa invitation letter\nto support your application. I can check your nationality's exact rule — what's your passport?"},
+  pay:{cmd:"/pay",title:"付款 ★",star:true,note:"收款方式、定金比例以主管确认口径为准。",
+    text:"Booking is easy & safe:\n• 30% deposit to lock your dates & guide\n• 70% balance before arrival\n• We accept [确认后的收款方式, 如 Wise / PayPal / card]\nFull terms in your quote. Your deposit is protected by our money-back guarantee."},
+  cancel:{cmd:"/cancel",title:"取消退款",star:false,note:"灵活取消是核心卖点，主动讲降低顾虑。",
+    text:"Flexible & worry-free:\n• Free change of dates up to [[X]] days before\n• Full or partial refund by our cancellation ladder (I'll send the exact table)\n• Money-back guarantee on qualifying items\nWe want you to book with confidence, not stress."},
+  quote:{cmd:"/quote",title:"报价说明",star:false,note:"含/不含写清，USD 标价，附官网链接。",
+    text:"Here's your tailored plan for [[Destinations]], [[Days]] days:\n✅ Includes: private English guide, hotels, train/b transfers, 24/7 support\n❌ Excludes: intl. flights, visa fee, tips, some meals\nTotal: **$[[Price]] USD** per group. Full itinerary & quote PDF attached.\nBrowse similar tours: officialchinatravel.com/products/[[slug]]"},
+  f1:{cmd:"/f1",title:"跟进 D1",star:false,note:"报价次日轻触达，确认是否收到。",
+    text:"Hi [[Name]] 👋 just checking — did the [[Destinations]] plan land ok? Happy to tweak anything!"},
+  f3:{cmd:"/f3",title:"跟进 D3",star:false,note:"档期紧张可锁一下，不施压。",
+    text:"Still happy to help with [[Destinations]]? Your dates [[Dates]] are getting popular, want me to hold them?"},
+  f7:{cmd:"/f7",title:"跟进 D7",star:false,note:"不急，留门，低压力。",
+    text:"Hey [[Name]], no rush at all — when you're ready, I can finalize the quote. Any new questions?"},
+  push:{cmd:"/push",title:"逼单",star:false,note:"用档期/限时优惠，不编造。",
+    text:"Heads-up: your preferred window [[Dates]] has limited guide availability,\nand our [早鸟/限时] perk ends [[Date]]. I can lock your deposit now to secure both."},
+  worry:{cmd:"/worry",title:"拒签/犹豫应对",star:false,note:"3 个 reassurance 化解安全/沟通/购物顾虑。",
+    text:"Totally understand the concern. Three things our guests love most:\n🔒 Safe, vetted local guides  🗣️ English throughout, zero language barrier\n🚫 100% no shopping stops  💰 Money-back guarantee\nYou're in good hands — happy to share recent guest reviews."},
+  deal:{cmd:"/deal",title:"成交",star:false,note:"收定金→建群→行前提醒，三步闭环。",
+    text:"Awesome, let's make it happen! 🎉\nNext steps: 1) pay 30% deposit 2) I'll build your group & add your guide\n3) pre-trip checklist sent 48h before. I'll update everything in our system. Welcome to China! 🇨🇳"}
+};
+
+/* ============ 数据：分国家谈单注意（7 维） ============ */
+const COUNTRIES = {
+  US:{zh:"美国",fl:"🇺🇸",region:"北美",abbr:["us","usa","美","美国"],
+    visa:"多数适用 240h 过境免签（经合规口岸+第三国续程票）；否则 L 签常规，可发邀请函。话术不承诺结果。",
+    pay:"信用卡 / PayPal / Wise 顺畅；报价段明确支持方式。",
+    diet:"欧美家庭多儿童餐+过敏源（坚果/海鲜），行前收集忌口表。",
+    comm:"直接、效率，但也重体验；可适当给价格锚+行程细节。",
+    comms:"落地微信/eSIM 提示写进行前模板；WA 境内受限。",
+    trust:"重安全/无购物/可退款；主动给 3 个 reassurance。",
+    crowd:"带娃家庭多、solo 女常见；长者少爬台阶替代。"},
+  UK:{zh:"英国",fl:"🇬🇧",region:"欧洲",abbr:["uk","gb","英","英国"],
+    visa:"240h 过境免签适用；伦敦飞国内段衔接；L 签备选。",
+    pay:"卡 / PayPal / Wise；同美。",
+    diet:"过敏（麸质/乳制品）常见；问忌口。",
+    comm:"礼貌但含蓄、带幽默；别太 pushy。",
+    comms:"同美，WA 境内受限引导微信。",
+    trust:"重隐私/无购物/退款；英媒对华偏见，多给真实好评截图。",
+    crowd:"家庭 / 长者团常见。"},
+  CA:{zh:"加拿大",fl:"🇨🇦",region:"北美",abbr:["ca","can","加","加拿大"],
+    visa:"240h 过境免签适用；部分经美陆路注意。",
+    pay:"卡 / Interac / PayPal；Wise 可用。",
+    diet:"多文化饮食，过敏源多；问清真/素食/过敏。",
+    comm:"礼貌、温和；尊重多元。",
+    comms:"同美。",
+    trust:"重安全/公平；退款保障强调。",
+    crowd:"家庭 + 银发。"},
+  AU:{zh:"澳大利亚",fl:"🇦🇺",region:"大洋洲",abbr:["au","aus","澳","澳洲","澳大利亚"],
+    visa:"240h 过境免签适用；澳籍常经第三国。",
+    pay:"卡 / PayPal；Afterpay 等可选。",
+    diet:"过敏（花生/海鲜）高；问忌口。",
+    comm:"直率、平等；别端架子。",
+    comms:"WA 境内受限，强调微信/eSIM。",
+    trust:"重安全/自然/无购物；强调英文向导。",
+    crowd:"家庭 + 退休银发多。"},
+  NZ:{zh:"新西兰",fl:"🇳🇿",region:"大洋洲",abbr:["nz","新西","新西兰"],
+    visa:"240h 适用；南太航线少，常经澳/中。",
+    pay:"卡 / PayPal。",
+    diet:"过敏 / 有机偏好；问忌口。",
+    comm:"随和、低调。",
+    comms:"同 AU。",
+    trust:"重自然 / 安全。",
+    crowd:"家庭 + 银发。"},
+  DE:{zh:"德国",fl:"🇩🇪",region:"欧洲",abbr:["de","ger","德","德国"],
+    visa:"240h 适用；申根经验丰富。",
+    pay:"卡 / Sofort / 银行转账；Wise 可用。",
+    diet:"猪肉/啤酒文化；部分素食；问忌口。",
+    comm:"要效率、事实、价格 upfront；话术早给价格锚+细节。",
+    comms:"同美。",
+    trust:"重靠谱/准时/明细；报价单要详尽。",
+    crowd:"家庭 + 银发。"},
+  FR:{zh:"法国",fl:"🇫🇷",region:"欧洲",abbr:["fr","fra","法","法国"],
+    visa:"240h 适用。",
+    pay:"卡 / PayPal；Amex 常见。",
+    diet:"美食国，餐饮体验是卖点；问忌口/红酒偏好。",
+    comm:"重关系与品味；慢节奏，别急逼单。",
+    comms:"同美。",
+    trust:"重文化/美食；强调私人定制+法餐级体验。",
+    crowd:"情侣 / 家庭。"},
+  ES:{zh:"西班牙",fl:"🇪🇸",region:"欧洲",abbr:["es","esp","西","西班牙"],
+    visa:"240h 适用。",
+    pay:"卡 / Bizum / PayPal。",
+    diet:"火腿/海鲜饭；问忌口/过敏。",
+    comm:"南欧重温度重关系；先聊再买，放慢逼单。",
+    comms:"同美。",
+    trust:"重热情 / 体验。",
+    crowd:"家庭 / 朋友团。"},
+  IT:{zh:"意大利",fl:"🇮🇹",region:"欧洲",abbr:["it","ita","意","意大利"],
+    visa:"240h 适用。",
+    pay:"卡 / PayPal。",
+    diet:"美食国，意餐体验卖点；问忌口。",
+    comm:"热情但随意；重家庭感。",
+    comms:"同美。",
+    trust:"重文化/艺术；强调深度文化游。",
+    crowd:"家庭 / 情侣。"},
+  SE:{zh:"瑞典",fl:"🇸🇪",region:"欧洲",abbr:["se","swe","瑞典","北欧"],
+    visa:"240h 适用。",
+    pay:"卡 / Swish / PayPal。",
+    diet:"简约饮食；过敏/素食多。",
+    comm:"北欧要效率事实价格 upfront；话术早给细节。",
+    comms:"同美。",
+    trust:"重环保/平等/安全。",
+    crowd:"家庭 + 银发。"},
+  JP:{zh:"日本",fl:"🇯🇵",region:"东亚",abbr:["jp","jpn","日","日本"],
+    visa:"团队/个人游多需提前确认；话术按国籍分支，不套用欧美。",
+    pay:"信用卡 / 微信支付宝绑定国际卡；日本卡境外可用。",
+    diet:"生食/过敏（荞麦/海鲜）；问忌口；部分清真需求。",
+    comm:"极礼貌含蓄，很少直接说不；「考虑一下」可能是「不」，从提问/沉默判断真实意向。",
+    comms:"日本游客多用 LINE，落地可加 LINE 或微信。",
+    trust:"重礼仪/准时/细节；强调服务细致无购物。",
+    crowd:"银发团/家庭；少爬台阶替代。"},
+  KR:{zh:"韩国",fl:"🇰🇷",region:"东亚",abbr:["kr","kor","韩","韩国"],
+    visa:"互免已实施（2024 起阶段性）；话术直接恭喜免签+护照有效期。",
+    pay:"卡 / Naver Pay；微信支付宝绑定。",
+    diet:"泡菜/烤肉；问忌口；清真需求少但需注意。",
+    comm:"礼貌含蓄；重面子/关系；别当众施压。",
+    comms:"韩国用 KakaoTalk，落地可加或微信。",
+    trust:"重颜值/体验/安全；强调拍照点+无购物。",
+    crowd:"家庭 / 闺蜜团。"},
+  SG:{zh:"新加坡",fl:"🇸🇬",region:"东南亚",abbr:["sg","sgo","新","星","新加坡"],
+    visa:"互免，直接恭喜免签。",
+    pay:"卡 / PayNow / PayPal；微信支付宝通用。",
+    diet:"多元（华/马来/印）；清真/素食常见；问忌口。",
+    comm:"中英双语，效率；直接给方案。",
+    comms:"WA 可用（出国前）；境内微信/eSIM。",
+    trust:"重效率/安全/无购物。",
+    crowd:"家庭 + 朋友。"},
+  MY:{zh:"马来西亚",fl:"🇲🇾",region:"东南亚",abbr:["my","mas","马","马来","马来西亚"],
+    visa:"互免，恭喜免签。",
+    pay:"卡 / TnG / 微信支付宝。",
+    diet:"马来裔清真、华裔多元、印裔素食；清真预案必问。",
+    comm:"多元文化，亲切；重关系。",
+    comms:"WA 可用；境内微信。",
+    trust:"重清真/家庭；强调无酒精无猪肉预案。",
+    crowd:"家庭 + 银发。"},
+  TH:{zh:"泰国",fl:"🇹🇭",region:"东南亚",abbr:["th","tha","泰","泰国"],
+    visa:"互免，恭喜免签。",
+    pay:"卡 / PromptPay / 微信支付宝。",
+    diet:"泰餐（虾/花生/椰）；问过敏/忌口；清真区需清真。",
+    comm:"热情随和；重关系微笑。",
+    comms:"WA 可用；境内微信。",
+    trust:"重体验/安全；强调英文向导。",
+    crowd:"家庭 / 情侣 / 银发。"},
+  ID:{zh:"印尼",fl:"🇮🇩",region:"东南亚",abbr:["id","ind","印尼","印度尼西亚"],
+    visa:"互免（落地/免签政策），恭喜。",
+    pay:"卡 / GoPay / OVO / 微信支付宝。",
+    diet:"穆斯林为主，清真必问；无酒精。",
+    comm:"热情礼貌；重关系尊长。",
+    comms:"WA 可用（本国）；境内微信。",
+    trust:"重清真/家庭/安全；强调清真餐厅+礼拜设施。",
+    crowd:"家庭 + 银发 + 穆斯林团。"},
+  AE:{zh:"阿联酋",fl:"🇦🇪",region:"中东",abbr:["ae","uae","阿联酋","迪拜"],
+    visa:"互免，恭喜免签。",
+    pay:"卡 / Apple Pay；中东通道顺畅。",
+    diet:"穆斯林，清真+无酒精必问；斋月注意。",
+    comm:"重尊荣/礼貌；别公开谈宗教敏感。",
+    comms:"WA 可用；境内微信。",
+    trust:"重隐私/尊贵/安全；强调私人定制尊享。",
+    crowd:"家庭+高端团；斋月出行注意。"},
+  SA:{zh:"沙特",fl:"🇸🇦",region:"中东",abbr:["sa","ksa","沙特","沙特阿拉伯"],
+    visa:"电子签/落地签便利；话术给办理指引，不承诺结果。",
+    pay:"卡 / Apple Pay / STC Pay；中东通道。",
+    diet:"穆斯林，清真+无酒精（严格）；斋月极强。",
+    comm:"重宗教礼仪/尊卑；异性沟通适度；别逼单。",
+    comms:"WA 可用；境内微信。",
+    trust:"重宗教合规/隐私/安全；强调清真全程+礼拜设施。",
+    crowd:"家庭+男性商务；斋月规避或特别安排。"},
+  QA:{zh:"卡塔尔",fl:"🇶🇦",region:"中东",abbr:["qa","qat","卡塔尔"],
+    visa:"互免/落地签便利。",
+    pay:"卡 / Apple Pay。",
+    diet:"穆斯林清真无酒精；斋月注意。",
+    comm:"重尊贵礼貌；别公开饮酒。",
+    comms:"WA 可用；境内微信。",
+    trust:"重尊享/安全/隐私。",
+    crowd:"家庭 + 高端。"},
+  IL:{zh:"以色列",fl:"🇮🇱",region:"中东",abbr:["il","isr","以色列"],
+    visa:"需提前确认（部分可落地/电子）；按国籍分支，不套用。",
+    pay:"卡 / PayPal；通道顺畅。",
+    diet:"犹太洁食(kosher)部分需求；安息日（周五日落-周六）勿安排活动；问忌口。",
+    comm:"直接、爱辩论；重事实。",
+    comms:"WA 可用；境内微信。",
+    trust:"重安全（历史顾虑）/直率；强调安全向导。",
+    crowd:"家庭+宗教团；安息日安排注意。"},
+  IN:{zh:"印度",fl:"🇮🇳",region:"南亚",abbr:["in","india","印","印度"],
+    visa:"电子签(e-visa)常规；话术给指引，不承诺结果。",
+    pay:"卡 / UPI / 微信支付宝（部分）；Wise 可用。",
+    diet:"大量素食（印度教）；部分清真；牛禁忌（避免牛肉）；问忌口。",
+    comm:"重关系/价格敏感；爱砍价但重体验。",
+    comms:"WA 可用（本国）；境内微信。",
+    trust:"重家庭/性价比/安全；强调素食预案+无牛肉。",
+    crowd:"家庭+朋友大团；素食必问。"},
+  RU:{zh:"俄罗斯",fl:"🇷🇺",region:"欧洲",abbr:["ru","rus","俄","俄罗斯"],
+    visa:"团队免签/个人需邀请函；话术给邀请函协助。",
+    pay:"受制裁，Western 卡(MC/VISA)境内难用；备银行电汇/人民币通道/UnionPay。",
+    diet:"俄餐（肉类/面食）；问忌口。",
+    comm:"直接、重情谊；慢热。",
+    comms:"WA 可用；境内微信/Telegram。",
+    trust:"重安全/实惠；强调人民币结算便利。",
+    crowd:"家庭 + 银发团。"},
+  BR:{zh:"巴西",fl:"🇧🇷",region:"南美",abbr:["br","bra","巴西"],
+    visa:"需提前确认（部分已免签/电子）；按国籍分支。",
+    pay:"卡 / Pix / 微信支付宝。",
+    diet:"烤肉/豆饭；问忌口/过敏。",
+    comm:"拉美重温度重关系；先聊再买，放慢逼单。",
+    comms:"WA 可用（本国极常用）；境内微信。",
+    trust:"重热情/体验/安全。",
+    crowd:"家庭 + 朋友团。"},
+  MX:{zh:"墨西哥",fl:"🇲🇽",region:"南美",abbr:["mx","mex","墨西哥"],
+    visa:"需提前确认（美签持有常可转机）；按国籍分支。",
+    pay:"卡 / PayPal / 微信支付宝。",
+    diet:"玉米/辣椒/豆类；问忌口。",
+    comm:"拉美重关系温度；放慢逼单。",
+    comms:"WA 极常用；境内微信。",
+    trust:"重家庭/体验/安全。",
+    crowd:"家庭 + 朋友。"},
+  ZA:{zh:"南非",fl:"🇿🇦",region:"非洲",abbr:["za","zaf","南非"],
+    visa:"需提前确认（电子签/落地）；按国籍分支。",
+    pay:"卡 / 微信支付宝。",
+    diet:"多元；问忌口/过敏。",
+    comm:"直率、重事实；英语流利。",
+    comms:"WA 常用；境内微信。",
+    trust:"重安全（尤其野生动物团）/无购物。",
+    crowd:"家庭+银发+摄影团。"},
+  AR:{zh:"阿根廷",fl:"🇦🇷",region:"南美",abbr:["ar","arg","阿根廷"],
+    visa:"需提前确认（部分免签）；按国籍分支。",
+    pay:"卡 / Mercado Pago；通胀下重 USD 定价。",
+    diet:"牛排/马黛茶；问忌口。",
+    comm:"拉美重关系温度；放慢逼单。",
+    comms:"WA 常用；境内微信。",
+    trust:"重体验/安全/性价比。",
+    crowd:"家庭 + 朋友。"}
+};
+
+/* 英文名映射（补全英文关键词检索，如 korea / brazil） */
+const ENNAME={US:"united states america",UK:"united kingdom britain",CA:"canada",AU:"australia",NZ:"new zealand",DE:"germany",FR:"france",ES:"spain",IT:"italy",SE:"sweden",JP:"japan",KR:"korea",SG:"singapore",MY:"malaysia",TH:"thailand",ID:"indonesia",AE:"united arab emirates emirates",SA:"saudi arabia",QA:"qatar",IL:"israel",IN:"india",RU:"russia",BR:"brazil",MX:"mexico",ZA:"south africa",AR:"argentina"};
+
+/* ============ 状态 & 渲染 ============ */
+let mode="stage";
+let curStage="s1";
+let q="";
+
+function onSearch(){ q=document.getElementById("q").value.trim(); render(); }
+function setMode(m){ mode=m;
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.dataset.m===m));
+  document.getElementById("stageView").style.display=m==="stage"?"block":"none";
+  document.getElementById("countryView").style.display=m==="country"?"block":"none";
+  document.getElementById("scriptView").style.display=m==="script"?"block":"none";
+  render();
+}
+
+function esc(s){return (s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+function matchStage(st){
+  if(!q) return true;
+  const hay=(st.zh+st.sum+st.advice.join("")+st.cautions.join("")+st.countryTips+st.scripts.map(k=>SCRIPTS[k].title+SCRIPTS[k].text).join("")).toLowerCase();
+  return hay.includes(q.toLowerCase());
+}
+function matchCountry(c){
+  if(!q) return true;
+  const d=COUNTRIES[c];
+  const hay=(c+" "+d.zh+" "+d.region+" "+d.abbr.join(" ")+" "+(ENNAME[c]||"")+d.visa+d.pay+d.diet+d.comm+d.comms+d.trust+d.crowd).toLowerCase();
+  return hay.includes(q.toLowerCase());
+}
+function matchScript(k){
+  if(!q) return true;
+  const s=SCRIPTS[k];
+  return (s.cmd+" "+s.title+" "+s.text+" "+s.note).toLowerCase().includes(q.toLowerCase());
+}
+
+function render(){
+  if(mode==="stage") renderStage();
+  else if(mode==="country") renderCountry();
+  else renderScript();
+}
+
+function renderStage(){
+  const view=document.getElementById("stageView");
+  const list=STAGES.filter(matchStage);
+  let html='<div class="sec-title">① 谈单阶段指导 <small>从「刚加好友」到「成交售后」五步闭环 · 点阶段卡看详情</small></div>';
+  html+='<div class="stepper">';
+  list.forEach(st=>{
+    html+=`<div class="step ${st.id===curStage&&!q?'on':''}" onclick="openStage('${st.id}')">
+      <span class="n">${st.n}</span><h3>${st.icon} ${st.zh}</h3>
+      <p>${st.sum}</p></div>`;
+  });
+  html+='</div>';
+  if(q){ // 搜索态：直接列出所有命中阶段的详情
+    if(list.length===0) html+='<div class="empty">没有匹配「'+esc(q)+'」的阶段，换关键词试试。</div>';
+    list.forEach(st=>html+=stageDetail(st));
+  } else {
+    html+=stageDetail(STAGES.find(s=>s.id===curStage)||STAGES[0]);
+  }
+  view.innerHTML=html;
+  document.getElementById("cntPill").textContent=list.length+" 个阶段";
+}
+function openStage(id){ curStage=id; if(q){q="";document.getElementById("q").value="";} render(); }
+
+function stageDetail(st){
+  let h=`<div class="detail">
+    <div class="block"><h4>💡 谈单建议</h4><div class="b-adv"><ul class="tips">`;
+  st.advice.forEach(a=>h+=`<li>${esc(a)}</li>`);
+  h+=`</ul></div></div>`;
+  h+=`<div class="block"><h4>⚠️ 客服注意</h4><div class="b-cau"><ul class="tips">`;
+  st.cautions.forEach(c=>h+=`<li>${esc(c)}</li>`);
+  h+=`</ul></div></div>`;
+  if(st.id==="s4"){
+    h+=`<div class="block"><h4>🔔 跟进节奏（报价后）</h4><div class="timeline">
+      <div class="tl-node"><b>D1</b><span>轻触达：方案是否收到？可调</span></div>
+      <div class="tl-node"><b>D3</b><span>档期紧张可锁一下，不施压</span></div>
+      <div class="tl-node"><b>D7</b><span>不急，留门，低压力</span></div>
+      <div class="tl-node"><b>&gt;14天</b><span>转沉睡，低频次月触达</span></div></div></div>`;
+  }
+  h+=`<div class="block"><h4>💬 配套话术</h4>`;
+  st.scripts.forEach(k=>h+=scriptCard(k));
+  h+=`</div>`;
+  h+=`<div class="block"><h4>🌍 分国家差异提示</h4><div class="ctip">${esc(st.countryTips)}</div></div>`;
+  h+=`</div>`;
+  return h;
+}
+
+function scriptCard(k){
+  const s=SCRIPTS[k];
+  return `<div class="script">
+    <div class="top"><span class="cmd">${esc(s.cmd)}</span><span class="t">${esc(s.title)}</span>
+    ${s.star?'<span class="star">★ 标★口径问主管</span>':''}
+    <button class="copy" onclick="copyScript(this,'${k}')">复制</button></div>
+    <pre>${esc(s.text)}</pre>
+    <div class="note">📌 ${esc(s.note)}</div></div>`;
+}
+
+function renderCountry(){
+  const view=document.getElementById("countryView");
+  const list=Object.keys(COUNTRIES).filter(matchCountry);
+  let html='<div class="sec-title">② 分国家谈单注意 <small>7 维差异：签证分支 / 支付通道 / 饮食宗教 / 沟通风格 / 境内通讯 / 信任顾虑 / 人群结构 · 中英文/简写可搜</small></div>';
+  html+='<div class="grid">';
+  if(list.length===0) html+='<div class="empty">没有匹配「'+esc(q)+'」的国家，换关键词试试。</div>';
+  list.forEach(c=>{
+    const d=COUNTRIES[c];
+    html+=`<div class="ctry"><div class="ch"><span class="fl">${d.fl}</span>
+      <div><div class="nm">${d.zh}</div><div class="en">${c} · ${d.abbr.slice(0,2).join(" / ")}</div></div>
+      <span class="rg">${d.region}</span></div>
+      <dl class="dim">
+        <dt>签证</dt><dd>${esc(d.visa)}</dd>
+        <dt>支付</dt><dd>${esc(d.pay)}</dd>
+        <dt>饮食宗教</dt><dd>${esc(d.diet)}</dd>
+        <dt>沟通</dt><dd>${esc(d.comm)}</dd>
+        <dt>境内通讯</dt><dd>${esc(d.comms)}</dd>
+        <dt>信任</dt><dd>${esc(d.trust)}</dd>
+        <dt>人群</dt><dd>${esc(d.crowd)}</dd>
+      </dl>
+      <a class="taboo" href="各国文化禁忌速查.html" target="_blank">🔗 看该国文化禁忌详情 →</a>
+    </div>`;
+  });
+  html+='</div>';
+  view.innerHTML=html;
+  document.getElementById("cntPill").textContent=list.length+" 国";
+}
+
+function renderScript(){
+  const view=document.getElementById("scriptView");
+  const list=Object.keys(SCRIPTS).filter(matchScript);
+  let html='<div class="sec-title">③ 话术模板库 <small>WhatsApp 快捷回复可直接复制 · 标 ★ 口径先问主管 · 发送前必改 [[占位符]]</small></div>';
+  if(list.length===0) html+='<div class="empty">没有匹配「'+esc(q)+'」的话术，换关键词试试。</div>';
+  list.forEach(k=>html+=scriptCard(k));
+  view.innerHTML=html;
+  document.getElementById("cntPill").textContent=list.length+" 条话术";
+}
+
+function copyScript(btn,k){
+  const txt=SCRIPTS[k].text;
+  navigator.clipboard.writeText(txt).then(()=>{
+    btn.textContent="已复制 ✓"; btn.classList.add("done");
+    setTimeout(()=>{btn.textContent="复制";btn.classList.remove("done");},1400);
+  },()=>{ btn.textContent="复制失败"; });
+}
+
+render();
+</script>
+</body>
+</html>
