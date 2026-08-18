@@ -314,7 +314,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
         <button class="btn ghost mini" onclick="exportCSV()">导出 CSV</button>
         <button class="btn ghost mini" onclick="exportJSON()">导出备份</button>
         <button class="btn ghost mini" onclick="importJSON()">导入恢复</button>
-        <button class="btn ghost mini" onclick="clearSamples()">清空示例</button>
+        <button class="btn ghost mini" id="btnClearSamples" onclick="clearSamples()">清空示例</button>
         <button class="btn danger mini" onclick="clearAllLeads()">清空全部</button>
         <input id="importFile" type="file" accept="application/json" style="display:none" onchange="doImport(event)">
       </div>
@@ -672,7 +672,8 @@ function classify(l){
   if(n>t && n<=addDaysStr(t,2))return 'soon';
   return 'ok';
 }
-function renderAll(){renderUrgent();renderTable();renderStats();updateTopAlert();}
+function renderAll(){renderUrgent();renderTable();renderStats();updateTopAlert();syncSampleBtn();}
+function syncSampleBtn(){var b=document.getElementById('btnClearSamples');if(b&&!leads.some(function(x){return x._s;})){b.disabled=true;b.textContent='已无示例';b.style.opacity=.45;}}
 function renderStats(){
   var ym=todayStr().slice(0,7),win=0,add=0,live=0,todo=0;
   leads.forEach(function(l){
@@ -775,7 +776,15 @@ function doImport(e){
   r.onload=function(){try{var d=JSON.parse(r.result);if(!Array.isArray(d))throw 0;if(confirm('将导入 '+d.length+' 条客资，覆盖现有数据？')){leads=d;saveLeads();renderAll();alert('导入成功：'+d.length+' 条');}}catch(err){alert('文件格式有误，导入失败');}};
   r.readAsText(f);e.target.value='';
 }
-function clearSamples(){leads=leads.filter(function(x){return !x._s;});saveLeads();renderAll();alert('示例数据已清空，你的真实客资保留。');}
+function clearSamples(){
+  var before=leads.length;
+  leads=leads.filter(function(x){return !x._s;});
+  var removed=before-leads.length, kept=leads.length;
+  saveLeads();renderAll();
+  var b=document.getElementById('btnClearSamples');
+  if(b && !leads.some(function(x){return x._s;})){b.disabled=true;b.textContent='已无示例';b.style.opacity=.45;if(b.style)void b.style;}
+  alert('已移除 '+removed+' 条示例数据，你的真实客资（'+kept+' 条）已完整保留并继续跟进。');
+}
 function clearAllLeads(){if(confirm('确认清空全部客资？此操作不可恢复！')){if(confirm('再确认一次：真的清空所有客资记录？')){leads=[];saveLeads();renderAll();}}}
 
 /* ===================== 景点英语陪练打卡 ===================== */
