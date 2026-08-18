@@ -208,8 +208,14 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 .phrase{background:#faf5f8;border:1px solid var(--line);border-radius:9px;padding:9px 11px;margin-top:9px}
 .phrase .en-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .phrase .en{flex:1;font-weight:600;color:var(--ink);line-height:1.5}
+.phrase .btn-cluster{display:flex;align-items:center;gap:5px;flex-shrink:0}
 .phrase .speak-btn{flex-shrink:0;font-size:15px;line-height:1;padding:4px 7px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;transition:.15s}
 .phrase .speak-btn:hover{border-color:var(--brand);background:#fff5fa;transform:scale(1.05)}
+.phrase .rec-btn{flex-shrink:0;font-size:12px;font-weight:700;line-height:1;padding:5px 9px;border-radius:8px;border:1px solid var(--line);background:#fff;color:var(--ink);cursor:pointer;transition:.15s;white-space:nowrap}
+.phrase .rec-btn:hover{border-color:var(--brand);background:#fff5fa}
+.phrase .rec-btn.recording{background:var(--brand);color:#fff;border-color:var(--brand);animation:recPulse 1s infinite}
+.phrase .rec-btn.play{background:#fff;color:var(--brand);border-color:var(--brand)}
+@keyframes recPulse{0%{box-shadow:0 0 0 0 rgba(230,73,128,.5)}70%{box-shadow:0 0 0 8px rgba(230,73,128,0)}100%{box-shadow:0 0 0 0 rgba(230,73,128,0)}}
 .phrase .zh{color:var(--muted);margin-top:5px;font-size:12px}
 .phrase .pf{margin-top:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .phrase .mk{cursor:pointer;font-size:12px;font-weight:700;border-radius:7px;padding:4px 12px;border:1px solid var(--line);background:#fff;color:var(--brand)}
@@ -565,7 +571,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
   <!-- 6. SPOTS · 景点英语陪练打卡 -->
   <section id="spots" class="panel">
     <h2 class="sec"><span class="tag">陪练</span>入境游销售英语陪练打卡 · 把业务聊成英文（NEW）</h2>
-    <p class="sec-sub">覆盖景点讲解、日期时间、销售沟通、行程、车/酒店/餐/大交通/门票等高频谈单场景。每句英文可点 📢 朗读跟读，自己打 1–5🌟；逐句标记「已掌握」，未掌握优先抽卡练习。数据存本机浏览器。</p>
+    <p class="sec-sub">覆盖景点讲解、日期时间、销售沟通、行程、车/酒店/餐/大交通/门票等高频谈单场景。每句英文可点 📢 听标准音、点 🎙️ 录自己的跟读对比，再打 1–5🌟；逐句标记「已掌握」，未掌握优先抽卡练习。数据存本机浏览器。</p>
 
     <div class="spot-stats" id="spotStats"></div>
 
@@ -1035,6 +1041,43 @@ function starHtml(id, score){
 function hoverStar(id, score){ hoverStarId=id; var el=document.querySelector('.stars[data-id="'+id+'"]'); if(!el) return; var spans=el.querySelectorAll('.s'); for(var i=0;i<spans.length;i++){ spans[i].className=(i<score?'s hov':'s'); } }
 function rateStar(id, score){ spotStars[id]=score; spotSave(); renderSpots(); renderSpotStats(); }
 
+var spotRecUrl={}, spotRecState={}, spotRecMap={}, spotRecStream=null, spotAudios={};
+function recBtnHtml(id){
+  var st=spotRecState[id]||'idle';
+  if(st==='recording') return '<button id="rec_'+id+'" class="rec-btn recording" onclick="recToggle(\''+id+'\')">🔴 停止</button>';
+  if(st==='recorded') return '<button id="rec_'+id+'" class="rec-btn play" onclick="recToggle(\''+id+'\')">🔊 我的</button>';
+  return '<button id="rec_'+id+'" class="rec-btn" onclick="recToggle(\''+id+'\')">🎙️ 跟读</button>';
+}
+function recToggle(id){
+  var st=spotRecState[id]||'idle';
+  if(st==='recording'){ if(spotRecMap[id]) spotRecMap[id].stop(); return; }
+  if(st==='recorded'){ playMine(id); return; }
+  if(typeof MediaRecorder==='undefined' || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    alert('当前环境不支持录音。请用最新版 Chrome/Edge 或 Safari 14.1+，并通过 https 或 localhost（如线上版或本地预览）打开。'); return;
+  }
+  navigator.mediaDevices.getUserMedia({audio:true}).then(function(stream){
+    spotRecStream=stream;
+    var mr=new MediaRecorder(stream), chunks=[];
+    mr.ondataavailable=function(e){ if(e.data && e.data.size) chunks.push(e.data); };
+    mr.onstop=function(){
+      var blob=new Blob(chunks,{type:mr.mimeType||'audio/webm'});
+      if(spotRecUrl[id]) URL.revokeObjectURL(spotRecUrl[id]);
+      spotRecUrl[id]=URL.createObjectURL(blob); spotRecState[id]='recorded';
+      var b=document.getElementById('rec_'+id); if(b) b.outerHTML=recBtnHtml(id);
+      if(spotRecStream){ spotRecStream.getTracks().forEach(function(t){t.stop();}); spotRecStream=null; }
+      playMine(id);
+    };
+    spotRecMap[id]=mr; spotRecState[id]='recording';
+    var b=document.getElementById('rec_'+id); if(b) b.outerHTML=recBtnHtml(id);
+    mr.start();
+  }).catch(function(err){ alert('无法访问麦克风：'+(err&&err.message?err.message:err)+'\n请允许浏览器麦克风权限后重试。'); });
+}
+function playMine(id){
+  if(!spotRecUrl[id]) return;
+  if(spotAudios[id]){ try{ spotAudios[id].pause(); }catch(e){} }
+  var a=new Audio(spotRecUrl[id]); spotAudios[id]=a; a.play();
+}
+
 function computeStreak(){
   if(!spotDates.length) return 0;
   var set={}; spotDates.forEach(function(d){ set[d]=1; });
@@ -1118,7 +1161,7 @@ function phraseGrid(items){
   items.forEach(function(p){
     var on=!!spotMastery[p.id];
     html+='<div class="phrase'+(on?' mastered':'')+'">'
-      +'<div class="en-row"><div class="en">'+esc(p.en)+'</div><button id="spk_'+p.id+'" class="speak-btn" title="朗读" onclick="speak(\''+esc(p.en.replace(/'/g,"\\'"))+'\',\''+p.id+'\')">📢</button></div>'
+      +'<div class="en-row"><div class="en">'+esc(p.en)+'</div><span class="btn-cluster"><button id="spk_'+p.id+'" class="speak-btn" title="朗读" onclick="speak(\''+esc(p.en.replace(/'/g,"\\'"))+'\',\''+p.id+'\')">📢</button>'+recBtnHtml(p.id)+'</span></div>'
       +'<div class="zh">'+esc(p.zh)+'</div>'
       +'<div class="pf"><button class="mk'+(on?' on':'')+'" onclick="toggleSpotMastery(\''+p.id+'\')">'+(on?'✓ 已掌握':'标记掌握')+'</button>'+starHtml(p.id, spotStars[p.id]||0)+'</div>'
       +'</div>';
@@ -1144,7 +1187,7 @@ function renderPracticeCard(){
   }
   var p=spotQueue[spotIdx];
   box.innerHTML='<div class="pbar">进度 '+(spotIdx+1)+' / '+spotQueue.length+'　（未掌握优先）</div>'
-    +'<div class="pc"><div class="q">'+esc(p.zh)+'</div><div class="a" id="pa">'+esc(p.en)+' <button class="speak-btn" title="朗读" onclick="speak(\''+esc(p.en.replace(/'/g,"\\'"))+'\')">📢</button></div><div class="hint">👆 先在心里说出英文，再点「看英文」对照；点开 📢 听标准发音跟读</div></div>'
+    +'<div class="pc"><div class="q">'+esc(p.zh)+'</div><div class="a" id="pa">'+esc(p.en)+' <button class="speak-btn" title="朗读" onclick="speak(\''+esc(p.en.replace(/'/g,"\\'"))+'\')">📢</button> '+recBtnHtml(p.id)+'</div><div class="hint">👆 先在心里说出英文，再点「看英文」对照；点 📢 听标准音，点 🎙️ 录自己的跟读对比</div></div>'
     +'<div class="pbtns"><button class="btn ghost" onclick="practiceReveal()">看英文</button>'
     +'<button class="btn primary" id="prOk" style="display:none" onclick="practiceResult(true)">记得 ✓</button>'
     +'<button class="btn danger" id="prNo" style="display:none" onclick="practiceResult(false)">忘了 ✗</button></div>';
