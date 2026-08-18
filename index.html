@@ -805,7 +805,7 @@ document.querySelectorAll('a[href^="#mod"]').forEach(a=>{
 load();bind();loadLeads();renderAll();initRoutes();
 
 /* access gate: 改下面 WB_PW 为你自己的口令（客户端遮挡，仅挡普通访客，不能当真加密） */
-var WB_PW="lisa888";
+var WB_PW="china888";
 function checkPW(){var v=document.getElementById('pw').value;if(v===WB_PW){document.getElementById('gate').style.display='none';try{localStorage.setItem('wb_ok','1');}catch(e){}}else{document.getElementById('gerr').textContent='口令错误，请重试';}}
 try{if(localStorage.getItem('wb_ok')==='1'){document.getElementById('gate').style.display='none';}}catch(e){}
 document.getElementById('pw').addEventListener('keydown',function(e){if(e.key==='Enter')checkPW();});
