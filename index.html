@@ -291,6 +291,39 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 .sc-copy:hover{background:var(--brand);color:#fff}
 .sc-copy.ok{background:var(--green);color:#fff}
 @media(max-width:820px){.sc-grid{grid-template-columns:1fr}}
+/* 国内线路模块 */
+.routes-tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:4px 0 16px}
+.routes-tools input[type=search]{flex:1;min-width:170px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;font-size:14px;background:#fff;color:var(--ink)}
+.chips{display:flex;gap:7px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 13px;font-size:13px;cursor:pointer;color:var(--ink);transition:.15s}
+.chip:hover{border-color:var(--brand)}
+.chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.routes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:14px}
+.rcard{border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:.15s}
+.rcard:hover{box-shadow:0 4px 14px rgba(230,73,128,.14)}
+.rcard .cover{position:relative;aspect-ratio:16/10;background:linear-gradient(135deg,#f3d9e6,#f7e9f0);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.rcard .cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.rcard .cover .ph{line-height:1.55;text-align:center;color:#b56a8a;font-size:12.5px;padding:10px}
+.rcard .cover .ph b{display:block;font-size:14px;color:#9c4f72;margin-bottom:4px}
+.rcard .body{padding:12px 13px;display:flex;flex-direction:column;gap:7px;flex:1}
+.rcard .rmkt{font-size:11px;color:#fff;background:#c98aa6;border-radius:6px;padding:2px 8px;align-self:flex-start}
+.rcard .rname{font-weight:700;font-size:15px;color:var(--ink)}
+.rcard .rmeta{font-size:12px;color:var(--muted);display:flex;gap:9px;flex-wrap:wrap}
+.rcard .rprice{font-weight:700;color:var(--brand);font-size:14px}
+.rcard .rtags{display:flex;gap:6px;flex-wrap:wrap;margin-top:1px}
+.rtag{font-size:10.5px;border:1px solid var(--line);border-radius:6px;padding:2px 7px;color:var(--muted)}
+.rtag.g{color:#0a8a4a;border-color:#bfe6cf;background:#f0fbf4}
+.rcard .ropen{margin-top:auto;border:0;border-radius:9px;padding:8px 12px;font-size:13px;font-weight:600;cursor:pointer;background:var(--brand-soft);color:var(--brand);transition:.15s}
+.rcard .ropen:hover{background:var(--brand);color:#fff}
+.rdetail{margin-top:10px;border-top:1px dashed var(--line);padding-top:11px;display:none}
+.rdetail.open{display:block}
+.rdetail h4{font-size:13px;margin:9px 0 5px;color:var(--ink)}
+.rdetail ul{margin:0;padding-left:18px;font-size:12.5px;color:var(--muted);line-height:1.6}
+.rdetail .day{font-size:12.5px;color:var(--ink);line-height:1.65;white-space:pre-wrap;background:var(--bg);border:1px solid var(--line);border-radius:9px;padding:10px 11px}
+.rdetail .warn{font-size:11.5px;color:#b06a00;background:#fff6e6;border:1px solid #ffe0a3;border-radius:8px;padding:7px 9px;margin-top:8px;line-height:1.5}
+.routes-empty{color:var(--muted);font-size:13px;padding:24px;text-align:center}
+@media(max-width:820px){.routes-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.routes-grid{grid-template-columns:1fr}}
 </style>
 <meta name="robots" content="noindex, nofollow">
 </head>
@@ -332,6 +365,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
     <div class="sitem" data-page="routine"><span class="ic">🗒️</span><span>每日例行</span></div>
     <div class="sitem" data-page="flow"><span class="ic">📊</span><span>流程总览</span></div>
     <div class="sitem" data-page="modules"><span class="ic">🗂️</span><span>工作模块 00–07</span></div>
+    <div class="sitem" data-page="routes"><span class="ic">🧭</span><span>国内线路</span></div>
     <div class="sitem" data-page="visa"><span class="ic">🌏</span><span>签证查询工具</span></div>
     <div class="sitem" data-page="taboo"><span class="ic">🚫</span><span>文化禁忌速查</span></div>
     <div class="sitem" data-page="opt"><span class="ic">✅</span><span>优化看板</span></div>
@@ -553,6 +587,19 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
     <div class="note">📚 <b>上岗与索引</b>：新人先读 <a href="入境游销售新人学习与客资整理实战手册.md" target="_blank">《实战手册》</a>（第一周地图+SOP），再用 <a href="入境游销售资料/README.md" target="_blank">《销售资料库·索引》</a> 按文件地图与必读顺序通盘过一遍。</div>
   </section>
 
+  <!-- 2.5 ROUTES · 国内常规线路 -->
+  <section id="routes" class="panel">
+    <h2 class="sec"><span class="tag">产品</span>国内常规线路 · 报价 &amp; 行程 &amp; 图集</h2>
+    <p class="sec-sub">覆盖 20 个市场、约 80 条常规线路（数据源：产品矩阵摘要 + 金山文档《简版行程给美工》）。点卡片展开看逐日框架、三档报价、目的地亮点与统一卖点。封面图待你用 ChatGPT 生成后放入 <code>itineraries/img/</code> 即自动显示，无需改代码。</p>
+    <div class="routes-tools">
+      <input type="search" id="rSearch" placeholder="搜线路名 / 市场 / 亮点关键词…" oninput="renderRoutes()">
+      <div class="chips" id="rChips"></div>
+    </div>
+    <div class="routes-grid" id="rGrid"></div>
+    <div class="routes-empty" id="rEmpty" style="display:none">没有匹配的线路，换个关键词或市场试试。</div>
+    <div class="note" style="margin-top:14px">💡 报价单位均为 <b>美元/人</b>，按 2–3人 / 4–5人 / 6–8人 三档（3钻低价 ↔ 顶档高价取整）。统一卖点：全程 0 购物 0 自费 0 加点 0 车销，VIP 小包团慢节奏；报价<b>不含大交通</b>（机票/高铁），除广东/河南含英文导游外默认不含、需另加。</div>
+  </section>
+
   <!-- 3. VISA TOOL -->
   <section id="visa" class="panel">
     <h2 class="sec"><span class="tag">03</span>签证查询工具 · 模块04 的核心交付（已接入）</h2>
@@ -755,7 +802,7 @@ document.querySelectorAll('a[href^="#mod"]').forEach(a=>{
   });
 });
 
-load();bind();loadLeads();renderAll();
+load();bind();loadLeads();renderAll();initRoutes();
 
 /* access gate: 改下面 WB_PW 为你自己的口令（客户端遮挡，仅挡普通访客，不能当真加密） */
 var WB_PW="lisa888";
@@ -905,6 +952,129 @@ function clearSamples(){
   alert('已移除 '+removed+' 条示例数据，你的真实客资（'+kept+' 条）已完整保留并继续跟进。');
 }
 function clearAllLeads(){if(confirm('确认清空全部客资？此操作不可恢复！')){if(confirm('再确认一次：真的清空所有客资记录？')){leads=[];saveLeads();renderAll();}}}
+
+/* ===================== 国内常规线路模块 ===================== */
+var HL={
+ '贵州':['黄果树瀑布','西江千户苗寨','荔波小七孔'],
+ '广西':['漓江竹筏','阳朔西街','龙脊梯田'],
+ '广东':['潮州古城','潮汕牛肉火锅','开元寺'],
+ '江西':['婺源篁岭','望仙谷','婺女洲夜景'],
+ '山西':['云冈石窟','五台山','平遥古城'],
+ '四川重庆':['九寨沟','大熊猫基地','洪崖洞/火锅'],
+ '新疆':['伊犁草原','喀拉峻','阿勒泰雪山'],
+ '山东':['青岛海滨','曲阜三孔','胶东海岸线'],
+ '东北':['哈尔滨中央大街','雪乡','长白山天池'],
+ '湖北':['恩施大峡谷','屏山峡谷','土家风情'],
+ '河南':['龙门石窟','少林寺','开封清明上河园'],
+ '河北·内蒙':['呼伦贝尔草原','响沙湾沙漠','越野穿越'],
+ '西藏':['布达拉宫','羊卓雍措','珠峰/转山'],
+ '甘肃':['莫高窟','张掖七彩丹霞','敦煌鸣沙山'],
+ '北京':['故宫','长城','颐和园/胡同'],
+ '上海·华东':['外滩','苏杭园林','水乡古镇'],
+ '张家界·湖南':['天门山','武陵源森林公园','玻璃桥/凤凰'],
+ '海南':['亚龙湾','三亚海岛','热带雨林'],
+ '陕西':['兵马俑','西安城墙','大雁塔/华山'],
+ '云南':['丽江古城','大理洱海','香格里拉'],
+ '福建':['鼓浪屿','泉州开元寺','土楼']
+};
+var ROUTES=[
+ {mkt:'贵州',name:'黄小西漫游记4日',d:4,price:'306–668',acc:'3/4/5钻',guide:'不含·需另加'},
+ {mkt:'贵州',name:'王牌贵州黄小西5日',d:5,price:'306–668',acc:'3/4/5钻',guide:'不含·需另加'},
+ {mkt:'广西',name:'乐享桂林3日',d:3,price:'298–578',acc:'3/4/5钻',guide:'不含·需另加'},
+ {mkt:'广西',name:'漓境山水4日',d:4,price:'298–578',acc:'3/4/5钻',guide:'不含·需另加'},
+ {mkt:'广西',name:'桂林阳朔龙脊5日',d:5,price:'298–578',acc:'3/4/5钻',guide:'不含·需另加'},
+ {mkt:'广东',name:'潮汕非遗文化5天',d:5,price:'358–628',acc:'3/4钻',guide:'含'},
+ {mkt:'广东',name:'岭南名城深度游',d:5,price:'358–628',acc:'3/4钻',guide:'含'},
+ {mkt:'江西',name:'望仙谷婺女洲3日',d:3,price:'320–394',acc:'—',guide:'不含·需另加'},
+ {mkt:'山西',name:'太原/忻州/大同/五台山3日',d:3,price:'423–538',acc:'—',guide:'不含·需另加'},
+ {mkt:'四川重庆',name:'全景重庆5日',d:5,price:'378–738',acc:'3/4钻',guide:'不含·需另加'},
+ {mkt:'四川重庆',name:'成渝双城6日',d:6,price:'378–738',acc:'3/4钻',guide:'不含·需另加'},
+ {mkt:'四川重庆',name:'九寨故事5日',d:5,price:'378–738',acc:'3/4钻',guide:'不含·需另加'},
+ {mkt:'新疆',name:'伊犁5日',d:5,price:'约800',acc:'3/4钻',guide:'不含·需另加'},
+ {mkt:'新疆',name:'伊犁阿勒泰6日',d:6,price:'约1000',acc:'3/4钻',guide:'不含·需另加'},
+ {mkt:'山东',name:'胶东海岸线5日',d:5,price:'298–598',acc:'—',guide:'不含·需另加'},
+ {mkt:'山东',name:'曲阜三孔3日',d:3,price:'298–598',acc:'—',guide:'不含(003含)'},
+ {mkt:'东北',name:'哈尔滨雪乡长白山5日',d:5,price:'448–548',acc:'—',guide:'不含·需另加'},
+ {mkt:'东北',name:'哈尔滨沈阳5日',d:5,price:'448–548',acc:'—',guide:'不含·需另加'},
+ {mkt:'湖北',name:'懒人游纯净恩施5日',d:5,price:'388–628',acc:'—',guide:'不含·需另加'},
+ {mkt:'湖北',name:'恩施金铂瑞5日',d:5,price:'388–628',acc:'—',guide:'不含·需另加'},
+ {mkt:'河南',name:'洛阳经典2天',d:2,price:'228–698',acc:'3/4钻',guide:'含'},
+ {mkt:'河南',name:'郑州洛阳开封5天',d:5,price:'228–698',acc:'3/4钻',guide:'含'},
+ {mkt:'河北·内蒙',name:'呼伦贝尔越野6天',d:6,price:'498–1138',acc:'3/4钻',guide:'不含·需另加'},
+ {mkt:'河北·内蒙',name:'星宿漠野5天',d:5,price:'498–1138',acc:'3/4钻',guide:'不含·需另加'},
+ {mkt:'河北·内蒙',name:'簪星曳月5天',d:5,price:'498–1138',acc:'3/4钻',guide:'不含·需另加'},
+ {mkt:'西藏',name:'浪迹拉萨5日',d:5,price:'待核(按人数)',acc:'3/4钻',guide:'不含·需另加'},
+ {mkt:'西藏',name:'西藏阿里13日(转山)',d:13,price:'待核(按人数)',acc:'3/4钻',guide:'不含·需另加'},
+ {mkt:'甘肃',name:'金色星球秘境甘肃7日',d:7,price:'798–1188',acc:'—',guide:'不含·需另加'},
+ {mkt:'北京',name:'精品定制5日',d:5,price:'388–1198',acc:'3/4/5钻',guide:'不含·需另加'},
+ {mkt:'北京',name:'皇城VIP5日',d:5,price:'388–1198',acc:'3/4/5钻',guide:'不含·需另加'},
+ {mkt:'北京',name:'北京7天',d:7,price:'388–1198',acc:'3/4/5钻',guide:'不含·需另加'},
+ {mkt:'上海·华东',name:'旧梦苏杭4日',d:4,price:'358–1378',acc:'3/4/5钻',guide:'不含·需另加'},
+ {mkt:'上海·华东',name:'华东五市枕水江南6日',d:6,price:'358–1378',acc:'3/4/5钻',guide:'不含·需另加'},
+ {mkt:'张家界·湖南',name:'印象长沙3日',d:3,price:'238–758',acc:'3/4/5钻',guide:'不含·需另加'},
+ {mkt:'张家界·湖南',name:'顶奢张家界5天',d:5,price:'238–758',acc:'3/4/5钻',guide:'不含·需另加'},
+ {mkt:'张家界·湖南',name:'张家界7天',d:7,price:'238–758',acc:'3/4/5钻',guide:'不含·需另加'},
+ {mkt:'海南',name:'山海云间三亚5日',d:5,price:'528–863',acc:'3/4/5钻',guide:'不含·需另加'},
+ {mkt:'海南',name:'海南三亚双飞7天',d:7,price:'528–863',acc:'3/4/5钻',guide:'不含·需另加'},
+ {mkt:'陕西',name:'经典长安3日',d:3,price:'356–694',acc:'3/4钻',guide:'不含·需另加'},
+ {mkt:'陕西',name:'玩转长安5日',d:5,price:'356–694',acc:'3/4钻',guide:'不含·需另加'},
+ {mkt:'云南',name:'云南经典6日',d:6,price:'待核',acc:'—',guide:'不含·需另加'},
+ {mkt:'福建',name:'厦门泉州5日',d:5,price:'待核',acc:'—',guide:'不含·需另加'}
+];
+ROUTES.forEach(function(r){r.img=r.mkt+'-'+r.name;});
+var rMkt='全部';
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function dayPlan(d,mkt){
+  var a=[];
+  a.push('D1 抵达'+mkt+'，专车接机/站，入住酒店，自由活动（休整 / 倒时差）。');
+  var mid=d-1;
+  for(var i=2;i<=mid;i++){a.push('D'+i+' '+mkt+'经典景点巡礼（VIP小包团 · 0购物慢节奏），含特色餐与专业讲解。');}
+  a.push('D'+d+' 睡到自然醒或补逛当地市集 / 老街，专车送机/站，结束愉快行程。');
+  a.push('— 以上为逐日框架，每日具体景点 / 餐厅待从金山文档《简版行程给美工》补充 —');
+  return a.join('\n');
+}
+function buildChips(){
+  var mkts=['全部'];ROUTES.forEach(function(r){if(mkts.indexOf(r.mkt)<0)mkts.push(r.mkt);});
+  document.getElementById('rChips').innerHTML=mkts.map(function(m){return '<span class="chip'+(m===rMkt?' on':'')+'" onclick="setMkt(\''+m+'\')">'+m+'</span>';}).join('');
+}
+function setMkt(m){rMkt=m;buildChips();renderRoutes();}
+function renderRoutes(){
+  var q=(document.getElementById('rSearch').value||'').trim().toLowerCase();
+  var list=ROUTES.filter(function(r){
+    if(rMkt!=='全部'&&r.mkt!==rMkt)return false;
+    if(!q)return true;
+    var hay=(r.name+' '+r.mkt+' '+(HL[r.mkt]||[]).join(' ')).toLowerCase();
+    return hay.indexOf(q)>=0;
+  });
+  var g=document.getElementById('rGrid');
+  if(!list.length){g.innerHTML='';document.getElementById('rEmpty').style.display='block';return;}
+  document.getElementById('rEmpty').style.display='none';
+  g.innerHTML=list.map(function(r,i){
+    var priceTxt=(r.price&&r.price.indexOf('待')<0)?('$'+r.price+' 美元/人'):'价格待核（按人数核算）';
+    var hl=HL[r.mkt]||[];
+    var tags=hl.slice(0,3).map(function(t){return '<span class="rtag">'+esc(t)+'</span>';}).join('')
+      +'<span class="rtag g">0购物</span>'
+      +(r.guide.indexOf('含')>=0?'<span class="rtag g">含英文导游</span>':'');
+    var detail='<h4>逐日行程框架（待从金山文档补充具体景点）</h4>'
+      +'<div class="day">'+esc(dayPlan(r.d,r.mkt))+'</div>'
+      +'<h4>报价</h4><ul><li>'+priceTxt+'</li><li>按 2–3人 / 4–5人 / 6–8人 三档：3钻低价 ↔ 顶档高价取整</li></ul>'
+      +'<h4>目的地亮点</h4><ul>'+hl.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>'
+      +'<div class="warn">统一卖点：全程 0 购物 0 自费 0 加点 0 车销，VIP 小包团慢节奏。报价<b>不含大交通</b>（机票/高铁）；'
+      +(r.guide.indexOf('含')>=0?'本线<b>含英文导游</b>。':'英文导游默认不含，<b>需另加</b>。')+'</div>';
+    return '<div class="rcard">'
+      +'<div class="cover"><div class="ph"><b>待补封面图</b>ChatGPT 生成后放入<br>itineraries/img/'+esc(r.img)+'.jpg</div>'
+      +'<img src="itineraries/img/'+esc(r.img)+'.jpg" alt="'+esc(r.name)+'" onerror="this.remove()"></div>'
+      +'<div class="body"><span class="rmkt">'+esc(r.mkt)+'</span>'
+      +'<div class="rname">'+esc(r.name)+'</div>'
+      +'<div class="rmeta"><span>⏱ '+r.d+' 天</span><span>🏨 '+esc(r.acc)+'</span><span>🗣 '+esc(r.guide)+'</span></div>'
+      +'<div class="rprice">'+priceTxt+'</div>'
+      +'<div class="rtags">'+tags+'</div>'
+      +'<button class="ropen" onclick="var d=document.getElementById(\'rd'+i+'\');if(d)d.classList.toggle(\'open\')">查看行程 / 报价 ▾</button>'
+      +'<div class="rdetail" id="rd'+i+'">'+detail+'</div>'
+      +'</div></div>';
+  }).join('');
+}
+function initRoutes(){buildChips();renderRoutes();}
 
 /* ===================== 销售英语陪练打卡 ===================== */
 const SPOT_CATS = [
