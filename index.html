@@ -186,21 +186,21 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 @media(max-width:820px){.leadtable{overflow-x:auto}.leadtable table{min-width:760px}}
 .note.warn{background:#fff1f0;border-color:#f3c2bc}
 
-/* ===== 景点英语陪练打卡 ===== */
+/* ===== 销售英语陪练打卡 ===== */
 .spot-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:14px 0 18px}
 .spot-stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow);text-align:center}
 .spot-stat .v{font-size:26px;font-weight:800;color:var(--brand);line-height:1.15}
 .spot-stat .l{font-size:12px;color:var(--muted);margin-top:4px}
 .spot-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-.spot-tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.spot-tab{background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
+.spot-tabs{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.spot-tab{background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:7px 14px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
 .spot-tab:hover{border-color:var(--brand);color:var(--brand)}
 .spot-tab.on{background:var(--brand);color:#fff;border-color:var(--brand)}
-.spot-route{margin-bottom:22px}
-.spot-route .ri{background:linear-gradient(135deg,#fde7f0,#fff5fa);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:12px}
-.spot-route .ri h3{margin:0 0 3px;font-size:15px;color:var(--brand)}
-.spot-route .ri p{margin:0;font-size:12.5px;color:var(--muted)}
-.spot-route .ri .pitch{margin-top:8px;font-size:12.5px;color:var(--ink);background:#fff;border:1px dashed var(--line);border-radius:8px;padding:8px 10px;line-height:1.5}
+.spot-subtabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;padding-left:4px}
+.spot-subtabs .spot-tab{font-size:12px;padding:5px 12px;background:#fff;border-style:dashed}
+.spot-cat-h{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--brand);margin:16px 0 8px}
+.spot-cat-h .cnt{font-size:11px;color:var(--muted);font-weight:600;background:#f3f4f6;padding:2px 8px;border-radius:999px}
+.spot-sub-h{font-size:13px;font-weight:700;color:var(--ink);margin:12px 0 6px;padding-left:8px;border-left:3px solid var(--brand)}
 .spot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
 .spot-card{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--brand);border-radius:12px;padding:14px 15px;box-shadow:var(--shadow)}
 .spot-card h4{margin:0 0 2px;font-size:14px;display:flex;align-items:center;gap:8px}
@@ -264,7 +264,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
     <div class="sitem" data-page="visa"><span class="ic">🌏</span><span>签证查询工具</span></div>
     <div class="sitem" data-page="taboo"><span class="ic">🚫</span><span>文化禁忌速查</span></div>
     <div class="sitem" data-page="opt"><span class="ic">✅</span><span>优化看板</span></div>
-    <div class="sitem" data-page="spots"><span class="ic">🗣️</span><span>景点英语陪练</span></div>
+    <div class="sitem" data-page="spots"><span class="ic">🗣️</span><span>销售英语陪练</span></div>
   </aside>
   <div class="content">
 
@@ -556,8 +556,8 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 
   <!-- 6. SPOTS · 景点英语陪练打卡 -->
   <section id="spots" class="panel">
-    <h2 class="sec"><span class="tag">陪练</span>景点英语陪练打卡 · 把景点变成可讲的英文（NEW）</h2>
-    <p class="sec-sub">基于张家界 / 潮汕 / 港沪 主线，把景点写成「销售可讲的英文卖点 + 导览词」。每日打卡记录连续天数，逐句标记「已掌握」，未掌握优先抽卡练习。数据存本机浏览器。</p>
+    <h2 class="sec"><span class="tag">陪练</span>入境游销售英语陪练打卡 · 把业务聊成英文（NEW）</h2>
+    <p class="sec-sub">覆盖景点讲解、日期时间、销售沟通、行程、车/酒店/餐/大交通/门票等高频谈单场景。逐句标记「已掌握」，未掌握优先抽卡练习。数据存本机浏览器。</p>
 
     <div class="spot-stats" id="spotStats"></div>
 
@@ -567,18 +567,14 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
       <button class="btn ghost" onclick="resetMastery()">↺ 重置掌握标记</button>
     </div>
 
-    <div class="spot-tabs" id="spotTabs">
-      <div class="spot-tab on" data-r="all" onclick="setSpotRoute('all')">全部</div>
-      <div class="spot-tab" data-r="zjj" onclick="setSpotRoute('zjj')">张家界</div>
-      <div class="spot-tab" data-r="cs" onclick="setSpotRoute('cs')">潮汕</div>
-      <div class="spot-tab" data-r="gh" onclick="setSpotRoute('gh')">港沪</div>
-    </div>
+    <div class="spot-tabs" id="spotTabs"></div>
+    <div class="spot-subtabs" id="spotSubTabs"></div>
 
     <div id="spotList"></div>
 
     <div id="spotPractice" class="spot-practice" style="display:none"></div>
 
-    <div class="note">💡 用法：每天打开先点「今日打卡」养连续天数；背完一句点「标记掌握」；想测试记忆用「抽卡练习」，看中文说英文、再点「看英文」对照。句子可随业务继续扩（加新景点只需在数据中加一条）。</div>
+    <div class="note">💡 用法：每天打开先点「今日打卡」养连续天数；背完一句点「标记掌握」；想测试记忆用「抽卡练习」，看中文说英文、再点「看英文」对照。句子会随业务继续扩。</div>
   </section>
 
   <footer>
@@ -787,99 +783,220 @@ function clearSamples(){
 }
 function clearAllLeads(){if(confirm('确认清空全部客资？此操作不可恢复！')){if(confirm('再确认一次：真的清空所有客资记录？')){leads=[];saveLeads();renderAll();}}}
 
-/* ===================== 景点英语陪练打卡 ===================== */
-const SPOT_ROUTES = [
-  { id:"zjj", name:"张家界", en:"Zhangjiajie", region:"湖南 · 阿凡达山水现实版",
-    pitch:[
-      `Zhangjiajie is China's real-life "Avatar" landscape — over 3,000 quartz peaks rising from misty valleys.`,
-      `Dramatic, otherworldly, and far less crowded than the big cities — a top pick for first-time China visitors.`
-    ],
-    spots:[
-      { name:"张家界国家森林公园", en:"Zhangjiajie National Forest Park", phrases:[
-        { en:`Zhangjiajie National Forest Park is home to more than 3,000 quartz-sandstone peaks rising straight out of the ground.`, zh:`张家界国家森林公园有 3000 多根石英砂岩峰柱拔地而起。` },
-        { en:`This is the real-life inspiration for the floating "Hallelujah Mountains" in James Cameron's Avatar.`, zh:`这里就是电影《阿凡达》悬浮"哈利路亚山"的现实取景原型。` }
-      ]},
-      { name:"袁家界", en:"Yuanjiajie", phrases:[
-        { en:`Yuanjiajie is where you'll see the Avatar Hallelujah Mountain and the "First Bridge under Heaven".`, zh:`袁家界有阿凡达哈利路亚山和天然石桥"天下第一桥"。` }
-      ]},
-      { name:"天门山", en:"Tianmen Mountain", phrases:[
-        { en:`Tianmen Mountain has the world's longest passenger cable car and a thrilling glass skywalk.`, zh:`天门山拥有世界最长客运索道和惊险的玻璃栈道。` },
-        { en:`At the summit sits Tianmen Cave, a huge natural arch punched through the cliff — the "Gateway to Heaven".`, zh:`山顶的天门洞是穿山而过的巨大天然拱门，被称为"通天之门"。` }
-      ]},
-      { name:"玻璃栈道", en:"Glass Skywalk", phrases:[
-        { en:`The glass-bottom skywalk clings to a cliff edge 1,400 meters up — not for the faint of heart!`, zh:`玻璃栈道贴附在 1400 米高的悬崖边，胆小者慎入！` }
-      ]},
-      { name:"金鞭溪", en:"Golden Whip Stream", phrases:[
-        { en:`Golden Whip Stream is a flat, easy valley walk along clear water — perfect for families and seniors.`, zh:`金鞭溪是平缓的溪谷步道，溪水清澈，适合带娃家庭和长者。` }
-      ]},
-      { name:"天子山", en:"Tianzi Mountain", phrases:[
-        { en:`Tianzi Mountain gives you the classic sea-of-clouds panorama over the sandstone peaks.`, zh:`天子山可俯瞰砂岩峰林云海的经典全景。` }
-      ]}
-    ]
-  },
-  { id:"cs", name:"潮汕", en:"Chaoshan", region:"广东 · 美食与侨乡故里",
-    pitch:[
-      `Chaoshan is China's capital of Teochew cuisine — beef hotpot, gongfu tea, and street snacks loved worldwide.`,
-      `It's also the ancestral homeland of millions of overseas Chinese, especially across Southeast Asia.`
-    ],
-    spots:[
-      { name:"汕头老城", en:"Shantou Old Town", phrases:[
-        { en:`Shantou's old town is a rare surviving cluster of 1920s arcade (qilou) buildings — a window into overseas Chinese history.`, zh:`汕头老城保留着罕见的 1920 年代骑楼建筑群，是华侨历史的窗口。` }
-      ]},
-      { name:"南澳岛", en:"Nan'ao Island", phrases:[
-        { en:`Nan'ao is a breezy island with blue bays, a lighthouse, and fresh seafood — best outside typhoon season (Jun–Sep).`, zh:`南澳岛有蔚蓝海湾、灯塔和海鲜，建议避开 6–9 月台风季。` }
-      ]},
-      { name:"潮州古城", en:"Chaozhou Ancient City", phrases:[
-        { en:`Chaozhou Ancient City is the cultural heart of Teochew heritage — Ming-dynasty walls, the Guangji Bridge, and old teahouses.`, zh:`潮州古城是潮汕文化核心：明代城墙、广济桥和百年茶馆。` }
-      ]},
-      { name:"牌坊街", en:"Paifang Street", phrases:[
-        { en:`Paifang Street is lined with memorial archways and street food — the best place to taste authentic Teochew snacks.`, zh:`牌坊街林立着石牌坊与小吃，是尝地道潮汕味道的最佳去处。` }
-      ]},
-      { name:"工夫茶", en:"Teochew Gongfu Tea", phrases:[
-        { en:`Teochew gongfu tea is a slow, ritualistic brewing art — we'll sit with locals and learn the proper pour.`, zh:`潮汕工夫茶是一门慢工细活的冲泡艺术，我们会和当地人一起学斟茶。` }
-      ]},
-      { name:"牛肉火锅", en:"Chaoshan Beef Hotpot", phrases:[
-        { en:`Chaoshan beef hotpot uses same-day beef sliced paper-thin and blanched seconds — a must for foodies.`, zh:`潮汕牛肉火锅用当天现宰牛肉切薄片、几秒烫熟，是吃货必试。` }
-      ]}
-    ]
-  },
-  { id:"gh", name:"港沪", en:"Hong Kong + Shanghai", region:"中国双城记 · 东方之珠 + 魔都",
-    pitch:[
-      `Hong Kong and Shanghai are China's two most iconic cities — East-meets-West energy and skyline perfection.`,
-      `Pair them for a "two-Chinas" trip: colonial heritage and harbor glamour meets a futuristic metropolis.`
-    ],
-    spots:[
-      { name:"太平山顶", en:"Victoria Peak (HK)", phrases:[
-        { en:`Victoria Peak offers the postcard view of Hong Kong's skyline and harbor — ride the historic Peak Tram up.`, zh:`太平山顶可俯瞰香港天际线与维港，搭乘百年山顶缆车上山。` }
-      ]},
-      { name:"维多利亚港", en:"Victoria Harbour (HK)", phrases:[
-        { en:`Victoria Harbour's "Symphony of Lights" is a nightly free light-and-sound show across the skyline.`, zh:`维港"幻彩咏香江"是每晚免费的天际线灯光音乐汇演。` }
-      ]},
-      { name:"旺角", en:"Mong Kok (HK)", phrases:[
-        { en:`Mong Kok is the buzzing heart of local street life — neon, markets, and the best dai pai dong eats.`, zh:`旺角是本地街头的烟火中心：霓虹、市集与最地道的排档美食。` }
-      ]},
-      { name:"外滩", en:"The Bund (Shanghai)", phrases:[
-        { en:`The Bund is Shanghai's riverside promenade of 1920s buildings facing the futuristic Lujiazui skyline.`, zh:`外滩是上海滨江的 1920 年代建筑群，正对陆家嘴摩天楼天际线。` }
-      ]},
-      { name:"豫园", en:"Yu Garden (Shanghai)", phrases:[
-        { en:`Yu Garden is a 400-year-old classical Suzhou-style garden with rockeries, pavilions, and a lively old town.`, zh:`豫园是 400 年历史的苏州式古典园林，亭台假山外是热闹的老城厢。` }
-      ]},
-      { name:"南京路", en:"Nanjing Road (Shanghai)", phrases:[
-        { en:`Nanjing Road is one of the world's busiest shopping streets — a window into Shanghai's modern energy.`, zh:`南京路是全球最繁忙的购物街之一，尽显上海的都市活力。` }
-      ]},
-      { name:"田子坊", en:"Tianzifang (Shanghai)", phrases:[
-        { en:`Tianzifang is a maze of lane-house alleys turned into boutiques and cafés — great for souvenirs and photos.`, zh:`田子坊是弄堂改建的创意街区，小店咖啡馆林立，适合淘纪念品和拍照。` }
-      ]}
-    ]
-  }
+/* ===================== 销售英语陪练打卡 ===================== */
+const SPOT_CATS = [
+  {id:'scenic', name:'景点讲解', icon:'🏞️', subs:[
+    {id:'bj', name:'北京', intro:'Beijing — the Great Wall and Forbidden City.'},
+    {id:'xa', name:'西安', intro:"Xi'an — 2,000-year-old warriors and city walls."},
+    {id:'sh', name:'上海', intro:'Shanghai — East-meets-West skyline by the river.'},
+    {id:'hz', name:'杭州', intro:'Hangzhou — the West Lake and tea hills.'},
+    {id:'zjj', name:'张家界', intro:'Zhangjiajie — the real-life Avatar mountains.'},
+    {id:'gl', name:'桂林', intro:'Guilin — the most famous karst river views in China.'},
+    {id:'lj', name:'丽江', intro:'Lijiang — old town, snow mountain and Naxi culture.'},
+    {id:'cd', name:'成都/九寨', intro:'Chengdu & Jiuzhaigou — pandas and rainbow lakes.'},
+    {id:'cq', name:'重庆', intro:'Chongqing — hotpot, light shows and mountain city views.'},
+    {id:'xz', name:'西藏', intro:'Tibet — Potala Palace and high-plateau landscapes.'},
+    {id:'cs', name:'潮汕', intro:'Chaoshan — Teochew food and overseas-Chinese heritage.'},
+    {id:'hk', name:'香港', intro:'Hong Kong — harbor skyline and street life.'}
+  ]},
+  {id:'date', name:'日期时间', icon:'📅', subs:null},
+  {id:'chat', name:'销售沟通', icon:'💬', subs:null},
+  {id:'trip', name:'行程安排', icon:'🗺️', subs:null},
+  {id:'car',  name:'车/用车',  icon:'🚐', subs:null},
+  {id:'hotel',name:'酒店标准', icon:'🏨', subs:null},
+  {id:'meal', name:'餐/饮食',  icon:'🍜', subs:null},
+  {id:'trans',name:'大交通',   icon:'✈️', subs:null},
+  {id:'ticket',name:'门票',    icon:'🎫', subs:null}
 ];
-var ALL_PHRASES=[];
-SPOT_ROUTES.forEach(function(r){ r.spots.forEach(function(s){ s.phrases.forEach(function(p){ p.id="ph_"+ALL_PHRASES.length; p.routeId=r.id; ALL_PHRASES.push(p); }); }); });
 
-var SPOT_MK_KEY="inboundWB_spot_mk", SPOT_DT_KEY="inboundWB_spot_dt";
-var spotMastery={}, spotDates=[], spotRoute="all", spotQueue=[], spotIdx=0;
-function spotLoad(){ try{ spotMastery=JSON.parse(localStorage.getItem(SPOT_MK_KEY)||"{}")||{}; }catch(e){ spotMastery={}; } try{ spotDates=JSON.parse(localStorage.getItem(SPOT_DT_KEY)||"[]")||[]; }catch(e){ spotDates=[]; } }
+const SPOT_PHRASES = [
+  // 北京
+  {cat:'scenic', sub:'bj', en:`Mutianyu Great Wall is less crowded and easy to walk.`, zh:`慕田峪长城人少、好走。`},
+  {cat:'scenic', sub:'bj', en:`The Forbidden City was the imperial palace for 600 years.`, zh:`故宫是 600 年皇家宫殿。`},
+  {cat:'scenic', sub:'bj', en:`Tiananmen Square is the world's largest city square.`, zh:`天安门广场是世界最大城市广场。`},
+  {cat:'scenic', sub:'bj', en:`Beijing roast duck is a must-try dinner.`, zh:`北京烤鸭是必吃晚餐。`},
+  // 西安
+  {cat:'scenic', sub:'xa', en:`The Terracotta Army has over 8,000 life-size clay soldiers.`, zh:`兵马俑有 8000 多个真人大小陶俑。`},
+  {cat:'scenic', sub:'xa', en:`You can bike on the old city wall of Xi'an.`, zh:`可在西安古城墙上骑行。`},
+  {cat:'scenic', sub:'xa', en:`Big Wild Goose Pagoda is a 1,300-year-old Buddhist tower.`, zh:`大雁塔是 1300 年历史的佛塔。`},
+  {cat:'scenic', sub:'xa', en:`The Muslim Quarter is great for local street food.`, zh:`回民街是本地小吃好去处。`},
+  // 上海
+  {cat:'scenic', sub:'sh', en:`The Bund shows old European buildings by the river.`, zh:`外滩是滨江欧式老建筑。`},
+  {cat:'scenic', sub:'sh', en:`Yu Garden is a 400-year-old classical garden.`, zh:`豫园是 400 年古典园林。`},
+  {cat:'scenic', sub:'sh', en:`Nanjing Road is one of the busiest shopping streets.`, zh:`南京路是最繁忙的购物街之一。`},
+  {cat:'scenic', sub:'sh', en:`Lujiazui has the famous Shanghai skyline.`, zh:`陆家嘴有上海标志性天际线。`},
+  // 杭州
+  {cat:'scenic', sub:'hz', en:`West Lake is the most famous lake in China.`, zh:`西湖是中国最著名的湖。`},
+  {cat:'scenic', sub:'hz', en:`Longjing tea comes from the hills around Hangzhou.`, zh:`龙井茶产自杭州周边茶山。`},
+  {cat:'scenic', sub:'hz', en:`Lingyin Temple is one of China's oldest Buddhist temples.`, zh:`灵隐寺是中国最古老佛寺之一。`},
+  // 张家界
+  {cat:'scenic', sub:'zjj', en:`The forest park has over 3,000 tall rock pillars.`, zh:`森林公园有 3000 多根高耸石柱。`},
+  {cat:'scenic', sub:'zjj', en:`Yuanjiajie is where Avatar mountains come to life.`, zh:`袁家界是阿凡达山原型。`},
+  {cat:'scenic', sub:'zjj', en:`Tianmen Mountain has the world's longest cable car.`, zh:`天门山有世界最长索道。`},
+  {cat:'scenic', sub:'zjj', en:`The glass walkway hangs on a 1,400m cliff.`, zh:`玻璃栈道挂在 1400 米悬崖上。`},
+  {cat:'scenic', sub:'zjj', en:`Golden Whip Stream is an easy walk by clear water.`, zh:`金鞭溪是沿清水的轻松步道。`},
+  // 桂林
+  {cat:'scenic', sub:'gl', en:`The Li River has the most beautiful karst hills.`, zh:`漓江有最美的喀斯特山。`},
+  {cat:'scenic', sub:'gl', en:`Yangshuo is great for biking and river rafting.`, zh:`阳朔适合骑行和漂流。`},
+  {cat:'scenic', sub:'gl', en:`Elephant Trunk Hill looks like an elephant drinking.`, zh:`象鼻山像大象饮水。`},
+  {cat:'scenic', sub:'gl', en:`West Street has bars, cafés and live music.`, zh:`西街有酒吧、咖啡馆和现场音乐。`},
+  // 丽江
+  {cat:'scenic', sub:'lj', en:`Lijiang Old Town has cobblestone lanes and canals.`, zh:`丽江古城有石板路和小桥流水。`},
+  {cat:'scenic', sub:'lj', en:`Jade Dragon Snow Mountain rises above 5,000m.`, zh:`玉龙雪山海拔 5000 米以上。`},
+  {cat:'scenic', sub:'lj', en:`Blue Moon Valley has incredibly blue water.`, zh:`蓝月谷的水蓝得惊人。`},
+  // 成都/九寨
+  {cat:'scenic', sub:'cd', en:`Chengdu Panda Base lets you see pandas up close.`, zh:`成都熊猫基地可近距离看熊猫。`},
+  {cat:'scenic', sub:'cd', en:`Kuanzhai Alleys mix old lanes with teahouses.`, zh:`宽窄巷子是茶馆林立的古巷。`},
+  {cat:'scenic', sub:'cd', en:`Jiuzhaigou has rainbow-colored lakes and waterfalls.`, zh:`九寨沟有五彩湖泊和瀑布。`},
+  {cat:'scenic', sub:'cd', en:`Chengdu hotpot is spicy and famous worldwide.`, zh:`成都火锅麻辣闻名世界。`},
+  // 重庆
+  {cat:'scenic', sub:'cq', en:`Hongyadong looks like a cliff-side lantern village at night.`, zh:`洪崖洞夜晚像悬崖上的灯笼村。`},
+  {cat:'scenic', sub:'cq', en:`Three Natural Bridges is a giant karst valley from a movie.`, zh:`天生三桥是电影取景的巨型喀斯特峡谷。`},
+  {cat:'scenic', sub:'cq', en:`The Yangtze River Cableway gives great city views.`, zh:`长江索道可看城市美景。`},
+  {cat:'scenic', sub:'cq', en:`Chongqing hotpot is even spicier than Chengdu's.`, zh:`重庆火锅比成都更辣。`},
+  // 西藏
+  {cat:'scenic', sub:'xz', en:`Potala Palace is the landmark palace of Tibet.`, zh:`布达拉宫是西藏标志性宫殿。`},
+  {cat:'scenic', sub:'xz', en:`Jokhang Temple is the spiritual heart of Lhasa.`, zh:`大昭寺是拉萨精神中心。`},
+  {cat:'scenic', sub:'xz', en:`We plan a slow ascent to avoid altitude sickness.`, zh:`我们缓慢上升以防高原反应。`},
+  // 潮汕
+  {cat:'scenic', sub:'cs', en:`Shantou Old Town has 1920s arcade buildings.`, zh:`汕头老城有 1920 年代骑楼。`},
+  {cat:'scenic', sub:'cs', en:`Nan'ao Island has blue sea and fresh seafood.`, zh:`南澳岛有蓝海和海鲜。`},
+  {cat:'scenic', sub:'cs', en:`Chaozhou Ancient City has old walls and the Guangji Bridge.`, zh:`潮州古城有古城墙和广济桥。`},
+  {cat:'scenic', sub:'cs', en:`Teochew gongfu tea is a slow, careful tea art.`, zh:`潮汕工夫茶是慢工茶艺。`},
+  {cat:'scenic', sub:'cs', en:`Chaoshan beef hotpot uses fresh, thin-sliced beef.`, zh:`潮汕牛肉火锅用新鲜薄切牛肉。`},
+  // 香港
+  {cat:'scenic', sub:'hk', en:`Victoria Peak gives the best skyline view.`, zh:`太平山顶天际线最佳。`},
+  {cat:'scenic', sub:'hk', en:`Victoria Harbour has a free light show every night.`, zh:`维港每晚有免费灯光秀。`},
+  {cat:'scenic', sub:'hk', en:`Mong Kok is full of street markets and food.`, zh:`旺角充满街市和美食。`},
+
+  // 日期时间
+  {cat:'date', en:`Which month do you plan to travel?`, zh:`您计划几月出行？`},
+  {cat:'date', en:`How many days would you like?`, zh:`您想玩几天？`},
+  {cat:'date', en:`We can start the tour tomorrow.`, zh:`我们明天可以开始行程。`},
+  {cat:'date', en:`The day after tomorrow is fine too.`, zh:`后天也可以。`},
+  {cat:'date', en:`The trip starts next week.`, zh:`行程下周开始。`},
+  {cat:'date', en:`We have slots this month.`, zh:`这个月还有名额。`},
+  {cat:'date', en:`Next month is peak season for China travel.`, zh:`下个月是中国游旺季。`},
+  {cat:'date', en:`Weekends are busier for attractions.`, zh:`周末景点更挤。`},
+  {cat:'date', en:`During holidays, hotels cost more.`, zh:`节假日酒店更贵。`},
+  {cat:'date', en:`Let me confirm the dates with you.`, zh:`我跟您确认下日期。`},
+  {cat:'date', en:`We should book early — two weeks ahead is best.`, zh:`建议尽早预订，提前两周最好。`},
+  {cat:'date', en:`What time does your flight land?`, zh:`您的航班几点到？`},
+  {cat:'date', en:`We'll meet in the morning / afternoon / evening.`, zh:`我们上午/下午/晚上碰面。`},
+  {cat:'date', en:`Autumn is the best season to visit China.`, zh:`秋天是中国游最佳季节。`},
+  {cat:'date', en:`All of China is on one time zone.`, zh:`全中国同一时区。`},
+
+  // 销售沟通
+  {cat:'chat', en:`Hello! Welcome to China travel. How can I help?`, zh:`您好！欢迎咨询中国游，有什么可以帮您？`},
+  {cat:'chat', en:`I'm Lisa, your travel consultant for China.`, zh:`我是 Lisa，您的中国旅行顾问。`},
+  {cat:'chat', en:`We are a licensed inbound travel agency in China.`, zh:`我们是中国持牌入境旅行社。`},
+  {cat:'chat', en:`May I know your travel dates and group size?`, zh:`方便告知出行日期和人数吗？`},
+  {cat:'chat', en:`What's your budget per person?`, zh:`人均预算大概多少？`},
+  {cat:'chat', en:`What do you enjoy most — nature, culture, or food?`, zh:`您更爱自然、文化还是美食？`},
+  {cat:'chat', en:`Here is a quote for your group.`, zh:`这是给您团队的报价。`},
+  {cat:'chat', en:`The price includes hotel, car, guide, and tickets.`, zh:`价格含酒店、用车、导游和门票。`},
+  {cat:'chat', en:`Flights and personal spending are not included.`, zh:`机票和个人消费不含。`},
+  {cat:'chat', en:`We ask for a 30% deposit to confirm the booking.`, zh:`确认预订需付 30% 定金。`},
+  {cat:'chat', en:`We accept bank transfer and PayPal.`, zh:`我们接受银行转账和 PayPal。`},
+  {cat:'chat', en:`Most visitors can enter China visa-free for up to 30 days now.`, zh:`现在多数游客可免签入境 30 天。`},
+  {cat:'chat', en:`Just checking in — any questions about the plan?`, zh:`跟进一下，行程有疑问吗？`},
+  {cat:'chat', en:`The early-bird price ends this Friday.`, zh:`早鸟价本周五截止。`},
+  {cat:'chat', en:`Shall I lock in the dates for you?`, zh:`要我帮您锁定日期吗？`},
+  {cat:'chat', en:`Great! I'll send the invoice now.`, zh:`好的！我马上发发票。`},
+  {cat:'chat', en:`No problem, we can change the dates.`, zh:`没问题，可以改期。`},
+  {cat:'chat', en:`The deposit is refundable up to 30 days before.`, zh:`定金出发前 30 天可退。`},
+  {cat:'chat', en:`We'd love a review after your trip!`, zh:`行程结束欢迎给我们评价！`},
+  {cat:'chat', en:`Save our WeChat — message me anytime during the trip.`, zh:`存好我们微信，行程中随时联系我。`},
+
+  // 行程安排
+  {cat:'trip', en:`We offer private tours, not big group buses.`, zh:`我们做私人定制，不走大团。`},
+  {cat:'trip', en:`This is a private tour just for your group.`, zh:`这是只为您团队的私人行程。`},
+  {cat:'trip', en:`You'll have a driver and an English guide.`, zh:`配备司机和英文导游。`},
+  {cat:'trip', en:`We keep a relaxed pace — no rushing.`, zh:`我们节奏轻松，不赶路。`},
+  {cat:'trip', en:`Tomorrow morning is free time for you.`, zh:`明天上午是您的自由活动时间。`},
+  {cat:'trip', en:`We'll pick you up at the airport.`, zh:`我们提供机场接机。`},
+  {cat:'trip', en:`Let's meet in the hotel lobby at 9 a.m.`, zh:`我们上午 9 点在酒店大堂集合。`},
+  {cat:'trip', en:`The tour is 7 days and 6 nights.`, zh:`行程为 7 天 6 晚。`},
+  {cat:'trip', en:`We'll take a high-speed train between cities.`, zh:`城市间我们坐高铁。`},
+  {cat:'trip', en:`We can adjust the plan as we go.`, zh:`行程可以边走边调。`},
+  {cat:'trip', en:`We have child-friendly activities.`, zh:`我们有适合孩子的安排。`},
+  {cat:'trip', en:`The pace is easy for seniors.`, zh:`节奏适合长者。`},
+  {cat:'trip', en:`No forced shopping on our tours.`, zh:`我们行程不强制购物。`},
+  {cat:'trip', en:`We handle your luggage between hotels.`, zh:`酒店间行李我们帮您搬。`},
+
+  // 车/用车
+  {cat:'car', en:`We use business vans for 4–6 guests.`, zh:`4–6 人我们用商务车。`},
+  {cat:'car', en:`For bigger groups we arrange a coach.`, zh:`大团我们安排中巴。`},
+  {cat:'car', en:`The driver speaks basic English and is very safe.`, zh:`司机英文基础、驾驶安全。`},
+  {cat:'car', en:`The car is at your service 10 hours a day.`, zh:`车辆每天服务 10 小时。`},
+  {cat:'car', en:`Extra hours are charged at a small rate.`, zh:`超时按少量加收。`},
+  {cat:'car', en:`Airport transfer is included.`, zh:`含接送机。`},
+  {cat:'car', en:`There's plenty of space for your luggage.`, zh:`行李空间充足。`},
+  {cat:'car', en:`We can provide child seats on request.`, zh:`可按需提供儿童座椅。`},
+  {cat:'car', en:`Free Wi-Fi is in the car.`, zh:`车内有免费 Wi-Fi。`},
+  {cat:'car', en:`We provide free bottled water daily.`, zh:`每天提供免费矿泉水。`},
+
+  // 酒店标准
+  {cat:'hotel', en:`We book 4–5 star hotels for you.`, zh:`我们为您订 4–5 星酒店。`},
+  {cat:'hotel', en:`Hotels are in the city center or near the sights.`, zh:`酒店在市中心或景点附近。`},
+  {cat:'hotel', en:`Breakfast is included at all hotels.`, zh:`酒店全含早餐。`},
+  {cat:'hotel', en:`We can arrange twin or king beds.`, zh:`可安排双床或大床。`},
+  {cat:'hotel', en:`Family rooms are available for 3 guests.`, zh:`三人家庭房可安排。`},
+  {cat:'hotel', en:`We book non-smoking rooms by default.`, zh:`默认订无烟房。`},
+  {cat:'hotel', en:`Early check-in can be arranged.`, zh:`可安排提前入住。`},
+  {cat:'hotel', en:`We give better rates for longer stays.`, zh:`连住有更优价格。`},
+  {cat:'hotel', en:`All our hotels have good guest reviews.`, zh:`我们酒店评价都很好。`},
+  {cat:'hotel', en:`Hotels have Wi-Fi and air conditioning.`, zh:`酒店有 Wi-Fi 和空调。`},
+
+  // 餐/饮食
+  {cat:'meal', en:`Daily breakfast is included.`, zh:`含每日早餐。`},
+  {cat:'meal', en:`We can add lunch or dinner if you like.`, zh:`如需可加午晚餐。`},
+  {cat:'meal', en:`Meals are authentic Chinese cuisine.`, zh:`餐食为正宗中餐。`},
+  {cat:'meal', en:`We can adjust the spice level for you.`, zh:`辣度可按您调整。`},
+  {cat:'meal', en:`Vegetarian meals are no problem.`, zh:`素食没问题。`},
+  {cat:'meal', en:`Halal food can be arranged.`, zh:`可安排清真餐。`},
+  {cat:'meal', en:`Tell us any food allergies.`, zh:`请告知任何食物过敏。`},
+  {cat:'meal', en:`We include a local specialty dinner.`, zh:`含一顿当地特色餐。`},
+  {cat:'meal', en:`A hotpot night is a fun option.`, zh:`火锅之夜是个有趣的选项。`},
+  {cat:'meal', en:`We'll take you to try street snacks.`, zh:`带您尝地道小吃。`},
+  {cat:'meal', en:`Drink bottled water, not tap water.`, zh:`请喝瓶装水，勿饮生水。`},
+  {cat:'meal', en:`Tipping is not required in China.`, zh:`中国不需付小费。`},
+
+  // 大交通
+  {cat:'trans', en:`China's high-speed trains are fast and on time.`, zh:`中国高铁快且准点。`},
+  {cat:'trans', en:`We book second class by default — clean and comfy.`, zh:`默认订二等座，干净舒适。`},
+  {cat:'trans', en:`First class is available for more space.`, zh:`一等座空间更大可选。`},
+  {cat:'trans', en:`Business class has lie-flat seats.`, zh:`商务座可平躺。`},
+  {cat:'trans', en:`Train tickets sell out fast in holiday weeks.`, zh:`节假日车票很快售罄。`},
+  {cat:'trans', en:`We can book domestic flights for you.`, zh:`可为您订国内机票。`},
+  {cat:'trans', en:`There are direct flights between the cities.`, zh:`城市间有直飞航班。`},
+  {cat:'trans', en:`Check your baggage allowance with the airline.`, zh:`请按航司查行李额度。`},
+  {cat:'trans', en:`Flight changes depend on the fare rules.`, zh:`机票改签看票规。`},
+  {cat:'trans', en:`We'll connect your flight with the hotel transfer.`, zh:`航班与接送酒店无缝衔接。`},
+  {cat:'trans', en:`We'll meet you at the arrival hall.`, zh:`我们在到达大厅接您。`},
+
+  // 门票
+  {cat:'ticket', en:`All attraction tickets are included.`, zh:`所有景点门票全含。`},
+  {cat:'ticket', en:`Popular sites need advance booking.`, zh:`热门景点需提前预约。`},
+  {cat:'ticket', en:`Kids and seniors get discounted tickets.`, zh:`儿童长者有优惠票。`},
+  {cat:'ticket', en:`Under-6 children enter free.`, zh:`6 岁以下儿童免票。`},
+  {cat:'ticket', en:`Bring your passport for ticket pick-up.`, zh:`取票请带护照。`},
+  {cat:'ticket', en:`We use skip-the-line tickets where possible.`, zh:`尽量用免排队快速票。`},
+  {cat:'ticket', en:`Most sites open at 8:30 a.m.`, zh:`多数景点早 8:30 开放。`},
+  {cat:'ticket', en:`Some museums close on Mondays.`, zh:`部分博物馆周一闭馆。`},
+  {cat:'ticket', en:`Cable car tickets are included at the mountain.`, zh:`山上缆车票已含。`},
+  {cat:'ticket', en:`Your guide explains each site in English.`, zh:`导游用英文讲解每个景点。`}
+];
+
+var ALL_PHRASES=[];
+SPOT_PHRASES.forEach(function(p, i){ p.id='ph_'+i; ALL_PHRASES.push(p); });
+
+var SPOT_MK_KEY='inboundWB_spot_mk', SPOT_DT_KEY='inboundWB_spot_dt';
+var spotMastery={}, spotDates=[], spotCat='all', spotSub='all', spotQueue=[], spotIdx=0;
+
+function spotLoad(){ try{ spotMastery=JSON.parse(localStorage.getItem(SPOT_MK_KEY)||'{}')||{}; }catch(e){ spotMastery={}; } try{ spotDates=JSON.parse(localStorage.getItem(SPOT_DT_KEY)||'[]')||[]; }catch(e){ spotDates=[]; } }
 function spotSave(){ localStorage.setItem(SPOT_MK_KEY,JSON.stringify(spotMastery)); localStorage.setItem(SPOT_DT_KEY,JSON.stringify(spotDates)); }
+
 function computeStreak(){
   if(!spotDates.length) return 0;
   var set={}; spotDates.forEach(function(d){ set[d]=1; });
@@ -892,47 +1009,94 @@ function renderSpotStats(){
   var total=ALL_PHRASES.length;
   var mastered=ALL_PHRASES.filter(function(p){return spotMastery[p.id];}).length;
   var pct= total? Math.round(mastered/total*100):0;
-  var el=document.getElementById("spotStats"); if(!el) return;
-  el.innerHTML= spotStat(computeStreak(),"连续打卡(天)")+spotStat(spotDates.length,"累计打卡(天)")+spotStat(mastered+"/"+total,"已掌握")+spotStat(pct+"%","掌握率");
-  var btn=document.getElementById("checkinBtn");
-  if(btn){ var done=spotDates.indexOf(todayStr())>=0; btn.disabled=done; btn.textContent= done? "✅ 今日已打卡":"✅ 今日打卡"; }
+  var el=document.getElementById('spotStats'); if(!el) return;
+  el.innerHTML= spotStat(computeStreak(),'连续打卡(天)')+spotStat(spotDates.length,'累计打卡(天)')+spotStat(mastered+'/'+total,'已掌握')+spotStat(pct+'%','掌握率');
+  var btn=document.getElementById('checkinBtn');
+  if(btn){ var done=spotDates.indexOf(todayStr())>=0; btn.disabled=done; btn.textContent= done? '✅ 今日已打卡':'✅ 今日打卡'; }
+}
+function renderTabs(){
+  var tabs=document.getElementById('spotTabs'); if(!tabs) return;
+  var html='<div class="spot-tab'+(spotCat==='all'?' on':'')+'" onclick="setSpotCat(\'all\')">全部</div>';
+  SPOT_CATS.forEach(function(c){
+    html+='<div class="spot-tab'+(spotCat===c.id?' on':'')+'" onclick="setSpotCat(\''+c.id+'\')">'+esc(c.icon+' '+c.name)+'</div>';
+  });
+  tabs.innerHTML=html;
+  var subBox=document.getElementById('spotSubTabs'); if(!subBox) return;
+  var catObj=SPOT_CATS.find(function(c){return c.id===spotCat;});
+  if(!catObj || !catObj.subs){ subBox.innerHTML=''; subBox.style.display='none'; return; }
+  subBox.style.display='flex';
+  var shtml='<div class="spot-tab'+(spotSub==='all'?' on':'')+'" onclick="setSpotSub(\'all\')">全部</div>';
+  catObj.subs.forEach(function(s){
+    shtml+='<div class="spot-tab'+(spotSub===s.id?' on':'')+'" onclick="setSpotSub(\''+s.id+'\')">'+esc(s.name)+'</div>';
+  });
+  subBox.innerHTML=shtml;
+}
+function filteredPhrases(){
+  return ALL_PHRASES.filter(function(p){
+    if(spotCat!=='all' && p.cat!==spotCat) return false;
+    if(spotCat==='scenic' && spotSub!=='all' && p.sub!==spotSub) return false;
+    return true;
+  });
 }
 function renderSpots(){
-  var box=document.getElementById("spotList"); if(!box) return;
-  var routes= spotRoute==="all"? SPOT_ROUTES : SPOT_ROUTES.filter(function(r){return r.id===spotRoute;});
-  var html="";
-  routes.forEach(function(r){
-    html+='<div class="spot-route"><div class="ri"><h3>'+esc(r.name)+' · '+esc(r.en)+'</h3><p>'+esc(r.region)+'</p>';
-    if(r.pitch&&r.pitch.length){ html+='<div class="pitch"><b>路线英文卖点：</b><br>'+r.pitch.map(function(p){return "• "+esc(p);}).join("<br>")+'</div>'; }
-    html+='</div><div class="spot-grid">';
-    r.spots.forEach(function(s){
-      html+='<div class="spot-card"><h4>'+esc(s.name)+' <span class="en">'+esc(s.en)+'</span></h4>';
-      s.phrases.forEach(function(p){
-        var on=!!spotMastery[p.id];
-        html+='<div class="phrase'+(on?" mastered":"")+'">'
-          +'<div class="en">'+esc(p.en)+'</div>'
-          +'<div class="zh">'+esc(p.zh)+'</div>'
-          +'<div class="pf"><button class="mk'+(on?" on":"")+'" onclick="toggleSpotMastery(\''+p.id+'\')">'+(on?"✓ 已掌握":"标记掌握")+'</button></div>'
-          +'</div>';
-      });
-      html+='</div>';
+  var box=document.getElementById('spotList'); if(!box) return;
+  var list=filteredPhrases();
+  var html='';
+  if(spotCat==='all'){
+    SPOT_CATS.forEach(function(c){
+      var items=list.filter(function(p){return p.cat===c.id;});
+      if(!items.length) return;
+      html+='<div class="spot-cat-h">'+esc(c.icon+' '+c.name)+'<span class="cnt">'+items.length+' 句</span></div>';
+      if(c.subs){
+        c.subs.forEach(function(s){
+          var subItems=items.filter(function(p){return p.sub===s.id;});
+          if(!subItems.length) return;
+          html+='<div class="spot-sub-h">'+esc(s.name)+' · '+esc(s.intro)+'</div><div class="spot-grid">'+phraseGrid(subItems)+'</div>';
+        });
+      } else {
+        html+='<div class="spot-grid">'+phraseGrid(items)+'</div>';
+      }
     });
-    html+='</div></div>';
-  });
+  } else {
+    var catObj=SPOT_CATS.find(function(c){return c.id===spotCat;});
+    if(catObj && catObj.subs){
+      catObj.subs.forEach(function(s){
+        if(spotSub!=='all' && s.id!==spotSub) return;
+        var subItems=list.filter(function(p){return p.sub===s.id;});
+        if(!subItems.length) return;
+        html+='<div class="spot-sub-h">'+esc(s.name)+' · '+esc(s.intro)+'</div><div class="spot-grid">'+phraseGrid(subItems)+'</div>';
+      });
+    } else {
+      html+='<div class="spot-grid">'+phraseGrid(list)+'</div>';
+    }
+  }
   box.innerHTML=html;
 }
+function phraseGrid(items){
+  var html='';
+  items.forEach(function(p){
+    var on=!!spotMastery[p.id];
+    html+='<div class="phrase'+(on?' mastered':'')+'">'
+      +'<div class="en">'+esc(p.en)+'</div>'
+      +'<div class="zh">'+esc(p.zh)+'</div>'
+      +'<div class="pf"><button class="mk'+(on?' on':'')+'" onclick="toggleSpotMastery(\''+p.id+'\')">'+(on?'✓ 已掌握':'标记掌握')+'</button></div>'
+      +'</div>';
+  });
+  return html;
+}
 function toggleSpotMastery(id){ spotMastery[id]=!spotMastery[id]; spotSave(); renderSpots(); renderSpotStats(); }
-function setSpotRoute(r){ spotRoute=r; document.querySelectorAll(".spot-tab").forEach(function(t){ t.classList.toggle("on",t.getAttribute("data-r")===r); }); renderSpots(); }
+function setSpotCat(c){ spotCat=c; spotSub='all'; renderTabs(); renderSpots(); }
+function setSpotSub(s){ spotSub=s; renderTabs(); renderSpots(); }
 function spotCheckIn(){ var t=todayStr(); if(spotDates.indexOf(t)<0){ spotDates.push(t); spotSave(); } renderSpotStats(); }
 function startPractice(){
-  var pool=ALL_PHRASES.filter(function(p){ if(spotRoute!=="all"&&p.routeId!==spotRoute) return false; return !spotMastery[p.id]; });
-  if(!pool.length) pool=ALL_PHRASES.filter(function(p){ return spotRoute==="all"||p.routeId===spotRoute; });
+  var pool=filteredPhrases().filter(function(p){ return !spotMastery[p.id]; });
+  if(!pool.length) pool=filteredPhrases();
   for(var i=pool.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=pool[i]; pool[i]=pool[j]; pool[j]=t; }
   spotQueue=pool; spotIdx=0;
-  var box=document.getElementById("spotPractice"); box.style.display="block"; renderPracticeCard(); box.scrollIntoView({behavior:"smooth"});
+  var box=document.getElementById('spotPractice'); box.style.display='block'; renderPracticeCard(); box.scrollIntoView({behavior:'smooth'});
 }
 function renderPracticeCard(){
-  var box=document.getElementById("spotPractice");
+  var box=document.getElementById('spotPractice');
   if(spotIdx>=spotQueue.length){
     box.innerHTML='<div class="pc"><div class="q">🎉 本轮练习完成！</div><div class="a show">共 '+spotQueue.length+' 句已过一遍。每天来打卡，英文越说越溜～</div></div><div class="pbtns"><button class="btn ghost" onclick="document.getElementById(\'spotPractice\').style.display=\'none\'">关闭</button></div>';
     return;
@@ -944,11 +1108,11 @@ function renderPracticeCard(){
     +'<button class="btn primary" id="prOk" style="display:none" onclick="practiceResult(true)">记得 ✓</button>'
     +'<button class="btn danger" id="prNo" style="display:none" onclick="practiceResult(false)">忘了 ✗</button></div>';
 }
-function practiceReveal(){ var a=document.getElementById("pa"); if(a)a.classList.add("show"); var o=document.getElementById("prOk"),n=document.getElementById("prNo"); if(o)o.style.display=""; if(n)n.style.display=""; }
+function practiceReveal(){ var a=document.getElementById('pa'); if(a)a.classList.add('show'); var o=document.getElementById('prOk'),n=document.getElementById('prNo'); if(o)o.style.display=''; if(n)n.style.display=''; }
 function practiceResult(remembered){ var p=spotQueue[spotIdx]; if(p){ spotMastery[p.id]=remembered; spotSave(); } spotIdx++; renderPracticeCard(); renderSpotStats(); }
-function resetMastery(){ if(confirm("确认清空所有「已掌握」标记？打卡记录会保留。")){ spotMastery={}; spotSave(); renderSpots(); renderSpotStats(); } }
+function resetMastery(){ if(confirm('确认清空所有「已掌握」标记？打卡记录会保留。')){ spotMastery={}; spotSave(); renderSpots(); renderSpotStats(); } }
 
-spotLoad(); renderSpots(); renderSpotStats();
+spotLoad(); renderTabs(); renderSpots(); renderSpotStats();
 </script>
 </body>
 </html>
