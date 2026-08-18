@@ -112,20 +112,6 @@ h2.sec .tag{font-size:11px;font-weight:600;color:#fff;background:var(--brand);pa
 .note{font-size:12px;color:var(--muted);background:#fff8e6;border:1px solid #f0e0b0;border-radius:8px;padding:10px 13px;margin-top:12px}
 footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;padding-top:18px;border-top:1px solid var(--line)}
 
-/* access gate */
-#gate{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#e64980,#c2256b);display:flex;align-items:center;justify-content:center;font-family:inherit}
-.gate-box{background:#fff;border-radius:18px;padding:34px 38px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.25);max-width:340px;width:86%}
-.gate-box .gl{font-size:42px}
-.gate-box h2{margin:8px 0 4px;font-size:18px;color:#33252e}
-.gate-box .gs{margin:0 0 18px;font-size:13px;color:#8a6f7a}
-.grow{display:flex;gap:8px}
-.grow input{flex:1;padding:11px 13px;border:1px solid #f1dde7;border-radius:10px;font-size:14px;outline:none}
-.grow input:focus{border-color:#e64980}
-.grow button{padding:11px 18px;border:0;border-radius:10px;background:#e64980;color:#fff;font-size:14px;font-weight:600;cursor:pointer}
-.grow button:hover{background:#c2256b}
-.gerr{color:#b42318;font-size:12px;min-height:16px;margin:8px 0 0}
-.ghint{font-size:11px;color:#8a6f7a;margin:12px 0 0}
-
 /* ===== 今日作战 / 客资追踪器 ===== */
 .topalert{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:10px;padding:11px 18px;background:linear-gradient(135deg,#fff0f6,#ffe3ee);border-bottom:1px solid var(--line);font-size:13px;cursor:pointer}
 .topalert .dot{width:9px;height:9px;border-radius:50%;background:var(--red);flex:none;box-shadow:0 0 0 3px rgba(180,35,24,.15)}
@@ -328,17 +314,6 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body>
-
-<div id="gate">
-  <div class="gate-box">
-    <div class="gl">🔒</div>
-    <h2>Lisa 入境游销售工作台</h2>
-    <p class="gs">请输入访问口令后进入</p>
-    <div class="grow"><input id="pw" type="password" placeholder="访问口令" autofocus><button onclick="checkPW()">进入</button></div>
-    <p id="gerr" class="gerr"></p>
-    <p class="ghint">口令由管理员设置；忘记请联系 Lisa。</p>
-  </div>
-</div>
 
 <header>
   <div class="inner">
@@ -804,11 +779,6 @@ document.querySelectorAll('a[href^="#mod"]').forEach(a=>{
 
 load();bind();loadLeads();renderAll();initRoutes();
 
-/* access gate: 改下面 WB_PW 为你自己的口令（客户端遮挡，仅挡普通访客，不能当真加密） */
-var WB_PW="china888";
-function checkPW(){var v=document.getElementById('pw').value;if(v===WB_PW){document.getElementById('gate').style.display='none';try{localStorage.setItem('wb_ok','1');}catch(e){}}else{document.getElementById('gerr').textContent='口令错误，请重试';}}
-try{if(localStorage.getItem('wb_ok')==='1'){document.getElementById('gate').style.display='none';}}catch(e){}
-document.getElementById('pw').addEventListener('keydown',function(e){if(e.key==='Enter')checkPW();});
 try{document.getElementById('f_added').value=todayStr();}catch(e){}
 
 /* ===== 今日作战 / 客资追踪器（localStorage 存储） ===== */
