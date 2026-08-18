@@ -269,6 +269,14 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 .sc-copy-zh{margin-top:8px;padding:5px 12px;font-size:12px;border:1px solid var(--brand);background:#fff;color:var(--brand);border-radius:7px;cursor:pointer;transition:.15s}
 .sc-copy-zh:hover{background:var(--brand);color:#fff}
 .sc-copy-zh.ok{background:var(--brand);color:#fff}
+.sc-guide{background:var(--brand-soft);border:1px solid var(--line);border-left:4px solid var(--brand);border-radius:10px;margin:0 0 14px;overflow:hidden}
+.sc-guide summary{cursor:pointer;list-style:none;padding:12px 15px;font-weight:700;color:var(--brand);font-size:14px;user-select:none}
+.sc-guide summary::-webkit-details-marker{display:none}
+.sc-guide summary::before{content:"▸";display:inline-block;margin-right:8px;transition:.15s}
+.sc-guide[open] summary::before{content:"▾"}
+.sc-guide-body{padding:2px 16px 15px;font-size:13px;line-height:1.78;color:var(--ink)}
+.sc-guide-body b{color:var(--brand)}
+.sc-guide-body code{background:#fff;border:1px solid var(--line);border-radius:4px;padding:1px 6px;font-size:12px;color:var(--brand);font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
 .sc-search{width:100%;max-width:440px;padding:11px 14px;border:1px solid var(--line);border-radius:10px;font-size:14px;margin-bottom:14px;box-sizing:border-box}
 .sc-search:focus{outline:none;border-color:var(--brand)}
 .sc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
@@ -645,6 +653,19 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
   <section id="scripts" class="panel">
     <h2 class="sec"><span class="tag">话术</span>WhatsApp 谈单话术库 · 进线到成交一键复制（NEW）</h2>
     <p class="sec-sub">覆盖进线破冰、有效询盘、跟进、异议处理、报价成交五阶段 + 目的地专属补充块。每条按 WhatsApp 快捷回复指令（如 /first-cs）命名，点「复制」即可粘贴到 WhatsApp 发送（发送前把 [[占位符]] 改成真实信息）。完整 SOP 见《入境游WhatsApp谈单完整SOP.md》。</p>
+
+    <details class="sc-guide">
+      <summary>📘 长线实战对照（30天多城）· 同行对话拆解与我们的打法</summary>
+      <div class="sc-guide-body">
+        把一份同行（Fancydeeptour 定制师）接 <b>30 天 / 10 城长线</b> 的对话，拆成「对方漏点 = 我们抢点」：<br><br>
+        <b>① 破冰首响</b> → 用 <code>/first-long</code>：信任钩子（不进店 / 英文向导 / 24-7）+ 把<b>预算、签证国籍、兴趣动机</b>前置问齐。对方先聊城市再补问题，我们是先锁资格再出方案。<br><br>
+        <b>② 客户说"从香港来"</b> → 用 <code>/visa-hk</code>：对方只回"近、方便"，我们立刻提示<b>香港与内地签证分开</b>，30 天内地游大概率要 L 签（我们出邀请函），并追问护照国籍——立"专业、替我想到了"的信任。<br><br>
+        <b>③ 路线提案</b> → 用 <code>/long-route</code>：直接抄对方"无折返路线"亮点（上海→北京→西安→成都→重庆→张家界→昆明→广州），点明越往后越轻松；紧接 <code>/long-pace</code> 补对方漏问的"快刷多城 vs 慢深度"，定基调再出行程。<br><br>
+        <b>④ 报价</b> → 用 <code>/long-quote</code>（★先问主管）：把<b>大交通拆分</b>（上海→昆明机票、昆明→广州高铁代订）写进包含项，含 / 不含清晰。<br><br>
+        <b>⑤ 逼单 + 成交</b> → 用 <code>/long-push</code>（★）软逼 30% 定金（30 天跨 8 城档期紧 + 早鸟锁价）；用 <code>/long-deal</code>（★）给<b>分期定金 30/30/40</b> 降大单门槛。对方全程"soon 再说"，我们用明确下一步拿下。<br><br>
+        一句话：对方强在路线设计，弱在<b>资格筛查 + 信任背书 + 流程节奏</b>——这三块正是我们 <code>/first</code>、<code>/obj-visa</code>、<code>/obj-safe</code> 的看家武器。
+      </div>
+    </details>
 
     <div class="sc-steps" id="scTabs"></div>
     <div class="sc-stage-desc" id="scStageDesc"></div>
