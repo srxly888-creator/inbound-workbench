@@ -250,10 +250,15 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 .spot-practice .pbtns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
 
 /* ===== SCRIPTS · 谈单话术库 ===== */
-.sc-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 10px}
-.sc-tab{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:20px;padding:7px 16px;font-size:13px;cursor:pointer;user-select:none;transition:.15s}
-.sc-tab:hover{background:var(--brand-soft);color:var(--brand)}
-.sc-tab.on{background:var(--brand);color:#fff;border-color:var(--brand);font-weight:600}
+.sc-steps{display:flex;flex-wrap:wrap;gap:0;margin:14px 0 6px;border:1px solid var(--line);border-radius:12px;overflow:hidden;width:fit-content;max-width:100%}
+.sc-step{display:flex;align-items:center;gap:7px;padding:9px 15px;cursor:pointer;user-select:none;color:var(--muted);font-size:13px;background:var(--panel);transition:.15s;border-right:1px solid var(--line)}
+.sc-step:last-child{border-right:0}
+.sc-step .num{width:20px;height:20px;border-radius:50%;background:var(--brand-soft);color:var(--brand);font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex:none}
+.sc-step.on{background:var(--brand);color:#fff}
+.sc-step.on .num{background:#fff;color:var(--brand)}
+.sc-step:hover:not(.on){background:var(--brand-soft);color:var(--brand)}
+.sc-stage-desc{font-size:12.5px;color:var(--muted);background:var(--brand-soft);border:1px solid var(--line);border-radius:10px;padding:10px 13px;margin:0 0 14px;line-height:1.55}
+.sc-stage-desc b{color:var(--brand)}
 .sc-search{width:100%;max-width:440px;padding:11px 14px;border:1px solid var(--line);border-radius:10px;font-size:14px;margin-bottom:14px;box-sizing:border-box}
 .sc-search:focus{outline:none;border-color:var(--brand)}
 .sc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
@@ -631,7 +636,8 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
     <h2 class="sec"><span class="tag">话术</span>WhatsApp 谈单话术库 · 进线到成交一键复制（NEW）</h2>
     <p class="sec-sub">覆盖进线破冰、有效询盘、跟进、异议处理、报价成交五阶段 + 目的地专属补充块。每条按 WhatsApp 快捷回复指令（如 /first-cs）命名，点「复制」即可粘贴到 WhatsApp 发送（发送前把 [[占位符]] 改成真实信息）。完整 SOP 见《入境游WhatsApp谈单完整SOP.md》。</p>
 
-    <div class="sc-tabs" id="scTabs"></div>
+    <div class="sc-steps" id="scTabs"></div>
+    <div class="sc-stage-desc" id="scStageDesc"></div>
     <input class="sc-search" id="scSearch" placeholder="🔍 搜指令或关键词（如 visa / 潮汕 / 嫌贵）…" />
 
     <div class="sc-grid" id="scGrid"></div>
@@ -1261,6 +1267,7 @@ function phraseGrid(items){
     html+='<div class="phrase'+(on?' mastered':'')+'">'
       +'<div class="en-row"><div class="en">'+esc(p.en)+'</div><span class="btn-cluster"><button id="spk_'+p.id+'" class="speak-btn" title="朗读" onclick="speak(\''+esc(p.en.replace(/'/g,"\\'"))+'\',\''+p.id+'\')">📢</button>'+recBtnHtml(p.id)+'</span></div>'
       +'<div class="zh">'+esc(p.zh)+'</div>'
+      +'<div class="rec-report" id="rpt_'+p.id+'"></div>'
       +'<div class="pf"><button class="mk'+(on?' on':'')+'" onclick="toggleSpotMastery(\''+p.id+'\')">'+(on?'✓ 已掌握':'标记掌握')+'</button>'+starHtml(p.id, spotStars[p.id]||0)+'</div>'
       +'</div>';
   });
@@ -1285,7 +1292,7 @@ function renderPracticeCard(){
   }
   var p=spotQueue[spotIdx];
   box.innerHTML='<div class="pbar">进度 '+(spotIdx+1)+' / '+spotQueue.length+'　（未掌握优先）</div>'
-    +'<div class="pc"><div class="q">'+esc(p.zh)+'</div><div class="a" id="pa">'+esc(p.en)+' <button class="speak-btn" title="朗读" onclick="speak(\''+esc(p.en.replace(/'/g,"\\'"))+'\')">📢</button> '+recBtnHtml(p.id)+'</div><div class="hint">👆 先在心里说出英文，再点「看英文」对照；点 📢 听标准音，点 🎙️ 录自己的跟读对比</div></div>'
+    +'<div class="pc"><div class="q">'+esc(p.zh)+'</div><div class="a" id="pa">'+esc(p.en)+' <button class="speak-btn" title="朗读" onclick="speak(\''+esc(p.en.replace(/'/g,"\\'"))+'\')">📢</button> '+recBtnHtml(p.id)+'</div><div class="rec-report" id="rpt_'+p.id+'"></div><div class="hint">👆 先在心里说出英文，再点「看英文」对照；点 📢 听标准音，点 🎙️ 录自己的跟读对比</div></div>'
     +'<div class="pbtns"><button class="btn ghost" onclick="practiceReveal()">看英文</button>'
     +'<button class="btn primary" id="prOk" style="display:none" onclick="practiceResult(true)">记得 ✓</button>'
     +'<button class="btn danger" id="prNo" style="display:none" onclick="practiceResult(false)">忘了 ✗</button></div>';
@@ -1332,8 +1339,15 @@ var SCRIPTS=[
  {cmd:'港沪·签证',stage:'目的地',title:'港沪签证特殊',note:'香港与内地签证分开',text:"Hong Kong has its own visa rules (separate from mainland China).\nIf you're visiting both, I'll help you sort out the paperwork for both —\none less thing to worry about!"},
  {cmd:'多城·联动',stage:'目的地',title:'多城联动推荐组合',note:'6组高转化组合',text:"🔗 Multi-city combos we recommend:\n• Beijing + Xi'an (人文双城, 4–5天)\n• Chengdu + Chongqing (巴蜀双城, 4–5天)\n• Guilin + Yangshuo (山水画, 3–4天)\n• Hangzhou + Shanghai (江南+现代, 3–4天)\n• Lijiang + Dali (云南慢生活, 4–5天)\n• Chaoshan + Xiamen (闽南美食线, 4–5天)"}
 ];
-var SC_STAGES=['全部','破冰','跟进','异议','成交','目的地'];
-var scTab='全部', scQ='';
+var SC_STAGES=[
+ {k:'全部',num:'',label:'全部',desc:'显示所有话术；配合上方搜索框可跨阶段查找任意指令或关键词（如 visa / 潮汕 / 嫌贵）。'},
+ {k:'破冰',num:'①',label:'进线破冰',desc:'<b>节奏起点 · 客户首次进线 ≤2h</b>：先抛信任钩子（品牌官网·无购物·英文向导·24/7），再问签证分支开关 + 四问（时间 / 人数 / 是否中转 / 饮食）。这一步定调，别一上来就报价。'},
+ {k:'跟进',num:'②',label:'询盘·跟进',desc:'<b>客户回了基本信息 → 确认 + 收邮箱 + 分 A/B/C</b>；静默后按 D1/D3/D7 节奏跟进，B/C 类推多城联动。跟进靠"递减关注 + 给新价值"，不纯催。'},
+ {k:'异议',num:'③',label:'异议处理',desc:'<b>客户犹豫 / 嫌贵 / 担心时</b>：先认同情绪 → 给选项（不裸降价）→ 留口子。签证 / 安全 / 价格三块是高频异议，用对应卡片稳客。'},
+ {k:'成交',num:'④',label:'报价成交',desc:'<b>高意向 → 发报价（含/不含清晰）→ 软逼单 → 收 30% 定金 + 建群 + 行前清单</b>。标 ★ 口径（付款 / 定金 / 退款）先问主管确认。'},
+ {k:'目的地',num:'⑤',label:'目的地锦囊',desc:'<b>插入各线路专属补充块</b>：潮汕台风季 / 清真预案、张家界季节 / 楼梯、港沪签证特殊、多城联动组合。按客人目的地随用随插。'}
+];
+var scTab='破冰', scQ='';
 function scRender(){
  var grid=document.getElementById('scGrid'); if(!grid)return;
  var list=SCRIPTS.filter(function(s){
@@ -1362,8 +1376,20 @@ function fallback(txt,btn){var ta=document.createElement('textarea');ta.value=tx
 function scOk(btn){btn.textContent='✅ 已复制';btn.classList.add('ok');setTimeout(function(){btn.textContent='📋 复制';btn.classList.remove('ok');},1600);}
 function scInit(){
  var tabs=document.getElementById('scTabs'); if(!tabs)return;
- tabs.innerHTML=SC_STAGES.map(function(s){return '<div class="sc-tab'+(s==='全部'?' on':'')+'" data-s="'+s+'">'+s+'</div>';}).join('');
- tabs.querySelectorAll('.sc-tab').forEach(function(t){t.addEventListener('click',function(){scTab=t.dataset.s;tabs.querySelectorAll('.sc-tab').forEach(function(x){x.classList.remove('on');});t.classList.add('on');scRender();});});
+ var descBox=document.getElementById('scStageDesc');
+ function setDesc(k){var st=SC_STAGES.filter(function(x){return x.k===k;})[0];if(descBox)descBox.innerHTML=st?st.desc:'';}
+ tabs.innerHTML=SC_STAGES.map(function(s){
+   var on=(s.k===scTab)?' on':'';
+   return '<div class="sc-step'+on+'" data-s="'+s.k+'"><span class="num">'+s.num+'</span><span>'+s.label+'</span></div>';
+ }).join('');
+ tabs.querySelectorAll('.sc-step').forEach(function(t){t.addEventListener('click',function(){
+   scTab=t.dataset.s;
+   tabs.querySelectorAll('.sc-step').forEach(function(x){x.classList.remove('on');});
+   t.classList.add('on');
+   setDesc(scTab);
+   scRender();
+ });});
+ setDesc(scTab);
  var se=document.getElementById('scSearch'); if(se)se.addEventListener('input',function(){scQ=se.value.trim();scRender();});
  scRender();
 }
