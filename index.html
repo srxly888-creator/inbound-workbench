@@ -259,6 +259,8 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 .sc-step:hover:not(.on){background:var(--brand-soft);color:var(--brand)}
 .sc-stage-desc{font-size:12.5px;color:var(--muted);background:var(--brand-soft);border:1px solid var(--line);border-radius:10px;padding:10px 13px;margin:0 0 14px;line-height:1.55}
 .sc-stage-desc b{color:var(--brand)}
+.sc-zh{font-size:12.5px;color:var(--muted);background:var(--brand-soft);border-left:3px solid var(--brand);border-radius:0 8px 8px 0;padding:8px 11px;margin:9px 0 2px;line-height:1.65;white-space:pre-wrap;word-break:break-word}
+.sc-zh .sc-zh-tag{display:inline-block;font-size:10px;font-weight:700;color:#fff;background:var(--brand);border-radius:4px;padding:1px 6px;margin-right:7px;vertical-align:middle;letter-spacing:.5px}
 .sc-search{width:100%;max-width:440px;padding:11px 14px;border:1px solid var(--line);border-radius:10px;font-size:14px;margin-bottom:14px;box-sizing:border-box}
 .sc-search:focus{outline:none;border-color:var(--brand)}
 .sc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
@@ -1339,6 +1341,42 @@ var SCRIPTS=[
  {cmd:'港沪·签证',stage:'目的地',title:'港沪签证特殊',note:'香港与内地签证分开',text:"Hong Kong has its own visa rules (separate from mainland China).\nIf you're visiting both, I'll help you sort out the paperwork for both —\none less thing to worry about!"},
  {cmd:'多城·联动',stage:'目的地',title:'多城联动推荐组合',note:'6组高转化组合',text:"🔗 Multi-city combos we recommend:\n• Beijing + Xi'an (人文双城, 4–5天)\n• Chengdu + Chongqing (巴蜀双城, 4–5天)\n• Guilin + Yangshuo (山水画, 3–4天)\n• Hangzhou + Shanghai (江南+现代, 3–4天)\n• Lijiang + Dali (云南慢生活, 4–5天)\n• Chaoshan + Xiamen (闽南美食线, 4–5天)"}
 ];
+var SCRIPT_ZH={
+'/greet':'您好！👋 欢迎来到 China Travel（officialchinatravel.com）。我是 [[YourName]]，您的旅行顾问。今天想了解中国的哪些玩法呢？',
+'/first':'您好 [[Name]]！✈️ 感谢您咨询中国旅行！我是 China Travel 的 [[YourName]]。我们专做私人定制游，配英文向导、绝不进店购物、24/7 全程支持，您只管玩得开心。为给您做最合适的方案，能先问几个小问题吗？\n📅 计划什么时候来、大概玩几天？\n👥 几个人出行，有老人或小孩吗？\n🌏 中国是这次行程的主目的地，还是长线中的一站？（这能帮我确认您是否符合免签）\n🍽️ 有什么饮食需求吗——清真、素食或过敏？\n有了这些信息，我就能为您量身定制完美行程！😊',
+'/first-cs':'您好 [[Name]]！✈️ 好眼光——潮汕（汕头+潮州+南澳岛）是中国最好吃的地方之一！我是 China Travel 的 [[YourName]]，私人游、英文向导、不进店、24/7 支持。几个小问题帮您设计完美潮汕之旅：\n📅 计划何时来、玩几天？\n👥 几个人，有老人小孩吗？\n🌏 潮汕是主目的地，还是中国长线的一部分？（帮您查免签）\n🍽️ 饮食需求？潮汕以牛肉火锅和海鲜闻名——需要清真/素食请告诉我！\n🧳 更想看美食文化、自然风光，还是都来点？\n期待帮您探索潮汕！😊',
+'/first-zjj':'您好 [[Name]]！✈️ 张家界——阿凡达悬浮山！中国最震撼的自然奇观之一。我是 China Travel 的 [[YourName]]，私人游、英文向导、不进店、24/7 支持。几个小问题规划您的阿凡达之旅：\n📅 计划何时来、玩几天？\n👥 几个人，有老人小孩吗？（张家界台阶多——我可调整节奏）\n🌏 张家界是主目的地，还是中国长线的一部分？（帮您查免签）\n🍽️ 饮食需求——清真、素食或过敏？\n让您的旅程难忘！🏔️😊',
+'/first-gs':'您好 [[Name]]！✈️ 香港+上海——完美的中国组合：现代都市遇见经典文化！我是 China Travel 的 [[YourName]]，私人游、英文向导、不进店、24/7 支持。几个小问题设计您的港沪之旅：\n📅 计划何时来、玩几天？\n👥 几个人，有老人小孩吗？\n🌏 您是从海外直飞，还是经其他亚洲城市转机？（帮您查签证与中转方案）\n🍽️ 饮食需求——清真、素食或过敏？\n很期待帮您探索！🌆😊',
+'/confirm':'太好了——[[Month]] 对 [[X]] 位成人很合适！👍 首次去 [[Destination]]，我建议把精华景点走完又不赶行程。一个小请求：能留个邮箱吗？我把详细行程和报价做成 PDF 发您——方便查看、所有信息一处归档。📧\n另外：[[Destination]] 是您唯一一站，还是想再加几个城市？（上海、北京、西安、成都、桂林……选择很多！）',
+'/f1-info':'您好 [[Name]] 👋 跟进一下——您想我先发 [[Destination]] 行程，还是先发价格明细？都可以，我会按您最在意的部分来定制！😊',
+'/f2-info':'您好 [[Name]]！如果是首次来中国，我可以给您看 [[Destination]] 如何与 [[City1]] / [[City2]] 等城市完美串联——很多客人走双城组合都很喜欢。您是只考虑 [[Destination]]，还是愿意多加几城？😊\n（A类：首次去 [[Destination]] 的话，我可以分享当地美食攻略，以及哪些必看、哪些可选。）',
+'/f3-info':'嘿 [[Name]]！我整理了一条简单的 [[Destination]] 路线，展示主要景点如何在 [[X]] 天内串联。要我发您看看吗？如果时机还不对也没关系——准备好了随时找我就好！📌',
+'/f1-quote':'您好 [[Name]] 👋 想确认下——[[Destination]] 的报价和行程收到 OK 吗？随时可以调整：酒店档次、节奏、增减景点——您说了算！😊',
+'/f3-quote':'您好 [[Name]]！您 [[Dates]] 的日期越来越热门了——临近时向导档期和酒店价格都可能变动。要我先帮您把档期保留几天吗？完全没有压力，只是不想您错过心仪的时间窗！⏰',
+'/f7-quote':'嘿 [[Name]]，完全不急——您准备好了，我随时可以定稿报价并锁定一切。对 [[Destination]]、酒店或中国旅行还有任何新疑问吗？随时帮忙！🤝',
+'/obj-price':'我完全理解，[[Name]]。通常我们可以按您最看重的来调整套餐：\n• 酒店档次（舒适 vs 升级）\n• 专车接送 vs 拼车\n• 行程风格（轻松 vs 悠闲节奏）\n您更想让我做得更省预算，还是保持更舒适？无论如何，我都帮您找到最合适的！💪',
+'/obj-think':'当然，慢慢来——这是重要的决定！🙌 所有细节我都留在咱们的聊天里。路线、酒店或中国旅行有任何不清楚的，随时发消息我帮您。有件事常很有用：要不要我分享几条 [[Destination]] 近期客人的真实评价？听听其他旅客怎么说，有时更容易做决定！⭐',
+'/obj-nodate':'完全没问题——您现在不需要定具体日期！📅 哪怕是大概的月份或季节，我就能推荐合适的行程类型并给您一个大致区间。大致想春天、夏天、秋天还是冬天来？（我也会提示季节性贴士——比如天气或人流！）😊',
+'/obj-justlook':'完全没问题！😊 即便日期还没定，我也可以给您一个路线和典型天数的简单概念——等您准备好了，手里已有扎实的参考。没有压力、不催。我随时都在！👋',
+'/obj-hotel':'是的，酒店住宿包含在内！🏨 我可以给您看两档：\n✨ 舒适档——干净、便利、性价比高\n✨ 升级档——更高端设施、核心地段\n您可以先对比再决定。要我把两档照片都发您吗？',
+'/obj-safe':'完全理解——会先确认很明智！🔒 我们的不同之处：\n✅ 100% 绝不进店购物——保证\n✅ 全程经过甄选的英文当地向导\n✅ 在中国期间 24/7 支持\n✅ 符合条件的预订可退款保障\n✅ 已安全接待过来自 [[X]] 个国家的旅客\n需要的话，我很乐意分享近期客人评价帮您安心！⭐',
+'/obj-visa':'好问题——我来帮您！📋 取决于您的国籍和行程：\n✈️ 如果中国只是长线中的一站（有前往第三国的续程票）：您可能符合 240 小时过境免签——免费、无需申请！我可以帮查您是否符合。\n📝 如果中国就是主目的地：标准旅游签证（L 签）很简单，我们提供官方邀请函。\n🎉 部分国籍（新加坡、马来西亚、泰国、阿联酋……）享全面免签——带有效护照即可！\n您的护照国籍是？我直接告诉您需要什么。😊',
+'/qualify':'太棒了，[[Name]]！🎉 我现在信息齐了：\n📅 出行时间：[[Date/Month]]\n👥 出行人数：[[X]] 位成人（如有 [[Y]] 位小孩/老人）\n🗺 路线：[[Destination(s)]]\n🎯 风格：[[Style]]\n我马上为您做定制行程和报价。最后一件事——您的邮箱是？完整 PDF 套餐我发那里！📧',
+'/quote-send':'这是为您定制的 [[Destination]] 套餐，[[N]] 人 [[X]] 天：\n━━━━━\n✅ 包含：私人英文向导｜[[Hotel Level]] 酒店住宿｜专车+司机｜行程所列全部门票｜24/7 旅行支持\n❌ 不含：国际机票（可帮规划航线！）｜签证费｜个人消费与小费｜行程未注明的餐食\n💰 总价：**$[[Price]] USD**/团\n━━━━━\n完整逐日行程见 PDF 附件。慢慢看——有任何问题随时问！😊',
+'/push':'提醒一下，[[Name]]！⏰ 您心仪的 [[Dates]] 日期越来越近，我想告诉您：\n🔸 [[Month]] 的 [[Destination]] 向导档期有限\n🔸 临近时酒店价格可能浮动\n🔸 我们的早鸟福利（免费 [[X]]）将于 [[Date]] 截止\n如果方案 OK，我现在用 30% 定金帮您锁定日期——一切就稳了！🎯 没压力，只是不想您错过心仪档期！😊',
+'/deal':'成交，[[Name]]！🎉🇨🇳 接下来这样走：\n1️⃣ 定金：通过 [[Payment Method]] 付 30%（$[[Amount]]）锁定日期和向导→我发付款指引\n2️⃣ 建群：我建您的旅行群（您+向导+我）\n3️⃣ 行前清单：抵达前 48 小时发（打包贴士、向导联系方式、微信设置）\n4️⃣ 尾款：余下 70% 于抵达前 [[X]] 天付清\n欢迎来中国——我们会好好照顾您！🙌✈️',
+'潮汕·台风季':'先提醒一下：6–9 月是潮汕沿海的台风季。南澳岛轮渡遇风暴天可能停航。我会持续关注天气，并备好室内备选方案（博物馆参观 / 工夫茶体验 / 烹饪课）——您绝不会被困住！',
+'潮汕·美食':'潮汕是中国的美食之都——薄切牛肉火锅、刚上岸的海鲜、传统潮式工夫茶，还有闻名遐迩的蚝烙。美食家都说光为吃就值回这趟旅程！🍜',
+'潮汕·寻根':'许多潮汕后裔回来品尝祖辈长大的味道——那些风味、方言、庙宇。如果您家里与这里血脉相连，我很乐意为您打造一条寻根路线。',
+'潮汕·清真':'针对清真旅客：我在汕头 / 潮州合作有认证清真餐厅。请尽早告诉我，方便预订——清真选择虽有限，但我已为您安排妥当！🕌',
+'张家界·季节':'最佳时段：4–5 月 & 9–10 月（舒适、人少）。避开黄金周（10/1–7）——极度拥挤。冬季：天门山雪景绝美，但结冰天部分缆车可能关闭。',
+'张家界·楼梯':'张家界需要走不少路和台阶（天门山、袁家界悬崖）。对老人或更想轻松节奏的客人，我可以多加缆车、跳过较陡路段。',
+'张家界·Avatar':'这些山峰正是詹姆斯·卡梅隆《阿凡达》中悬浮山的灵感来源——亲眼看比屏幕上更震撼！🎬',
+'港沪·反差':'香港的活力 + 上海的天际线 + 其间的历史水乡——一趟旅程收获三种截然不同的中国体验！',
+'港沪·签证':'香港有自己的签证规则（与内地分开）。如果您两地都去，我会帮您把两边的手续都理顺——少一件操心事！',
+'多城·联动':'🔗 我们推荐的多城组合：\n• 北京+西安（人文双城，4–5天）\n• 成都+重庆（巴蜀双城，4–5天）\n• 桂林+阳朔（山水画，3–4天）\n• 杭州+上海（江南+现代，3–4天）\n• 丽江+大理（云南慢生活，4–5天）\n• 潮汕+厦门（闽南美食线，4–5天）'
+};
+SCRIPTS.forEach(function(s){ if(SCRIPT_ZH.hasOwnProperty(s.cmd)) s.zh=SCRIPT_ZH[s.cmd]; });
 var SC_STAGES=[
  {k:'全部',num:'',label:'全部',desc:'显示所有话术；配合上方搜索框可跨阶段查找任意指令或关键词（如 visa / 潮汕 / 嫌贵）。'},
  {k:'破冰',num:'①',label:'进线破冰',desc:'<b>节奏起点 · 客户首次进线 ≤2h</b>：先抛信任钩子（品牌官网·无购物·英文向导·24/7），再问签证分支开关 + 四问（时间 / 人数 / 是否中转 / 饮食）。这一步定调，别一上来就报价。'},
@@ -1361,6 +1399,7 @@ function scRender(){
    return '<div class="sc-card"><div class="sc-head"><span class="sc-cmd">'+s.cmd+'</span><span class="sc-stage">'+s.stage+'</span><span class="sc-title">'+s.title+star+'</span></div>'
      +'<div class="sc-note">'+s.note+'</div>'
      +'<pre class="sc-pre">'+esc(s.text)+'</pre>'
+     +(s.zh?'<div class="sc-zh"><span class="sc-zh-tag">译</span>'+esc(s.zh)+'</div>':'')
      +'<button class="sc-copy" onclick="scCopy(this)">📋 复制</button></div>';
  }).join('');
 }
