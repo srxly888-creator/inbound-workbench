@@ -259,8 +259,16 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 .sc-step:hover:not(.on){background:var(--brand-soft);color:var(--brand)}
 .sc-stage-desc{font-size:12.5px;color:var(--muted);background:var(--brand-soft);border:1px solid var(--line);border-radius:10px;padding:10px 13px;margin:0 0 14px;line-height:1.55}
 .sc-stage-desc b{color:var(--brand)}
-.sc-zh{font-size:12.5px;color:var(--muted);background:var(--brand-soft);border-left:3px solid var(--brand);border-radius:0 8px 8px 0;padding:8px 11px;margin:9px 0 2px;line-height:1.65;white-space:pre-wrap;word-break:break-word}
-.sc-zh .sc-zh-tag{display:inline-block;font-size:10px;font-weight:700;color:#fff;background:var(--brand);border-radius:4px;padding:1px 6px;margin-right:7px;vertical-align:middle;letter-spacing:.5px}
+.sc-zh{font-size:12.5px;color:var(--muted);background:var(--brand-soft);border-left:3px solid var(--brand);border-radius:0 8px 8px 0;margin:9px 0 2px;line-height:1.65;word-break:break-word}
+.sc-zh summary{cursor:pointer;list-style:none;padding:8px 11px;font-size:12.5px;font-weight:700;color:var(--brand);user-select:none}
+.sc-zh summary::-webkit-details-marker{display:none}
+.sc-zh summary::before{content:"▸";display:inline-block;margin-right:7px;transition:.15s}
+.sc-zh[open] summary::before{content:"▾"}
+.sc-zh-body{padding:0 11px 10px;white-space:pre-wrap}
+.sc-zh-text{display:block}
+.sc-copy-zh{margin-top:8px;padding:5px 12px;font-size:12px;border:1px solid var(--brand);background:#fff;color:var(--brand);border-radius:7px;cursor:pointer;transition:.15s}
+.sc-copy-zh:hover{background:var(--brand);color:#fff}
+.sc-copy-zh.ok{background:var(--brand);color:#fff}
 .sc-search{width:100%;max-width:440px;padding:11px 14px;border:1px solid var(--line);border-radius:10px;font-size:14px;margin-bottom:14px;box-sizing:border-box}
 .sc-search:focus{outline:none;border-color:var(--brand)}
 .sc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
@@ -1399,7 +1407,7 @@ function scRender(){
    return '<div class="sc-card"><div class="sc-head"><span class="sc-cmd">'+s.cmd+'</span><span class="sc-stage">'+s.stage+'</span><span class="sc-title">'+s.title+star+'</span></div>'
      +'<div class="sc-note">'+s.note+'</div>'
      +'<pre class="sc-pre">'+esc(s.text)+'</pre>'
-     +(s.zh?'<div class="sc-zh"><span class="sc-zh-tag">译</span>'+esc(s.zh)+'</div>':'')
+     +(s.zh?'<details class="sc-zh"><summary>译 · 中文对照</summary><div class="sc-zh-body"><span class="sc-zh-text">'+esc(s.zh)+'</span><button class="sc-copy-zh" onclick="scCopyZh(this)">📋 复制译文</button></div></details>':'')
      +'<button class="sc-copy" onclick="scCopy(this)">📋 复制</button></div>';
  }).join('');
 }
@@ -1411,8 +1419,15 @@ function scCopy(btn){
  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){scOk(btn);},function(){fallback(txt,btn);});}
  else fallback(txt,btn);
 }
+function scCopyZh(btn){
+ var body=btn.closest('.sc-zh-body'); if(!body)return;
+ var sp=body.querySelector('.sc-zh-text'); if(!sp)return;
+ var txt=sp.textContent;
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){scOk(btn);},function(){fallback(txt,btn);});}
+ else fallback(txt,btn);
+}
 function fallback(txt,btn){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');scOk(btn);}catch(e){}document.body.removeChild(ta);}
-function scOk(btn){btn.textContent='✅ 已复制';btn.classList.add('ok');setTimeout(function(){btn.textContent='📋 复制';btn.classList.remove('ok');},1600);}
+function scOk(btn){if(btn.dataset.lbl===undefined)btn.dataset.lbl=btn.textContent;btn.textContent='✅ 已复制';btn.classList.add('ok');setTimeout(function(){btn.textContent=btn.dataset.lbl;btn.classList.remove('ok');},1600);}
 function scInit(){
  var tabs=document.getElementById('scTabs'); if(!tabs)return;
  var descBox=document.getElementById('scStageDesc');
