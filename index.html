@@ -206,11 +206,19 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 .spot-card h4{margin:0 0 2px;font-size:14px;display:flex;align-items:center;gap:8px}
 .spot-card h4 .en{font-size:11px;color:var(--muted);font-weight:600}
 .phrase{background:#faf5f8;border:1px solid var(--line);border-radius:9px;padding:9px 11px;margin-top:9px}
-.phrase .en{font-weight:600;color:var(--ink);line-height:1.5}
-.phrase .zh{color:var(--muted);margin-top:3px;font-size:12px}
-.phrase .pf{margin-top:8px}
+.phrase .en-row{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.phrase .en{flex:1;font-weight:600;color:var(--ink);line-height:1.5}
+.phrase .speak-btn{flex-shrink:0;font-size:15px;line-height:1;padding:4px 7px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;transition:.15s}
+.phrase .speak-btn:hover{border-color:var(--brand);background:#fff5fa;transform:scale(1.05)}
+.phrase .zh{color:var(--muted);margin-top:5px;font-size:12px}
+.phrase .pf{margin-top:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .phrase .mk{cursor:pointer;font-size:12px;font-weight:700;border-radius:7px;padding:4px 12px;border:1px solid var(--line);background:#fff;color:var(--brand)}
 .phrase .mk.on{background:var(--green);color:#fff;border-color:var(--green)}
+.phrase .stars{font-size:15px;letter-spacing:2px;cursor:pointer;user-select:none}
+.phrase .stars .s{color:#ddd}
+.phrase .stars .s.on{color:#f59e0b}
+.phrase .stars .s.hov{color:#fbbf24}
+.phrase .star-tip{font-size:11px;color:var(--muted);margin-left:4px}
 .phrase.mastered{opacity:.7}
 .spot-practice{background:var(--panel);border:1px solid var(--brand);border-radius:14px;padding:20px;box-shadow:var(--shadow);margin-top:8px}
 .spot-practice .pc{background:linear-gradient(135deg,#fde7f0,#fff);border-radius:12px;padding:22px;text-align:center;min-height:130px;display:flex;flex-direction:column;justify-content:center}
@@ -557,14 +565,14 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
   <!-- 6. SPOTS · 景点英语陪练打卡 -->
   <section id="spots" class="panel">
     <h2 class="sec"><span class="tag">陪练</span>入境游销售英语陪练打卡 · 把业务聊成英文（NEW）</h2>
-    <p class="sec-sub">覆盖景点讲解、日期时间、销售沟通、行程、车/酒店/餐/大交通/门票等高频谈单场景。逐句标记「已掌握」，未掌握优先抽卡练习。数据存本机浏览器。</p>
+    <p class="sec-sub">覆盖景点讲解、日期时间、销售沟通、行程、车/酒店/餐/大交通/门票等高频谈单场景。每句英文可点 📢 朗读跟读，自己打 1–5🌟；逐句标记「已掌握」，未掌握优先抽卡练习。数据存本机浏览器。</p>
 
     <div class="spot-stats" id="spotStats"></div>
 
     <div class="spot-actions">
       <button class="btn primary" id="checkinBtn" onclick="spotCheckIn()">✅ 今日打卡</button>
       <button class="btn ghost" onclick="startPractice()">🎴 抽卡练习（未掌握优先）</button>
-      <button class="btn ghost" onclick="resetMastery()">↺ 重置掌握标记</button>
+      <button class="btn ghost" onclick="resetMastery()">↺ 重置学习记录</button>
     </div>
 
     <div class="spot-tabs" id="spotTabs"></div>
@@ -991,11 +999,41 @@ const SPOT_PHRASES = [
 var ALL_PHRASES=[];
 SPOT_PHRASES.forEach(function(p, i){ p.id='ph_'+i; ALL_PHRASES.push(p); });
 
-var SPOT_MK_KEY='inboundWB_spot_mk', SPOT_DT_KEY='inboundWB_spot_dt';
-var spotMastery={}, spotDates=[], spotCat='all', spotSub='all', spotQueue=[], spotIdx=0;
+var SPOT_MK_KEY='inboundWB_spot_mk', SPOT_DT_KEY='inboundWB_spot_dt', SPOT_STAR_KEY='inboundWB_spot_star';
+var spotMastery={}, spotDates=[], spotStars={}, spotCat='all', spotSub='all', spotQueue=[], spotIdx=0;
+var currentSpeakId=null, hoverStarId=null;
 
-function spotLoad(){ try{ spotMastery=JSON.parse(localStorage.getItem(SPOT_MK_KEY)||'{}')||{}; }catch(e){ spotMastery={}; } try{ spotDates=JSON.parse(localStorage.getItem(SPOT_DT_KEY)||'[]')||[]; }catch(e){ spotDates=[]; } }
-function spotSave(){ localStorage.setItem(SPOT_MK_KEY,JSON.stringify(spotMastery)); localStorage.setItem(SPOT_DT_KEY,JSON.stringify(spotDates)); }
+function spotLoad(){ try{ spotMastery=JSON.parse(localStorage.getItem(SPOT_MK_KEY)||'{}')||{}; }catch(e){ spotMastery={}; } try{ spotDates=JSON.parse(localStorage.getItem(SPOT_DT_KEY)||'[]')||[]; }catch(e){ spotDates=[]; } try{ spotStars=JSON.parse(localStorage.getItem(SPOT_STAR_KEY)||'{}')||{}; }catch(e){ spotStars={}; } }
+function spotSave(){ localStorage.setItem(SPOT_MK_KEY,JSON.stringify(spotMastery)); localStorage.setItem(SPOT_DT_KEY,JSON.stringify(spotDates)); localStorage.setItem(SPOT_STAR_KEY,JSON.stringify(spotStars)); }
+
+function speak(text, id){
+  if(!('speechSynthesis' in window)){ alert('您的浏览器不支持朗读功能，请换 Chrome / Edge / Safari 试试。'); return; }
+  window.speechSynthesis.cancel();
+  var u=new SpeechSynthesisUtterance(text);
+  u.lang='en-US'; u.rate=0.95; u.pitch=1;
+  var voices=window.speechSynthesis.getVoices();
+  var en=voices.find(function(v){ return v.lang && v.lang.indexOf('en')===0 && v.name.indexOf('Google')>-1; }) || voices.find(function(v){ return v.lang && v.lang.indexOf('en')===0; });
+  if(en) u.voice=en;
+  currentSpeakId=id;
+  if(id){ var btn=document.getElementById('spk_'+id); if(btn) btn.textContent='🔊'; }
+  u.onend=function(){ if(id){ var btn=document.getElementById('spk_'+id); if(btn) btn.textContent='📢'; } currentSpeakId=null; };
+  u.onerror=function(){ if(id){ var btn=document.getElementById('spk_'+id); if(btn) btn.textContent='📢'; } currentSpeakId=null; };
+  window.speechSynthesis.speak(u);
+}
+function starHtml(id, score){
+  score=Math.max(0,Math.min(5,score||0));
+  var html='<span class="stars" data-id="'+esc(id)+'" onmouseout="renderSpots()">';
+  for(var i=1;i<=5;i++){
+    var cls= i<=score ? 's on' : 's';
+    html+='<span class="'+cls+'" data-s="'+i+'" onclick="rateStar(\''+esc(id)+'\','+i+')" onmouseover="hoverStar(\''+esc(id)+'\','+i+')">★</span>';
+  }
+  html+='</span>';
+  if(score>0) html+='<span class="star-tip">'+score+'🌟</span>';
+  else html+='<span class="star-tip">跟读打分</span>';
+  return html;
+}
+function hoverStar(id, score){ hoverStarId=id; var el=document.querySelector('.stars[data-id="'+id+'"]'); if(!el) return; var spans=el.querySelectorAll('.s'); for(var i=0;i<spans.length;i++){ spans[i].className=(i<score?'s hov':'s'); } }
+function rateStar(id, score){ spotStars[id]=score; spotSave(); renderSpots(); renderSpotStats(); }
 
 function computeStreak(){
   if(!spotDates.length) return 0;
@@ -1009,8 +1047,11 @@ function renderSpotStats(){
   var total=ALL_PHRASES.length;
   var mastered=ALL_PHRASES.filter(function(p){return spotMastery[p.id];}).length;
   var pct= total? Math.round(mastered/total*100):0;
+  var rated=ALL_PHRASES.filter(function(p){return (spotStars[p.id]||0)>0;}).length;
+  var sum=0; ALL_PHRASES.forEach(function(p){ sum+=spotStars[p.id]||0; });
+  var avg=rated? (sum/rated).toFixed(1):'-';
   var el=document.getElementById('spotStats'); if(!el) return;
-  el.innerHTML= spotStat(computeStreak(),'连续打卡(天)')+spotStat(spotDates.length,'累计打卡(天)')+spotStat(mastered+'/'+total,'已掌握')+spotStat(pct+'%','掌握率');
+  el.innerHTML= spotStat(computeStreak(),'连续打卡(天)')+spotStat(spotDates.length,'累计打卡(天)')+spotStat(mastered+'/'+total,'已掌握')+spotStat(pct+'%','掌握率')+spotStat(rated+'/'+total,'已评分')+spotStat(avg,'平均🌟');
   var btn=document.getElementById('checkinBtn');
   if(btn){ var done=spotDates.indexOf(todayStr())>=0; btn.disabled=done; btn.textContent= done? '✅ 今日已打卡':'✅ 今日打卡'; }
 }
@@ -1077,9 +1118,9 @@ function phraseGrid(items){
   items.forEach(function(p){
     var on=!!spotMastery[p.id];
     html+='<div class="phrase'+(on?' mastered':'')+'">'
-      +'<div class="en">'+esc(p.en)+'</div>'
+      +'<div class="en-row"><div class="en">'+esc(p.en)+'</div><button id="spk_'+p.id+'" class="speak-btn" title="朗读" onclick="speak(\''+esc(p.en.replace(/'/g,"\\'"))+'\',\''+p.id+'\')">📢</button></div>'
       +'<div class="zh">'+esc(p.zh)+'</div>'
-      +'<div class="pf"><button class="mk'+(on?' on':'')+'" onclick="toggleSpotMastery(\''+p.id+'\')">'+(on?'✓ 已掌握':'标记掌握')+'</button></div>'
+      +'<div class="pf"><button class="mk'+(on?' on':'')+'" onclick="toggleSpotMastery(\''+p.id+'\')">'+(on?'✓ 已掌握':'标记掌握')+'</button>'+starHtml(p.id, spotStars[p.id]||0)+'</div>'
       +'</div>';
   });
   return html;
@@ -1103,14 +1144,14 @@ function renderPracticeCard(){
   }
   var p=spotQueue[spotIdx];
   box.innerHTML='<div class="pbar">进度 '+(spotIdx+1)+' / '+spotQueue.length+'　（未掌握优先）</div>'
-    +'<div class="pc"><div class="q">'+esc(p.zh)+'</div><div class="a" id="pa">'+esc(p.en)+'</div><div class="hint">👆 先在心里说出英文，再点「看英文」对照</div></div>'
+    +'<div class="pc"><div class="q">'+esc(p.zh)+'</div><div class="a" id="pa">'+esc(p.en)+' <button class="speak-btn" title="朗读" onclick="speak(\''+esc(p.en.replace(/'/g,"\\'"))+'\')">📢</button></div><div class="hint">👆 先在心里说出英文，再点「看英文」对照；点开 📢 听标准发音跟读</div></div>'
     +'<div class="pbtns"><button class="btn ghost" onclick="practiceReveal()">看英文</button>'
     +'<button class="btn primary" id="prOk" style="display:none" onclick="practiceResult(true)">记得 ✓</button>'
     +'<button class="btn danger" id="prNo" style="display:none" onclick="practiceResult(false)">忘了 ✗</button></div>';
 }
 function practiceReveal(){ var a=document.getElementById('pa'); if(a)a.classList.add('show'); var o=document.getElementById('prOk'),n=document.getElementById('prNo'); if(o)o.style.display=''; if(n)n.style.display=''; }
 function practiceResult(remembered){ var p=spotQueue[spotIdx]; if(p){ spotMastery[p.id]=remembered; spotSave(); } spotIdx++; renderPracticeCard(); renderSpotStats(); }
-function resetMastery(){ if(confirm('确认清空所有「已掌握」标记？打卡记录会保留。')){ spotMastery={}; spotSave(); renderSpots(); renderSpotStats(); } }
+function resetMastery(){ if(confirm('确认清空所有「已掌握」和星级评分？打卡记录会保留。')){ spotMastery={}; spotStars={}; spotSave(); renderSpots(); renderSpotStats(); } }
 
 spotLoad(); renderTabs(); renderSpots(); renderSpotStats();
 </script>
