@@ -226,6 +226,20 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 .phrase .stars .s.hov{color:#fbbf24}
 .phrase .star-tip{font-size:11px;color:var(--muted);margin-left:4px}
 .phrase.mastered{opacity:.7}
+.phrase .rec-report{margin-top:8px;font-size:12px;line-height:1.55;background:#fff;border:1px dashed var(--brand);border-radius:9px;padding:9px 11px;display:none}
+.phrase .rec-report.show{display:block}
+.phrase .rec-report .rhead{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:5px}
+.phrase .rec-report .rscore{font-size:20px;font-weight:800}
+.phrase .rec-report .rscore.good{color:var(--green)}
+.phrase .rec-report .rscore.mid{color:#d97706}
+.phrase .rec-report .rscore.low{color:#dc2626}
+.phrase .rec-report .rlabel{font-size:11px;color:var(--muted)}
+.phrase .rec-report .rline{margin-top:4px}
+.phrase .rec-report .rtxt{color:var(--ink)}
+.phrase .rec-report .rmiss{color:#dc2626;font-weight:600}
+.phrase .rec-report .rtip{color:var(--brand);margin-top:4px}
+.phrase .rec-report .rnote{color:var(--muted);font-size:11px;margin-top:5px}
+.phrase .rec-report .rerr{color:#dc2626}
 .spot-practice{background:var(--panel);border:1px solid var(--brand);border-radius:14px;padding:20px;box-shadow:var(--shadow);margin-top:8px}
 .spot-practice .pc{background:linear-gradient(135deg,#fde7f0,#fff);border-radius:12px;padding:22px;text-align:center;min-height:130px;display:flex;flex-direction:column;justify-content:center}
 .spot-practice .pc .q{font-size:14px;color:var(--muted);font-weight:600;line-height:1.5}
@@ -234,6 +248,26 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 .spot-practice .pc .hint{font-size:12px;color:var(--muted);margin-top:10px}
 .spot-practice .pbar{font-size:12px;color:var(--muted);margin:0 0 12px}
 .spot-practice .pbtns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
+
+/* ===== SCRIPTS · 谈单话术库 ===== */
+.sc-tabs{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 10px}
+.sc-tab{border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:20px;padding:7px 16px;font-size:13px;cursor:pointer;user-select:none;transition:.15s}
+.sc-tab:hover{background:var(--brand-soft);color:var(--brand)}
+.sc-tab.on{background:var(--brand);color:#fff;border-color:var(--brand);font-weight:600}
+.sc-search{width:100%;max-width:440px;padding:11px 14px;border:1px solid var(--line);border-radius:10px;font-size:14px;margin-bottom:14px;box-sizing:border-box}
+.sc-search:focus{outline:none;border-color:var(--brand)}
+.sc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px}
+.sc-card{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:14px 15px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.sc-card .sc-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.sc-cmd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;font-weight:700;color:#fff;background:var(--brand);padding:3px 9px;border-radius:6px;flex:none}
+.sc-stage{font-size:11px;color:var(--muted);border:1px solid var(--line);padding:2px 8px;border-radius:6px;flex:none}
+.sc-title{font-weight:600;font-size:14.5px;color:var(--ink);margin-left:auto}
+.sc-note{font-size:12px;color:var(--muted);margin:0 0 10px}
+.sc-pre{white-space:pre-wrap;word-break:break-word;font-size:13px;line-height:1.55;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 12px;margin:0 0 10px;flex:1}
+.sc-copy{border:0;border-radius:9px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer;background:var(--brand-soft);color:var(--brand);align-self:flex-start;transition:.15s}
+.sc-copy:hover{background:var(--brand);color:#fff}
+.sc-copy.ok{background:var(--green);color:#fff}
+@media(max-width:820px){.sc-grid{grid-template-columns:1fr}}
 </style>
 <meta name="robots" content="noindex, nofollow">
 </head>
@@ -279,6 +313,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
     <div class="sitem" data-page="taboo"><span class="ic">🚫</span><span>文化禁忌速查</span></div>
     <div class="sitem" data-page="opt"><span class="ic">✅</span><span>优化看板</span></div>
     <div class="sitem" data-page="spots"><span class="ic">🗣️</span><span>销售英语陪练</span></div>
+    <div class="sitem" data-page="scripts"><span class="ic">💬</span><span>谈单话术</span></div>
   </aside>
   <div class="content">
 
@@ -589,6 +624,19 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
     <div id="spotPractice" class="spot-practice" style="display:none"></div>
 
     <div class="note">💡 用法：每天打开先点「今日打卡」养连续天数；背完一句点「标记掌握」；想测试记忆用「抽卡练习」，看中文说英文、再点「看英文」对照。句子会随业务继续扩。</div>
+  </section>
+
+  <!-- 7. SCRIPTS · 谈单话术库 -->
+  <section id="scripts" class="panel">
+    <h2 class="sec"><span class="tag">话术</span>WhatsApp 谈单话术库 · 进线到成交一键复制（NEW）</h2>
+    <p class="sec-sub">覆盖进线破冰、有效询盘、跟进、异议处理、报价成交五阶段 + 目的地专属补充块。每条按 WhatsApp 快捷回复指令（如 /first-cs）命名，点「复制」即可粘贴到 WhatsApp 发送（发送前把 [[占位符]] 改成真实信息）。完整 SOP 见《入境游WhatsApp谈单完整SOP.md》。</p>
+
+    <div class="sc-tabs" id="scTabs"></div>
+    <input class="sc-search" id="scSearch" placeholder="🔍 搜指令或关键词（如 visa / 潮汕 / 嫌贵）…" />
+
+    <div class="sc-grid" id="scGrid"></div>
+
+    <div class="note">💡 用法：选阶段标签快速定位；搜指令/关键词跨阶段过滤；点卡片「复制」直接贴进 WhatsApp。标 ★ 口径（付款/定金/退款）先问主管确认。数据存本机浏览器无需联网。</div>
   </section>
 
   <footer>
@@ -1041,7 +1089,52 @@ function starHtml(id, score){
 function hoverStar(id, score){ hoverStarId=id; var el=document.querySelector('.stars[data-id="'+id+'"]'); if(!el) return; var spans=el.querySelectorAll('.s'); for(var i=0;i<spans.length;i++){ spans[i].className=(i<score?'s hov':'s'); } }
 function rateStar(id, score){ spotStars[id]=score; spotSave(); renderSpots(); renderSpotStats(); }
 
-var spotRecUrl={}, spotRecState={}, spotRecMap={}, spotRecStream=null, spotAudios={};
+var spotRecUrl={}, spotRecState={}, spotRecMap={}, spotRecStream=null, spotAudios={}, spotRecSR={}, spotRecStart={}, spotRecDur={}, spotRecTranscript={};
+function phraseTextById(id){ var p=ALL_PHRASES.find(function(x){return x.id===id;}); return p?p.en:''; }
+function normWords(s){ return (s||'').toLowerCase().replace(/[^a-z0-9\s']/g,' ').replace(/\s+/g,' ').trim().split(' ').filter(Boolean); }
+function comparePron(recognized, target){
+  var tw=normWords(target), rw=normWords(recognized);
+  var set={}; rw.forEach(function(w){ set[w]=1; });
+  var hit=0, missed=[];
+  tw.forEach(function(w){ if(set[w]) hit++; else missed.push(w); });
+  var score= tw.length? Math.round(hit/tw.length*100):0;
+  return {score:score, missed:missed};
+}
+function analyzeAndShow(id, transcript, dur){
+  var target=phraseTextById(id);
+  var box=document.getElementById('rpt_'+id); if(!box) return;
+  if(!transcript || !transcript.trim()){
+    box.innerHTML='<div class="rerr">🎤 没识别到你的声音。可能没说话、麦克风被占用，或浏览器语音识别未启用（需 Chrome/Edge/Safari 最新版并联网）。可点 🔊 回放确认录音是否录上。</div>';
+    box.classList.add('show'); return;
+  }
+  var c=comparePron(transcript, target);
+  var cls= c.score>=80?'good':(c.score>=50?'mid':'low');
+  var stdDur=Math.max(1,Math.round(normWords(target).length*0.45));
+  var ratio= dur>0 ? dur/stdDur : 0;
+  var tip='';
+  if(ratio>0 && ratio<0.6) tip='语速偏快/说得不完整，放慢节奏、把每个词说清楚。';
+  else if(ratio>=0.6 && ratio<=1.6) tip='节奏适中，表达连贯。';
+  else if(ratio>1.6) tip='停顿偏多/略犹豫，可更连贯（此为非专业判断，仅基于语速时长）。';
+  var html='<div class="rhead"><span class="rscore '+cls+'">'+c.score+'%</span><span class="rlabel">发音匹配度（你读出的词 vs 标准句）</span></div>'
+    +'<div class="rline rtxt"><b>你说了：</b>'+esc(transcript.trim())+'</div>';
+  if(c.missed.length) html+='<div class="rline"><b>没读准：</b><span class="rmiss">'+esc(c.missed.join(' / '))+'</span></div>';
+  else html+='<div class="rline"><b>没读准：</b><span class="rmiss" style="color:var(--green)">无，全部命中 ✓</span></div>';
+  if(tip) html+='<div class="rline"><b>表达自检：</b><span class="rtip">'+tip+'</span></div>';
+  html+='<div class="rnote">📌 发音/表达为客观指标自检：识别依赖浏览器语音引擎，匹配度按词比对，非音素级专业评测；情绪项仅由语速/时长近似，非真情绪 AI。</div>';
+  box.innerHTML=html; box.classList.add('show');
+}
+function startRecognition(id){
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){ setRecReport(id,'🔍 当前浏览器未启用语音识别（需 Chrome/Edge/Safari 最新版并联网）。🎙️ 录音仍可回放，和标准音对比即可。'); return; }
+  var rec=new SR(); rec.lang='en-US'; rec.continuous=true; rec.interimResults=false;
+  var transcript='';
+  rec.onresult=function(e){ for(var i=e.resultIndex;i<e.results.length;i++){ if(e.results[i].isFinal) transcript+=' '+e.results[i][0].transcript; } spotRecTranscript[id]=transcript.trim(); };
+  rec.onerror=function(){};
+  rec.onend=function(){ analyzeAndShow(id, spotRecTranscript[id]||'', spotRecDur[id]||0); };
+  spotRecSR[id]=rec;
+  try{ rec.start(); }catch(e){}
+}
+function setRecReport(id, html){ var box=document.getElementById('rpt_'+id); if(box){ box.innerHTML=html; box.classList.add('show'); } }
 function recBtnHtml(id){
   var st=spotRecState[id]||'idle';
   if(st==='recording') return '<button id="rec_'+id+'" class="rec-btn recording" onclick="recToggle(\''+id+'\')">🔴 停止</button>';
@@ -1058,18 +1151,23 @@ function recToggle(id){
   navigator.mediaDevices.getUserMedia({audio:true}).then(function(stream){
     spotRecStream=stream;
     var mr=new MediaRecorder(stream), chunks=[];
+    spotRecStart[id]=Date.now(); spotRecDur[id]=0; spotRecTranscript[id]='';
     mr.ondataavailable=function(e){ if(e.data && e.data.size) chunks.push(e.data); };
     mr.onstop=function(){
       var blob=new Blob(chunks,{type:mr.mimeType||'audio/webm'});
       if(spotRecUrl[id]) URL.revokeObjectURL(spotRecUrl[id]);
       spotRecUrl[id]=URL.createObjectURL(blob); spotRecState[id]='recorded';
+      spotRecDur[id]=Math.round((Date.now()-spotRecStart[id])/1000);
       var b=document.getElementById('rec_'+id); if(b) b.outerHTML=recBtnHtml(id);
       if(spotRecStream){ spotRecStream.getTracks().forEach(function(t){t.stop();}); spotRecStream=null; }
       playMine(id);
+      var sr=spotRecSR[id];
+      if(sr && sr.state && sr.state!=='stopped' && sr.state!=='inactive'){ try{ sr.stop(); }catch(e){} }
     };
     spotRecMap[id]=mr; spotRecState[id]='recording';
     var b=document.getElementById('rec_'+id); if(b) b.outerHTML=recBtnHtml(id);
     mr.start();
+    startRecognition(id);
   }).catch(function(err){ alert('无法访问麦克风：'+(err&&err.message?err.message:err)+'\n请允许浏览器麦克风权限后重试。'); });
 }
 function playMine(id){
@@ -1197,6 +1295,80 @@ function practiceResult(remembered){ var p=spotQueue[spotIdx]; if(p){ spotMaster
 function resetMastery(){ if(confirm('确认清空所有「已掌握」和星级评分？打卡记录会保留。')){ spotMastery={}; spotStars={}; spotSave(); renderSpots(); renderSpotStats(); } }
 
 spotLoad(); renderTabs(); renderSpots(); renderSpotStats();
+
+/* ===== SCRIPTS · 谈单话术库 ===== */
+var SCRIPTS=[
+ {cmd:'/greet',stage:'破冰',title:'自动问候（通用）',note:'固定一句·客户首次发消息自动弹出（Greeting message）',text:"Hi there! 👋 Welcome to China Travel (officialchinatravel.com).\nI'm [[YourName]], your travel consultant.\nHow can I help you explore China today?"},
+ {cmd:'/first',stage:'破冰',title:'通用破冰首响',note:'信任钩子+签证开关+四问（来源不明/多城咨询）',text:"Hi [[Name]]! ✈️ Thanks for reaching out about traveling in China!\n\nI'm [[YourName]] from China Travel (officialchinatravel.com).\nWe specialize in private tours with English-speaking guides,\nno shopping stops, and 24/7 support — so you can just enjoy.\n\nTo put together the right plan for you, may I ask a few quick things?\n\n📅 When are you planning to visit, and roughly how many days?\n👥 How many travelers — any seniors or children?\n🌏 Is China your main destination this trip, or just one stop on a longer journey?\n*(this helps me check visa-free options for you)*\n🍽️ Any dietary needs — halal, vegetarian, or allergies?\n\nWith these details I can tailor an itinerary that fits your group perfectly! 😊"},
+ {cmd:'/first-cs',stage:'破冰',title:'潮汕破冰专用',note:'美食钩子+清真预警+风格问（独立站潮汕页进线）',text:"Hi [[Name]]! ✈️ Great choice — Chaoshan (Shantou + Chaozhou + Nan'ao Island) has some of the best food in all of China!\n\nI'm [[YourName]] from China Travel (officialchinatravel.com).\nPrivate tours, English guides, no shopping stops, 24/7 support.\n\nA few quick questions to design your perfect Chaoshan trip:\n\n📅 When are you planning to visit, and for how many days?\n👥 How many travelers — any seniors or children?\n🌏 Is Chaoshan your main destination, or part of a longer China trip?\n*(helps me check visa-free options)*\n🍽️ Any dietary needs? Chaoshan is famous for beef hotpot & seafood —\n    let me know if you need halal/vegetarian options!\n🧳 Focusing on food & culture, nature, or a bit of everything?\n\nLooking forward to helping you explore Chaoshan! 😊"},
+ {cmd:'/first-zjj',stage:'破冰',title:'张家界破冰专用',note:'Avatar钩子+楼梯预警（张家界独立站进线）',text:"Hi [[Name]]! ✈️ Zhangjiajie — the Avatar Mountains! One of China's most stunning natural wonders.\n\nI'm [[YourName]] from China Travel (officialchinatravel.com).\nPrivate tours, English guides, no shopping stops, 24/7 support.\n\nQuick questions to plan your Avatar adventure:\n\n📅 When are you planning to visit, and for how many days?\n👥 How many travelers — any seniors or children?\n*(Zhangjiajie has lots of stairs — I can adjust the pace if needed)*\n🌏 Is Zhangjiajie your main destination, or part of a longer China trip?\n*(helps me check visa-free options)*\n🍽️ Any dietary needs — halal, vegetarian, or allergies?\n\nLet's make your trip unforgettable! 🏔️😊"},
+ {cmd:'/first-gs',stage:'破冰',title:'港沪破冰专用',note:'城市反差+转机签证问（港沪产品进线）',text:"Hi [[Name]]! ✈️ Hong Kong + Shanghai — the perfect China combo: modern city life meets classic culture!\n\nI'm [[YourName]] from China Travel (officialchinatravel.com).\nPrivate tours, English guides, no shopping stops, 24/7 support.\n\nA few quick things to design your HK-Shanghai trip:\n\n📅 When are you planning to visit, and for how many days?\n👥 How many travelers — any seniors or children?\n🌏 Are you coming from overseas directly, or connecting through another Asian city?\n*(helps me check visa & transit options)*\n🍽️ Any dietary needs — halal, vegetarian, or allergies?\n\nExcited to help you explore! 🌆😊"},
+ {cmd:'/confirm',stage:'跟进',title:'有效询盘确认',note:'复述信息+收邮箱+最终分类A/B/C',text:"Great — [[Month]] works well for [[X]] adults! 👍\n\nFor a first trip to [[Destination]], I'd recommend covering the highlights\nwithout rushing the schedule.\n\nOne quick favor: could you share your email address?\nI'll send you the detailed itinerary & quote as a PDF — easier to review\nand keeps everything in one place. 📧\n\nAlso: is [[Destination]] your only stop, or shall we add more cities?\n(Shanghai, Beijing, Xi'an, Chengdu, Guilin… lots of great options!)"},
+ {cmd:'/f1-info',stage:'跟进',title:'跟进1·未回信息(6–24h)',note:'行程or价格二选一·降低回复压力',text:"Hi [[Name]] 👋 Just checking in — would you prefer I send the\n[[Destination]] itinerary first, or the price breakdown?\nEither way, happy to tailor it to what matters most to you! 😊"},
+ {cmd:'/f2-info',stage:'跟进',title:'跟进2·未回信息(24–48h)',note:'A类给贴士 / B-C类推多城联动',text:"Hi [[Name]]! If this is your first China trip, I can show you how\n[[Destination]] connects beautifully with places like\n[[City1]] / [[City2]] — many guests do a 2-city combo and love it.\nAre you thinking [[Destination]] only, or open to adding more? 😊\n\n(A类: If this is your first time visiting [[Destination]], I can share tips on\nthe best local foods and which spots are must-sees vs optional.)"},
+ {cmd:'/f3-info',stage:'跟进',title:'跟进3·最后未回(48–72h)',note:'发简化路线+降级出口',text:"Hey [[Name]]! I've put together a simple [[Destination]] route\nshowing how the main attractions fit together in [[X]] days.\nWould you like me to send it over? If the timing isn't right yet,\nno worries — just message me when you're ready! 📌"},
+ {cmd:'/f1-quote',stage:'跟进',title:'报价后跟进·D1',note:'聚焦行程适不适合，不锁价格',text:"Hi [[Name]] 👋 Just wanted to check — did the [[Destination]]\nquote & itinerary land ok? Happy to tweak anything:\nhotel level, pace, add/remove attractions — your call! 😊"},
+ {cmd:'/f3-quote',stage:'跟进',title:'报价后跟进·D3',note:'档期紧迫+hold spot 软逼',text:"Hi [[Name]]! Your dates [[Dates]] are getting popular —\nguide availability and hotel rates can shift as we get closer.\nWant me to hold your spot for a few more days while you decide?\nNo pressure, just want to make sure you don't lose your preferred window! ⏰"},
+ {cmd:'/f7-quote',stage:'跟进',title:'报价后跟进·D7',note:'开放姿态+长线培育',text:"Hey [[Name]], no rush at all — whenever you're ready,\nI can finalize the quote and lock everything in.\nAny new questions about [[Destination]], hotels, or traveling in China?\nHappy to help! 🤝"},
+ {cmd:'/obj-price',stage:'异议',title:'客户嫌贵',note:'三维度调套餐不降价',text:"I completely understand, [[Name]].\n\nWe can usually adjust the package depending on what matters most to you:\n• Hotel level (comfortable vs. upgraded)\n• Private transfers vs. shared transport\n• Trip style (leisurely vs. relaxed pace)\n\nWould you prefer me to make it more budget-friendly,\nor keep it more comfortable? Either way, I'll find the right fit for you! 💪"},
+ {cmd:'/obj-think',stage:'异议',title:'客户说要考虑',note:'留资料+抛社会证明软推动',text:"Of course, take your time — it's an important decision! 🙌\n\nI'll leave all the details here in our chat.\nIf anything about the route, hotels, or traveling in China isn't clear,\njust message me anytime and I'll help.\n\nOne thing that often helps: would you like me to share\na couple of recent guest reviews from [[Destination]]?\nSometimes hearing from other travelers makes it easier to decide! ⭐"},
+ {cmd:'/obj-nodate',stage:'异议',title:'客户没定日期',note:'降压+引导模糊范围+季节提示',text:"That's completely fine — you don't need exact dates yet! 📅\n\nEven the approximate month or season is enough for me to suggest\nthe right type of trip and give you a ballpark idea.\n\nRoughly thinking spring, summer, fall, or winter?\n(I'll also flag any seasonal tips — like weather or crowd levels!) 😊"},
+ {cmd:'/obj-justlook',stage:'异议',title:'客户只是看看',note:'暂停追问+给框架',text:"No problem at all! 😊\n\nEven if your dates aren't fixed yet, I can give you a simple idea of\nthe route and typical trip length — so when you're ready,\nyou'll already have something solid to work with.\n\nNo pressure, no rush. I'm here whenever you need me! 👋"},
+ {cmd:'/obj-hotel',stage:'异议',title:'客户问酒店',note:'两档对比+发照片',text:"Yes, hotel accommodation is included! 🏨\n\nI can show you two options:\n✨ Comfortable option — clean, convenient, good value\n✨ Upgraded option — higher-end amenities, prime location\n\nYou can compare before deciding. Want me to send photos of both?"},
+ {cmd:'/obj-safe',stage:'异议',title:'客户担心安全/购物团',note:'五重 reassurance（欧美高频）',text:"Totally understand — it's smart to check! 🔒\n\nHere's what sets us apart:\n✅ 100% NO shopping stops — guaranteed\n✅ Vetted English-speaking local guides throughout\n✅ 24/7 support while you're in China\n✅ Money-back guarantee on qualifying bookings\n✅ We've hosted travelers from [[X]] countries safely\n\nHappy to share recent guest reviews if that helps reassure you! ⭐"},
+ {cmd:'/obj-visa',stage:'异议',title:'客户担心签证',note:'三分支全覆盖（240h/L签/互免）',text:"Great question — let me help with that! 📋\n\nIt depends on your nationality and travel plans:\n\n✈️ If China is ONE STOP on a longer trip (onward ticket to a 3rd country):\n   you may qualify for 240-hour visa-free transit — free, no application!\n   I can check if you qualify.\n\n📝 If China IS your main destination: a standard tourist visa (L visa)\n   is straightforward. We provide an official invitation letter.\n\n🎉 Some nationalities (Singapore, Malaysia, Thailand, UAE…) enjoy\n   FULL visa exemption — just bring a valid passport!\n\nWhat's your passport nationality? I'll tell you exactly what you need. 😊"},
+ {cmd:'/qualify',stage:'成交',title:'高意向确认',note:'复述确认+收邮箱',text:"Awesome, [[Name]]! 🎉 I have everything I need now:\n\n📅 Travel period: [[Date/Month]]\n👥 Travelers: [[X]] adults (+ [[Y]] kids/seniors if any)\n🗺 Route: [[Destination(s)]]\n🎯 Style: [[Style]]\n\nI'll put together your customized itinerary and quote right away.\nOne last thing — what's your email? I'll send the full PDF package there! 📧"},
+ {cmd:'/quote-send',stage:'成交',title:'发送报价 ★',note:'含/不含清晰+总价+PDF（标★先问主管）',text:"Here's your tailored [[Destination]] package, [[X]] days for [[N]] people:\n\n━━━━━━━━━━━━━━━━━━\n✅ INCLUDES:\n• Private English-speaking guide\n• [[Hotel Level]] hotel accommodation\n• Private vehicle with driver\n• All entrance tickets listed in itinerary\n• 24/7 travel support\n\n❌ EXCLUDES:\n• International flights (happy to advise on routes!)\n• Visa fees\n• Personal expenses & tips\n• Meals not specified in itinerary\n\n💰 TOTAL: **$[[Price]] USD** per group\n━━━━━━━━━━━━━━━━\n\nFull day-by-day itinerary attached as PDF.\nTake your time to review — any questions, just ask! 😊"},
+ {cmd:'/push',stage:'成交',title:'逼单 ★',note:'三重软紧迫+30%定金CTA',text:"Heads-up, [[Name]]! ⏰\n\nYour preferred dates [[Dates]] are getting close, and I wanted to let you know:\n🔸 Guide availability for [[Destination]] is limited in [[Month]]\n🔸 Hotel rates can shift as we get closer\n🔸 Our early-bird perk (free [[X]]) ends [[Date]]\n\nIf this plan looks good to you, I can lock your dates with a\n30% deposit now — and you'll have everything secured! 🎯\n\nNo pressure, just don't want you to miss your spot! 😊"},
+ {cmd:'/deal',stage:'成交',title:'成交确认 ★',note:'四步路径（定金+建群+行前+尾款）',text:"Let's do it, [[Name]]! 🎉🇨🇳\n\nHere's what happens next:\n\n1️⃣ DEPOSIT: Pay 30% ($[[Amount]]) via [[Payment Method]]\n   to lock your dates & guide → I'll send payment instructions\n2️⃣ GROUP SETUP: I'll create your travel group chat (you + guide + me)\n3️⃣ PRE-TRIP CHECKLIST: Sent 48h before arrival\n   (packing tips, guide contact, WeChat setup)\n4️⃣ BALANCE: Remaining 70% due [[X]] days before arrival\n\nWelcome to China — we'll take great care of you! 🙌✈️"},
+ {cmd:'潮汕·台风季',stage:'目的地',title:'潮汕台风季预警(6–9月)',note:'南澳轮渡可能停航·备室内方案',text:"Quick heads-up: June–September is typhoon season in coastal Chaoshan.\nNan'ao Island ferry may pause on stormy days. I always monitor weather and\nhave backup indoor plans (museum tour / tea ceremony / cooking class) —\nyou'll never be stuck!"},
+ {cmd:'潮汕·美食',stage:'目的地',title:'潮汕美食钩子',note:'牛肉火锅/海鲜/工夫茶/蚝烙',text:"Chaoshan is China's food capital — beef hotpot sliced thin, fresh seafood\nstraight from the coast, traditional Teochew kung fu tea ceremony, and the\nfamous oyster omelette. Foodies say it's worth the trip just for the meals! 🍜"},
+ {cmd:'潮汕·寻根',stage:'目的地',title:'潮汕侨乡寻根(东南亚裔)',note:'情感路线钩子',text:"Many travelers with Teochew roots come back to taste the food their\ngrandparents grew up with — the flavors, the dialect, the temples.\nIf you have family connections here, I'd love to build a heritage route for you."},
+ {cmd:'潮汕·清真',stage:'目的地',title:'潮汕清真预案',note:'提前预订认证清真餐厅',text:"For halal travelers: I work with certified halal restaurants in Shantou/Chaozhou.\nPlease let me know early so I can reserve — halal options are limited\nbut I've got you covered! 🕌"},
+ {cmd:'张家界·季节',stage:'目的地',title:'张家界季节/拥挤',note:'最佳4–5月&9–10月·避开十一',text:"Best times: Apr–May & Sep–Oct (comfortable, fewer crowds).\nAvoid Golden Week (Oct 1–7) — extremely crowded.\nWinter: stunning snow on Tianmen Mountain but some cable cars may close on icy days."},
+ {cmd:'张家界·楼梯',stage:'目的地',title:'张家界体力/楼梯预警',note:'长者/solo女性可加缆车减爬',text:"Zhangjiajie involves quite a bit of walking & stairs (Tianmen Mountain,\nYuanjiajie cliffs). For seniors or anyone who prefers a gentler pace, I can\nadd more cable car rides and skip the steeper sections."},
+ {cmd:'张家界·Avatar',stage:'目的地',title:'张家界Avatar钩子',note:'悬浮山取景地',text:"These mountains inspired the floating Hallelujah Mountains in James\nCameron's Avatar — seeing them in person is even more breathtaking\nthan on screen! 🎬"},
+ {cmd:'港沪·反差',stage:'目的地',title:'港沪城市反差钩子',note:'三城三体验',text:"Hong Kong's energy + Shanghai's skyline + the historic water towns\nbetween them — you get three completely different China experiences in one trip!"},
+ {cmd:'港沪·签证',stage:'目的地',title:'港沪签证特殊',note:'香港与内地签证分开',text:"Hong Kong has its own visa rules (separate from mainland China).\nIf you're visiting both, I'll help you sort out the paperwork for both —\none less thing to worry about!"},
+ {cmd:'多城·联动',stage:'目的地',title:'多城联动推荐组合',note:'6组高转化组合',text:"🔗 Multi-city combos we recommend:\n• Beijing + Xi'an (人文双城, 4–5天)\n• Chengdu + Chongqing (巴蜀双城, 4–5天)\n• Guilin + Yangshuo (山水画, 3–4天)\n• Hangzhou + Shanghai (江南+现代, 3–4天)\n• Lijiang + Dali (云南慢生活, 4–5天)\n• Chaoshan + Xiamen (闽南美食线, 4–5天)"}
+];
+var SC_STAGES=['全部','破冰','跟进','异议','成交','目的地'];
+var scTab='全部', scQ='';
+function scRender(){
+ var grid=document.getElementById('scGrid'); if(!grid)return;
+ var list=SCRIPTS.filter(function(s){
+   if(scTab!=='全部'&&s.stage!==scTab)return false;
+   if(scQ){var q=scQ.toLowerCase();if((s.cmd+' '+s.title+' '+s.note+' '+s.text).toLowerCase().indexOf(q)<0)return false;}
+   return true;
+ });
+ if(!list.length){grid.innerHTML='<div class="note">没有匹配的话术，换个关键词试试。</div>';return;}
+ grid.innerHTML=list.map(function(s){
+   var star=s.note.indexOf('★')>=0?' <span style="color:var(--red)">★</span>':'';
+   return '<div class="sc-card"><div class="sc-head"><span class="sc-cmd">'+s.cmd+'</span><span class="sc-stage">'+s.stage+'</span><span class="sc-title">'+s.title+star+'</span></div>'
+     +'<div class="sc-note">'+s.note+'</div>'
+     +'<pre class="sc-pre">'+esc(s.text)+'</pre>'
+     +'<button class="sc-copy" onclick="scCopy(this)">📋 复制</button></div>';
+ }).join('');
+}
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function scCopy(btn){
+ var card=btn.closest('.sc-card'); if(!card)return;
+ var pre=card.querySelector('.sc-pre'); if(!pre)return;
+ var txt=pre.textContent;
+ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(function(){scOk(btn);},function(){fallback(txt,btn);});}
+ else fallback(txt,btn);
+}
+function fallback(txt,btn){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');scOk(btn);}catch(e){}document.body.removeChild(ta);}
+function scOk(btn){btn.textContent='✅ 已复制';btn.classList.add('ok');setTimeout(function(){btn.textContent='📋 复制';btn.classList.remove('ok');},1600);}
+function scInit(){
+ var tabs=document.getElementById('scTabs'); if(!tabs)return;
+ tabs.innerHTML=SC_STAGES.map(function(s){return '<div class="sc-tab'+(s==='全部'?' on':'')+'" data-s="'+s+'">'+s+'</div>';}).join('');
+ tabs.querySelectorAll('.sc-tab').forEach(function(t){t.addEventListener('click',function(){scTab=t.dataset.s;tabs.querySelectorAll('.sc-tab').forEach(function(x){x.classList.remove('on');});t.classList.add('on');scRender();});});
+ var se=document.getElementById('scSearch'); if(se)se.addEventListener('input',function(){scQ=se.value.trim();scRender();});
+ scRender();
+}
+scInit();
+
 </script>
 </body>
 </html>
