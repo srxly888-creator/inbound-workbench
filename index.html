@@ -173,6 +173,41 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 .leadtable .op{display:flex;gap:6px;flex-wrap:wrap}
 @media(max-width:820px){.leadtable{overflow-x:auto}.leadtable table{min-width:760px}}
 .note.warn{background:#fff1f0;border-color:#f3c2bc}
+
+/* ===== 景点英语陪练打卡 ===== */
+.spot-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:14px 0 18px}
+.spot-stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow);text-align:center}
+.spot-stat .v{font-size:26px;font-weight:800;color:var(--brand);line-height:1.15}
+.spot-stat .l{font-size:12px;color:var(--muted);margin-top:4px}
+.spot-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.spot-tabs{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.spot-tab{background:var(--panel);border:1px solid var(--line);color:var(--muted);padding:8px 16px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
+.spot-tab:hover{border-color:var(--brand);color:var(--brand)}
+.spot-tab.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.spot-route{margin-bottom:22px}
+.spot-route .ri{background:linear-gradient(135deg,#fde7f0,#fff5fa);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:12px}
+.spot-route .ri h3{margin:0 0 3px;font-size:15px;color:var(--brand)}
+.spot-route .ri p{margin:0;font-size:12.5px;color:var(--muted)}
+.spot-route .ri .pitch{margin-top:8px;font-size:12.5px;color:var(--ink);background:#fff;border:1px dashed var(--line);border-radius:8px;padding:8px 10px;line-height:1.5}
+.spot-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px}
+.spot-card{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--brand);border-radius:12px;padding:14px 15px;box-shadow:var(--shadow)}
+.spot-card h4{margin:0 0 2px;font-size:14px;display:flex;align-items:center;gap:8px}
+.spot-card h4 .en{font-size:11px;color:var(--muted);font-weight:600}
+.phrase{background:#faf5f8;border:1px solid var(--line);border-radius:9px;padding:9px 11px;margin-top:9px}
+.phrase .en{font-weight:600;color:var(--ink);line-height:1.5}
+.phrase .zh{color:var(--muted);margin-top:3px;font-size:12px}
+.phrase .pf{margin-top:8px}
+.phrase .mk{cursor:pointer;font-size:12px;font-weight:700;border-radius:7px;padding:4px 12px;border:1px solid var(--line);background:#fff;color:var(--brand)}
+.phrase .mk.on{background:var(--green);color:#fff;border-color:var(--green)}
+.phrase.mastered{opacity:.7}
+.spot-practice{background:var(--panel);border:1px solid var(--brand);border-radius:14px;padding:20px;box-shadow:var(--shadow);margin-top:8px}
+.spot-practice .pc{background:linear-gradient(135deg,#fde7f0,#fff);border-radius:12px;padding:22px;text-align:center;min-height:130px;display:flex;flex-direction:column;justify-content:center}
+.spot-practice .pc .q{font-size:14px;color:var(--muted);font-weight:600;line-height:1.5}
+.spot-practice .pc .a{font-size:16px;color:var(--ink);font-weight:700;margin-top:10px;line-height:1.55;display:none}
+.spot-practice .pc .a.show{display:block}
+.spot-practice .pc .hint{font-size:12px;color:var(--muted);margin-top:10px}
+.spot-practice .pbar{font-size:12px;color:var(--muted);margin:0 0 12px}
+.spot-practice .pbtns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:14px}
 </style>
 <meta name="robots" content="noindex, nofollow">
 </head>
@@ -217,6 +252,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
     <div class="sitem" data-page="visa"><span class="ic">🌏</span><span>签证查询工具</span></div>
     <div class="sitem" data-page="taboo"><span class="ic">🚫</span><span>文化禁忌速查</span></div>
     <div class="sitem" data-page="opt"><span class="ic">✅</span><span>优化看板</span></div>
+    <div class="sitem" data-page="spots"><span class="ic">🗣️</span><span>景点英语陪练</span></div>
   </aside>
   <div class="content">
 
@@ -242,6 +278,8 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
         </select></div>
         <div><label>意向</label><select id="f_level"><option>A</option><option>B</option><option>C</option></select></div>
         <div><label>下次跟进</label><input id="f_next" type="date"></div>
+        <div><label>添加日期</label><input id="f_added" type="date" readonly title="自动填今天，可手动调整"></div>
+        <div><label>成交日期</label><input id="f_closed" type="date" title="成交后填上，自动从「待跟进」中移出"></div>
         <div><label>联系方式</label><input id="f_contact" placeholder="邮箱 / 微信"></div>
         <div style="grid-column:1/-1"><label>备注（忌口 / 特殊需求）</label><input id="f_note" placeholder="清真 / 素食 / 过敏等"></div>
       </div>
@@ -264,7 +302,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
       <div style="overflow-x:auto">
         <table>
           <thead><tr>
-            <th>姓名</th><th>国籍</th><th>人数/天数</th><th>目的地</th><th>阶段</th><th>意向</th><th>下次跟进</th><th>联系方式</th><th>备注</th><th>操作</th>
+            <th>姓名</th><th>国籍</th><th>人数/天数</th><th>目的地</th><th>阶段</th><th>意向</th><th>下次跟进</th><th>添加日期</th><th>成交日期</th><th>联系方式</th><th>备注</th><th>操作</th>
           </tr></thead>
           <tbody id="leadBody"></tbody>
         </table>
@@ -497,6 +535,33 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
     <div class="note">🧹 想清空勾选重新开始？点这里：<a href="javascript:clearChecks()">重置每日/每周勾选</a>（仅清例行，不清优化看板）。</div>
   </section>
 
+  <!-- 6. SPOTS · 景点英语陪练打卡 -->
+  <section id="spots" class="panel">
+    <h2 class="sec"><span class="tag">陪练</span>景点英语陪练打卡 · 把景点变成可讲的英文（NEW）</h2>
+    <p class="sec-sub">基于张家界 / 潮汕 / 港沪 主线，把景点写成「销售可讲的英文卖点 + 导览词」。每日打卡记录连续天数，逐句标记「已掌握」，未掌握优先抽卡练习。数据存本机浏览器。</p>
+
+    <div class="spot-stats" id="spotStats"></div>
+
+    <div class="spot-actions">
+      <button class="btn primary" id="checkinBtn" onclick="spotCheckIn()">✅ 今日打卡</button>
+      <button class="btn ghost" onclick="startPractice()">🎴 抽卡练习（未掌握优先）</button>
+      <button class="btn ghost" onclick="resetMastery()">↺ 重置掌握标记</button>
+    </div>
+
+    <div class="spot-tabs" id="spotTabs">
+      <div class="spot-tab on" data-r="all" onclick="setSpotRoute('all')">全部</div>
+      <div class="spot-tab" data-r="zjj" onclick="setSpotRoute('zjj')">张家界</div>
+      <div class="spot-tab" data-r="cs" onclick="setSpotRoute('cs')">潮汕</div>
+      <div class="spot-tab" data-r="gh" onclick="setSpotRoute('gh')">港沪</div>
+    </div>
+
+    <div id="spotList"></div>
+
+    <div id="spotPractice" class="spot-practice" style="display:none"></div>
+
+    <div class="note">💡 用法：每天打开先点「今日打卡」养连续天数；背完一句点「标记掌握」；想测试记忆用「抽卡练习」，看中文说英文、再点「看英文」对照。句子可随业务继续扩（加新景点只需在数据中加一条）。</div>
+  </section>
+
   <footer>
     入境游销售工作台 · 本地离线工具 · 政策口径以中国外交部 / 国家移民管理局最新公告及公司内部口径为准<br>
     数据源：外交部领事服务网《互免签证协定一览表》+ 国家移民管理局过境免签政策（截至 2025-06-12）· 整理 2026-08-18
@@ -559,6 +624,7 @@ var WB_PW="lisa888";
 function checkPW(){var v=document.getElementById('pw').value;if(v===WB_PW){document.getElementById('gate').style.display='none';try{localStorage.setItem('wb_ok','1');}catch(e){}}else{document.getElementById('gerr').textContent='口令错误，请重试';}}
 try{if(localStorage.getItem('wb_ok')==='1'){document.getElementById('gate').style.display='none';}}catch(e){}
 document.getElementById('pw').addEventListener('keydown',function(e){if(e.key==='Enter')checkPW();});
+try{document.getElementById('f_added').value=todayStr();}catch(e){}
 
 /* ===== 今日作战 / 客资追踪器（localStorage 存储） ===== */
 var LEADS_KEY='inboundWB_leads', LEADS_INIT='inboundWB_leads_init', leads=[];
@@ -620,6 +686,8 @@ function renderTable(){
       +'<td><span class="stage">'+esc(l.stage)+'</span></td>'
       +'<td class="lvl '+esc(l.level)+'">'+esc(l.level)+'</td>'
       +'<td'+(c==='over'?' style="color:var(--red);font-weight:600"':'')+'>'+esc(l.next||'-')+'</td>'
+      +'<td>'+esc(l.addedAt||'-')+'</td>'
+      +'<td>'+(l.closedAt?'<span style="color:#0a8a4a;font-weight:600">'+esc(l.closedAt)+'</span>':'-')+'</td>'
       +'<td>'+esc(l.contact||'')+'</td>'
       +'<td>'+esc(l.note||'')+'</td>'
       +'<td><div class="op"><button class="btn ghost mini" onclick="markDone(\''+l.id+'\')">已跟进</button>'
@@ -634,13 +702,13 @@ function addLead(){
   var name=g('f_name');if(!name){alert('请填写客户姓名');return;}
   var l={id:uid(),name:name,country:g('f_country'),people:g('f_people'),period:g('f_period'),days:g('f_days'),
     dest:g('f_dest'),stage:document.getElementById('f_stage').value,level:document.getElementById('f_level').value,
-    next:g('f_next'),contact:g('f_contact'),note:g('f_note')};
+    next:g('f_next'),addedAt:g('f_added')||todayStr(),closedAt:g('f_closed'),contact:g('f_contact'),note:g('f_note')};
   leads.unshift(l);saveLeads();clearForm();renderAll();
   var h=document.getElementById('backupHint');h.style.display='block';
   h.textContent='已建档：'+name+'。建议积累到 30 条时点「导出备份」留底。';
   show('today');
 }
-function clearForm(){['f_name','f_country','f_people','f_period','f_days','f_dest','f_next','f_contact','f_note'].forEach(function(i){document.getElementById(i).value='';});}
+function clearForm(){['f_name','f_country','f_people','f_period','f_days','f_dest','f_next','f_contact','f_note','f_closed'].forEach(function(i){document.getElementById(i).value='';});document.getElementById('f_added').value=todayStr();}
 function deleteLead(id){if(confirm('确认删除这条客资？')){leads=leads.filter(function(x){return x.id!==id;});saveLeads();renderAll();}}
 function editLead(id){
   var l=leads.find(function(x){return x.id===id;});if(!l)return;
@@ -648,7 +716,9 @@ function editLead(id){
   document.getElementById('f_people').value=l.people||'';document.getElementById('f_period').value=l.period||'';
   document.getElementById('f_days').value=l.days||'';document.getElementById('f_dest').value=l.dest||'';
   document.getElementById('f_stage').value=l.stage;document.getElementById('f_level').value=l.level;
-  document.getElementById('f_next').value=l.next||'';document.getElementById('f_contact').value=l.contact||'';
+  document.getElementById('f_next').value=l.next||'';
+  document.getElementById('f_added').value=l.addedAt||'';
+  document.getElementById('f_closed').value=l.closedAt||'';document.getElementById('f_contact').value=l.contact||'';
   document.getElementById('f_note').value=l.note||'';
   leads=leads.filter(function(x){return x.id!==id;});saveLeads();
   window.scrollTo({top:0,behavior:'smooth'});show('today');
@@ -662,8 +732,8 @@ function updateTopAlert(){
 }
 function download(content,name,type){var b=new Blob([content],{type:type+';charset=utf-8'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);}
 function exportCSV(){
-  var head=['姓名','国籍','人数','月份/日期','天数','目的地','阶段','意向','下次跟进','联系方式','备注'];
-  var rows=leads.map(function(l){return [l.name,l.country,l.people,l.period,l.days,l.dest,l.stage,l.level,l.next,l.contact,l.note];});
+  var head=['姓名','国籍','人数','月份/日期','天数','目的地','阶段','意向','下次跟进','添加日期','成交日期','联系方式','备注'];
+  var rows=leads.map(function(l){return [l.name,l.country,l.people,l.period,l.days,l.dest,l.stage,l.level,l.next,l.addedAt,l.closedAt,l.contact,l.note];});
   var csv='\uFEFF'+head.join(',')+'\n'+rows.map(function(r){return r.map(function(c){c=c==null?'':String(c);if(/[",\n]/.test(c))c='"'+c.replace(/"/g,'""')+'"';return c;}).join(',');}).join('\n');
   download(csv,'客资追踪_'+todayStr()+'.csv','text/csv');
 }
@@ -676,6 +746,169 @@ function doImport(e){
 }
 function clearSamples(){leads=leads.filter(function(x){return !x._s;});saveLeads();renderAll();alert('示例数据已清空，你的真实客资保留。');}
 function clearAllLeads(){if(confirm('确认清空全部客资？此操作不可恢复！')){if(confirm('再确认一次：真的清空所有客资记录？')){leads=[];saveLeads();renderAll();}}}
+
+/* ===================== 景点英语陪练打卡 ===================== */
+const SPOT_ROUTES = [
+  { id:"zjj", name:"张家界", en:"Zhangjiajie", region:"湖南 · 阿凡达山水现实版",
+    pitch:[
+      `Zhangjiajie is China's real-life "Avatar" landscape — over 3,000 quartz peaks rising from misty valleys.`,
+      `Dramatic, otherworldly, and far less crowded than the big cities — a top pick for first-time China visitors.`
+    ],
+    spots:[
+      { name:"张家界国家森林公园", en:"Zhangjiajie National Forest Park", phrases:[
+        { en:`Zhangjiajie National Forest Park is home to more than 3,000 quartz-sandstone peaks rising straight out of the ground.`, zh:`张家界国家森林公园有 3000 多根石英砂岩峰柱拔地而起。` },
+        { en:`This is the real-life inspiration for the floating "Hallelujah Mountains" in James Cameron's Avatar.`, zh:`这里就是电影《阿凡达》悬浮"哈利路亚山"的现实取景原型。` }
+      ]},
+      { name:"袁家界", en:"Yuanjiajie", phrases:[
+        { en:`Yuanjiajie is where you'll see the Avatar Hallelujah Mountain and the "First Bridge under Heaven".`, zh:`袁家界有阿凡达哈利路亚山和天然石桥"天下第一桥"。` }
+      ]},
+      { name:"天门山", en:"Tianmen Mountain", phrases:[
+        { en:`Tianmen Mountain has the world's longest passenger cable car and a thrilling glass skywalk.`, zh:`天门山拥有世界最长客运索道和惊险的玻璃栈道。` },
+        { en:`At the summit sits Tianmen Cave, a huge natural arch punched through the cliff — the "Gateway to Heaven".`, zh:`山顶的天门洞是穿山而过的巨大天然拱门，被称为"通天之门"。` }
+      ]},
+      { name:"玻璃栈道", en:"Glass Skywalk", phrases:[
+        { en:`The glass-bottom skywalk clings to a cliff edge 1,400 meters up — not for the faint of heart!`, zh:`玻璃栈道贴附在 1400 米高的悬崖边，胆小者慎入！` }
+      ]},
+      { name:"金鞭溪", en:"Golden Whip Stream", phrases:[
+        { en:`Golden Whip Stream is a flat, easy valley walk along clear water — perfect for families and seniors.`, zh:`金鞭溪是平缓的溪谷步道，溪水清澈，适合带娃家庭和长者。` }
+      ]},
+      { name:"天子山", en:"Tianzi Mountain", phrases:[
+        { en:`Tianzi Mountain gives you the classic sea-of-clouds panorama over the sandstone peaks.`, zh:`天子山可俯瞰砂岩峰林云海的经典全景。` }
+      ]}
+    ]
+  },
+  { id:"cs", name:"潮汕", en:"Chaoshan", region:"广东 · 美食与侨乡故里",
+    pitch:[
+      `Chaoshan is China's capital of Teochew cuisine — beef hotpot, gongfu tea, and street snacks loved worldwide.`,
+      `It's also the ancestral homeland of millions of overseas Chinese, especially across Southeast Asia.`
+    ],
+    spots:[
+      { name:"汕头老城", en:"Shantou Old Town", phrases:[
+        { en:`Shantou's old town is a rare surviving cluster of 1920s arcade (qilou) buildings — a window into overseas Chinese history.`, zh:`汕头老城保留着罕见的 1920 年代骑楼建筑群，是华侨历史的窗口。` }
+      ]},
+      { name:"南澳岛", en:"Nan'ao Island", phrases:[
+        { en:`Nan'ao is a breezy island with blue bays, a lighthouse, and fresh seafood — best outside typhoon season (Jun–Sep).`, zh:`南澳岛有蔚蓝海湾、灯塔和海鲜，建议避开 6–9 月台风季。` }
+      ]},
+      { name:"潮州古城", en:"Chaozhou Ancient City", phrases:[
+        { en:`Chaozhou Ancient City is the cultural heart of Teochew heritage — Ming-dynasty walls, the Guangji Bridge, and old teahouses.`, zh:`潮州古城是潮汕文化核心：明代城墙、广济桥和百年茶馆。` }
+      ]},
+      { name:"牌坊街", en:"Paifang Street", phrases:[
+        { en:`Paifang Street is lined with memorial archways and street food — the best place to taste authentic Teochew snacks.`, zh:`牌坊街林立着石牌坊与小吃，是尝地道潮汕味道的最佳去处。` }
+      ]},
+      { name:"工夫茶", en:"Teochew Gongfu Tea", phrases:[
+        { en:`Teochew gongfu tea is a slow, ritualistic brewing art — we'll sit with locals and learn the proper pour.`, zh:`潮汕工夫茶是一门慢工细活的冲泡艺术，我们会和当地人一起学斟茶。` }
+      ]},
+      { name:"牛肉火锅", en:"Chaoshan Beef Hotpot", phrases:[
+        { en:`Chaoshan beef hotpot uses same-day beef sliced paper-thin and blanched seconds — a must for foodies.`, zh:`潮汕牛肉火锅用当天现宰牛肉切薄片、几秒烫熟，是吃货必试。` }
+      ]}
+    ]
+  },
+  { id:"gh", name:"港沪", en:"Hong Kong + Shanghai", region:"中国双城记 · 东方之珠 + 魔都",
+    pitch:[
+      `Hong Kong and Shanghai are China's two most iconic cities — East-meets-West energy and skyline perfection.`,
+      `Pair them for a "two-Chinas" trip: colonial heritage and harbor glamour meets a futuristic metropolis.`
+    ],
+    spots:[
+      { name:"太平山顶", en:"Victoria Peak (HK)", phrases:[
+        { en:`Victoria Peak offers the postcard view of Hong Kong's skyline and harbor — ride the historic Peak Tram up.`, zh:`太平山顶可俯瞰香港天际线与维港，搭乘百年山顶缆车上山。` }
+      ]},
+      { name:"维多利亚港", en:"Victoria Harbour (HK)", phrases:[
+        { en:`Victoria Harbour's "Symphony of Lights" is a nightly free light-and-sound show across the skyline.`, zh:`维港"幻彩咏香江"是每晚免费的天际线灯光音乐汇演。` }
+      ]},
+      { name:"旺角", en:"Mong Kok (HK)", phrases:[
+        { en:`Mong Kok is the buzzing heart of local street life — neon, markets, and the best dai pai dong eats.`, zh:`旺角是本地街头的烟火中心：霓虹、市集与最地道的排档美食。` }
+      ]},
+      { name:"外滩", en:"The Bund (Shanghai)", phrases:[
+        { en:`The Bund is Shanghai's riverside promenade of 1920s buildings facing the futuristic Lujiazui skyline.`, zh:`外滩是上海滨江的 1920 年代建筑群，正对陆家嘴摩天楼天际线。` }
+      ]},
+      { name:"豫园", en:"Yu Garden (Shanghai)", phrases:[
+        { en:`Yu Garden is a 400-year-old classical Suzhou-style garden with rockeries, pavilions, and a lively old town.`, zh:`豫园是 400 年历史的苏州式古典园林，亭台假山外是热闹的老城厢。` }
+      ]},
+      { name:"南京路", en:"Nanjing Road (Shanghai)", phrases:[
+        { en:`Nanjing Road is one of the world's busiest shopping streets — a window into Shanghai's modern energy.`, zh:`南京路是全球最繁忙的购物街之一，尽显上海的都市活力。` }
+      ]},
+      { name:"田子坊", en:"Tianzifang (Shanghai)", phrases:[
+        { en:`Tianzifang is a maze of lane-house alleys turned into boutiques and cafés — great for souvenirs and photos.`, zh:`田子坊是弄堂改建的创意街区，小店咖啡馆林立，适合淘纪念品和拍照。` }
+      ]}
+    ]
+  }
+];
+var ALL_PHRASES=[];
+SPOT_ROUTES.forEach(function(r){ r.spots.forEach(function(s){ s.phrases.forEach(function(p){ p.id="ph_"+ALL_PHRASES.length; p.routeId=r.id; ALL_PHRASES.push(p); }); }); });
+
+var SPOT_MK_KEY="inboundWB_spot_mk", SPOT_DT_KEY="inboundWB_spot_dt";
+var spotMastery={}, spotDates=[], spotRoute="all", spotQueue=[], spotIdx=0;
+function spotLoad(){ try{ spotMastery=JSON.parse(localStorage.getItem(SPOT_MK_KEY)||"{}")||{}; }catch(e){ spotMastery={}; } try{ spotDates=JSON.parse(localStorage.getItem(SPOT_DT_KEY)||"[]")||[]; }catch(e){ spotDates=[]; } }
+function spotSave(){ localStorage.setItem(SPOT_MK_KEY,JSON.stringify(spotMastery)); localStorage.setItem(SPOT_DT_KEY,JSON.stringify(spotDates)); }
+function computeStreak(){
+  if(!spotDates.length) return 0;
+  var set={}; spotDates.forEach(function(d){ set[d]=1; });
+  var d=new Date(); d.setHours(0,0,0,0); var key=d.toISOString().slice(0,10);
+  if(!set[key]){ d.setDate(d.getDate()-1); key=d.toISOString().slice(0,10); if(!set[key]) return 0; }
+  var n=0; while(set[key]){ n++; d.setDate(d.getDate()-1); key=d.toISOString().slice(0,10); } return n;
+}
+function spotStat(v,l){ return '<div class="spot-stat"><div class="v">'+v+'</div><div class="l">'+l+'</div></div>'; }
+function renderSpotStats(){
+  var total=ALL_PHRASES.length;
+  var mastered=ALL_PHRASES.filter(function(p){return spotMastery[p.id];}).length;
+  var pct= total? Math.round(mastered/total*100):0;
+  var el=document.getElementById("spotStats"); if(!el) return;
+  el.innerHTML= spotStat(computeStreak(),"连续打卡(天)")+spotStat(spotDates.length,"累计打卡(天)")+spotStat(mastered+"/"+total,"已掌握")+spotStat(pct+"%","掌握率");
+  var btn=document.getElementById("checkinBtn");
+  if(btn){ var done=spotDates.indexOf(todayStr())>=0; btn.disabled=done; btn.textContent= done? "✅ 今日已打卡":"✅ 今日打卡"; }
+}
+function renderSpots(){
+  var box=document.getElementById("spotList"); if(!box) return;
+  var routes= spotRoute==="all"? SPOT_ROUTES : SPOT_ROUTES.filter(function(r){return r.id===spotRoute;});
+  var html="";
+  routes.forEach(function(r){
+    html+='<div class="spot-route"><div class="ri"><h3>'+esc(r.name)+' · '+esc(r.en)+'</h3><p>'+esc(r.region)+'</p>';
+    if(r.pitch&&r.pitch.length){ html+='<div class="pitch"><b>路线英文卖点：</b><br>'+r.pitch.map(function(p){return "• "+esc(p);}).join("<br>")+'</div>'; }
+    html+='</div><div class="spot-grid">';
+    r.spots.forEach(function(s){
+      html+='<div class="spot-card"><h4>'+esc(s.name)+' <span class="en">'+esc(s.en)+'</span></h4>';
+      s.phrases.forEach(function(p){
+        var on=!!spotMastery[p.id];
+        html+='<div class="phrase'+(on?" mastered":"")+'">'
+          +'<div class="en">'+esc(p.en)+'</div>'
+          +'<div class="zh">'+esc(p.zh)+'</div>'
+          +'<div class="pf"><button class="mk'+(on?" on":"")+'" onclick="toggleSpotMastery(\''+p.id+'\')">'+(on?"✓ 已掌握":"标记掌握")+'</button></div>'
+          +'</div>';
+      });
+      html+='</div>';
+    });
+    html+='</div></div>';
+  });
+  box.innerHTML=html;
+}
+function toggleSpotMastery(id){ spotMastery[id]=!spotMastery[id]; spotSave(); renderSpots(); renderSpotStats(); }
+function setSpotRoute(r){ spotRoute=r; document.querySelectorAll(".spot-tab").forEach(function(t){ t.classList.toggle("on",t.getAttribute("data-r")===r); }); renderSpots(); }
+function spotCheckIn(){ var t=todayStr(); if(spotDates.indexOf(t)<0){ spotDates.push(t); spotSave(); } renderSpotStats(); }
+function startPractice(){
+  var pool=ALL_PHRASES.filter(function(p){ if(spotRoute!=="all"&&p.routeId!==spotRoute) return false; return !spotMastery[p.id]; });
+  if(!pool.length) pool=ALL_PHRASES.filter(function(p){ return spotRoute==="all"||p.routeId===spotRoute; });
+  for(var i=pool.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=pool[i]; pool[i]=pool[j]; pool[j]=t; }
+  spotQueue=pool; spotIdx=0;
+  var box=document.getElementById("spotPractice"); box.style.display="block"; renderPracticeCard(); box.scrollIntoView({behavior:"smooth"});
+}
+function renderPracticeCard(){
+  var box=document.getElementById("spotPractice");
+  if(spotIdx>=spotQueue.length){
+    box.innerHTML='<div class="pc"><div class="q">🎉 本轮练习完成！</div><div class="a show">共 '+spotQueue.length+' 句已过一遍。每天来打卡，英文越说越溜～</div></div><div class="pbtns"><button class="btn ghost" onclick="document.getElementById(\'spotPractice\').style.display=\'none\'">关闭</button></div>';
+    return;
+  }
+  var p=spotQueue[spotIdx];
+  box.innerHTML='<div class="pbar">进度 '+(spotIdx+1)+' / '+spotQueue.length+'　（未掌握优先）</div>'
+    +'<div class="pc"><div class="q">'+esc(p.zh)+'</div><div class="a" id="pa">'+esc(p.en)+'</div><div class="hint">👆 先在心里说出英文，再点「看英文」对照</div></div>'
+    +'<div class="pbtns"><button class="btn ghost" onclick="practiceReveal()">看英文</button>'
+    +'<button class="btn primary" id="prOk" style="display:none" onclick="practiceResult(true)">记得 ✓</button>'
+    +'<button class="btn danger" id="prNo" style="display:none" onclick="practiceResult(false)">忘了 ✗</button></div>';
+}
+function practiceReveal(){ var a=document.getElementById("pa"); if(a)a.classList.add("show"); var o=document.getElementById("prOk"),n=document.getElementById("prNo"); if(o)o.style.display=""; if(n)n.style.display=""; }
+function practiceResult(remembered){ var p=spotQueue[spotIdx]; if(p){ spotMastery[p.id]=remembered; spotSave(); } spotIdx++; renderPracticeCard(); renderSpotStats(); }
+function resetMastery(){ if(confirm("确认清空所有「已掌握」标记？打卡记录会保留。")){ spotMastery={}; spotSave(); renderSpots(); renderSpotStats(); } }
+
+spotLoad(); renderSpots(); renderSpotStats();
 </script>
 </body>
 </html>
