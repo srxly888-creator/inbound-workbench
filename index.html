@@ -1009,7 +1009,6 @@ var ROUTES=[
 ];
 ROUTES.forEach(function(r){r.img=r.mkt+'-'+r.name;});
 var rMkt='全部';
-function esc(s){return (s==null?'':String(s)).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function dayPlan(d,mkt){
   var a=[];
   a.push('D1 抵达'+mkt+'，专车接机/站，入住酒店，自由活动（休整 / 倒时差）。');
@@ -1637,7 +1636,7 @@ function scRender(){
      +'<button class="sc-copy" onclick="scCopy(this)">📋 复制</button></div>';
  }).join('');
 }
-function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
 function scCopy(btn){
  var card=btn.closest('.sc-card'); if(!card)return;
  var pre=card.querySelector('.sc-pre'); if(!pre)return;
