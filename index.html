@@ -301,6 +301,9 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 .rtag.g{color:#0a8a4a;border-color:#bfe6cf;background:#f0fbf4}
 .rcard .ropen{margin-top:auto;border:0;border-radius:9px;padding:8px 12px;font-size:13px;font-weight:600;cursor:pointer;background:var(--brand-soft);color:var(--brand);transition:.15s}
 .rcard .ropen:hover{background:var(--brand);color:#fff}
+.rcard .rbtnrow{display:flex;gap:8px;margin-top:auto}
+.rcard .rbtnrow .ropen{margin-top:0;flex:1}
+.rcard .rbtnrow .rcopy{margin-top:0;flex:1}
 .rdetail{margin-top:10px;border-top:1px dashed var(--line);padding-top:11px;display:none}
 .rdetail.open{display:block}
 .rdetail h4{font-size:13px;margin:9px 0 5px;color:var(--ink)}
@@ -310,6 +313,19 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 .routes-empty{color:var(--muted);font-size:13px;padding:24px;text-align:center}
 @media(max-width:820px){.routes-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.routes-grid{grid-template-columns:1fr}}
+/* 封面图点击放大 lightbox */
+.rcard .cover{cursor:zoom-in;position:relative}
+.rcard .cover img{width:100%;display:block;cursor:zoom-in}
+.rcard .cover .ph{cursor:default}
+.rcopy{margin-top:auto;margin-left:8px;border:1px solid var(--brand);border-radius:9px;padding:8px 12px;font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:var(--brand);transition:.15s}
+.rcopy:hover{background:var(--brand);color:#fff}
+.coverLb{display:none;position:fixed;inset:0;background:rgba(20,10,18,.86);z-index:9999;align-items:center;justify-content:center;flex-direction:column;padding:16px}
+.coverLb img{max-width:92vw;max-height:72vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);background:#fff}
+.coverLb .lbBar{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;justify-content:center}
+.coverLb .lbBtn{background:var(--brand);color:#fff;border:0;border-radius:999px;padding:9px 16px;font-size:14px;cursor:pointer;text-decoration:none;display:inline-block}
+.coverLb .lbBtn.ghost{background:#fff;color:var(--brand);border:1px solid var(--brand)}
+.coverLb .lbClose{position:absolute;top:14px;right:18px;background:rgba(255,255,255,.92);border:0;border-radius:50%;width:38px;height:38px;font-size:20px;line-height:1;cursor:pointer;color:#333}
+.coverLb .lbTip{color:#ffe7b3;font-size:13px;margin-top:10px;text-align:center;max-width:92vw;line-height:1.5}
 </style>
 <meta name="robots" content="noindex, nofollow">
 </head>
@@ -1070,18 +1086,89 @@ function renderRoutes(){
       +(r.guide.indexOf('含')>=0?'本线<b>含英文导游</b>。':'英文导游默认不含，<b>需另加</b>。')+'</div>';
     return '<div class="rcard">'
       +'<div class="cover"><div class="ph"><b>待补封面图</b>ChatGPT 生成后放入<br>itineraries/img/'+esc(r.img)+'.jpg</div>'
-      +'<img src="itineraries/img/'+esc(r.img)+'.jpg" alt="'+esc(r.name)+'" onerror="this.remove()"></div>'
+      +'<img src="itineraries/img/'+esc(r.img)+'.jpg" alt="'+esc(r.name)+'" title="点击放大 / 复制图片" style="cursor:zoom-in" onclick="openCover(this.src,this.alt)" onerror="this.remove()"></div>'
       +'<div class="body"><span class="rmkt">'+esc(r.mkt)+'</span>'
       +'<div class="rname">'+esc(r.name)+'</div>'
       +'<div class="rmeta"><span>⏱ '+r.d+' 天</span><span>🏨 '+esc(r.acc)+'</span><span>🗣 '+esc(r.guide)+'</span></div>'
       +'<div class="rprice">'+priceTxt+'</div>'
       +'<div class="rtags">'+tags+'</div>'
-      +'<button class="ropen" onclick="var d=document.getElementById(\'rd'+i+'\');if(d)d.classList.toggle(\'open\')">查看行程 / 报价 ▾</button>'
+      +'<div class="rbtnrow"><button class="ropen" onclick="var d=document.getElementById(\'rd'+i+'\');if(d)d.classList.toggle(\'open\')">查看行程 / 报价 ▾</button>'
+      +'<button class="rcopy" onclick="copyRouteText(this)">📋 复制行程</button></div>'
       +'<div class="rdetail" id="rd'+i+'">'+detail+'</div>'
       +'</div></div>';
   }).join('');
 }
 function initRoutes(){buildChips();renderRoutes();}
+
+/* ---- 封面图放大 + 一键复制图片/行程 ---- */
+var _curRoute=null;
+function toast(msg){
+  var t=document.getElementById('wbToast');
+  if(!t){t=document.createElement('div');t.id='wbToast';
+    t.style.cssText='position:fixed;left:50%;bottom:32px;transform:translateX(-50%);background:#2a2330;color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;z-index:10001;box-shadow:0 8px 24px rgba(0,0,0,.35);opacity:0;transition:opacity .25s;pointer-events:none;max-width:90vw;text-align:center';
+    document.body.appendChild(t);}
+  t.textContent=msg;t.style.opacity='1';clearTimeout(t._t);t._t=setTimeout(function(){t.style.opacity='0';},2800);
+}
+function openCover(src,alt){
+  _curRoute=alt||null;
+  var ov=document.getElementById('coverLb');
+  var img=document.getElementById('coverLbImg');
+  img.src=src;
+  var dl=document.getElementById('coverDl');
+  dl.href=src;dl.download=(alt||'cover')+'.jpg';
+  document.getElementById('coverLbTip').textContent='复制后直接粘到 WhatsApp / 微信发给客人';
+  ov.style.display='flex';
+}
+function closeCover(){document.getElementById('coverLb').style.display='none';}
+function copyCover(){
+  var src=document.getElementById('coverLbImg').src;
+  if(navigator.clipboard&&window.ClipboardItem){
+    fetch(src).then(function(r){return r.blob();}).then(function(b){
+      navigator.clipboard.write([new ClipboardItem({'image/jpeg':b})]).then(function(){
+        toast('✅ 图片已复制，去 WhatsApp/微信粘贴即可');
+      }).catch(function(){copyCoverFallback();});
+    }).catch(function(){copyCoverFallback();});
+  }else{copyCoverFallback();}
+}
+function copyCoverFallback(){
+  var img=document.getElementById('coverLbImg');
+  img.style.outline='3px solid #e64980';
+  toast('当前浏览器不支持一键复制图片：请右键图片→“复制图片”，或长按图片复制');
+  setTimeout(function(){img.style.outline='';},3500);
+}
+function copyRouteText(btn){
+  var name=null;
+  if(btn&&btn.closest){var card=btn.closest('.rcard');if(card){var n=card.querySelector('.rname');if(n)name=n.textContent;}}
+  if(!name&&_curRoute)name=_curRoute;
+  if(!name){toast('未找到对应行程');return;}
+  var r=null;
+  for(var i=0;i<ROUTES.length;i++){if(ROUTES[i].name===name){r=ROUTES[i];break;}}
+  if(!r){toast('未找到对应行程');return;}
+  var days=(r.days&&r.days.length)?r.days:dayPlan(r.d,r.mkt);
+  var priceTxt=(r.price&&r.price.indexOf('待')<0)?('USD '+r.price+'/人'):'价格待核（按人数核算）';
+  var hl=r.chips||HL[r.mkt]||[];
+  var L=[];
+  L.push('🌟 '+r.name+' · '+r.d+' 天 · '+r.mkt);
+  L.push('');
+  L.push('📅 行程：');
+  days.forEach(function(d){L.push('  '+d.replace(/\n/g,' · ').trim());});
+  L.push('');
+  L.push('💰 价格：'+priceTxt+'（按人数分档）');
+  L.push('🏨 住宿：'+r.acc);
+  L.push('🗣 向导：'+r.guide);
+  if(hl.length)L.push('✨ 亮点：'+hl.join('、'));
+  L.push('🍲 统一卖点：全程 0 购物 0 自费 0 加点 0 车销，VIP 小包团慢节奏');
+  L.push('— officialchinatravel.com');
+  var txt=L.join('\n');
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(function(){toast('✅ 行程文字已复制，去 WhatsApp/微信粘贴');}).catch(function(){copyTextFallback(txt);});
+  }else{copyTextFallback(txt);}
+}
+function copyTextFallback(txt){
+  var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.top='-9999px';document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');toast('✅ 行程文字已复制（兼容模式）');}catch(e){toast('复制失败，请手动长按选择文字复制');}
+  document.body.removeChild(ta);
+}
 
 /* ===================== 销售英语陪练打卡 ===================== */
 const SPOT_CATS = [
@@ -1709,5 +1796,15 @@ function scInit(){
 scInit();
 initRoutes();
 </script>
+<div class="coverLb" id="coverLb" onclick="if(event.target===this)closeCover()">
+  <button class="lbClose" onclick="closeCover()" aria-label="close">×</button>
+  <img id="coverLbImg" src="" alt="cover">
+  <div class="lbBar">
+    <button class="lbBtn" onclick="copyCover()">📋 复制图片</button>
+    <a class="lbBtn ghost" id="coverDl" download>⬇️ 下载图片</a>
+    <button class="lbBtn ghost" onclick="copyRouteText()">📝 复制行程文字</button>
+  </div>
+  <div class="lbTip" id="coverLbTip">复制后直接粘到 WhatsApp / 微信发给客人</div>
+</div>
 </body>
 </html>
