@@ -777,7 +777,7 @@ document.querySelectorAll('a[href^="#mod"]').forEach(a=>{
   });
 });
 
-load();bind();loadLeads();renderAll();initRoutes();
+load();bind();loadLeads();renderAll();
 
 try{document.getElementById('f_added').value=todayStr();}catch(e){}
 
@@ -1658,7 +1658,7 @@ function scInit(){
  scRender();
 }
 scInit();
-
+initRoutes();
 </script>
 </body>
 </html>
