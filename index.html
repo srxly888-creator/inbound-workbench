@@ -329,10 +329,41 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 .coverLb .lbBtn.ghost{background:#fff;color:var(--brand);border:1px solid var(--brand)}
 .coverLb .lbClose{position:absolute;top:14px;right:18px;background:rgba(255,255,255,.92);border:0;border-radius:50%;width:38px;height:38px;font-size:20px;line-height:1;cursor:pointer;color:#333}
 .coverLb .lbTip{color:#ffe7b3;font-size:13px;margin-top:10px;text-align:center;max-width:92vw;line-height:1.5}
+/* 客户端访问门 */
+.gate{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,#e64980,#c2256b);display:flex;align-items:center;justify-content:center;padding:20px}
+.gate.hide{display:none}
+.gate .gcard{background:#fff;border-radius:18px;padding:34px 30px 28px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.25);text-align:center}
+.gate .glogo{font-size:34px;margin-bottom:6px}
+.gate h2{margin:0 0 4px;font-size:19px;color:#33252e}
+.gate .gsub{color:#8a6f7a;font-size:12.5px;margin:0 0 20px}
+.gate input{width:100%;padding:12px 14px;border:1.5px solid #f1dde7;border-radius:10px;font-size:15px;text-align:center;letter-spacing:2px;outline:none;transition:.15s}
+.gate input:focus{border-color:#e64980;box-shadow:0 0 0 3px #fde7f0}
+.gate button{width:100%;margin-top:12px;padding:12px;border:0;border-radius:10px;background:#e64980;color:#fff;font-size:15px;font-weight:600;cursor:pointer;transition:.15s}
+.gate button:hover{background:#c2256b}
+.gate .gerr{color:#b42318;font-size:12.5px;margin-top:10px;min-height:16px}
+.gate .gshake{animation:gshake .4s}
+@keyframes gshake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+.gate .ghint{color:#b89aa3;font-size:11.5px;margin-top:16px;line-height:1.5}
+.lockbtn{cursor:pointer;background:none;border:0;color:var(--muted);font-size:12px;text-decoration:underline;padding:2px 4px}
+.lockbtn:hover{color:var(--brand)}
 </style>
 <meta name="robots" content="noindex, nofollow">
 </head>
 <body>
+
+<div class="gate" id="gate">
+  <div class="gcard">
+    <div class="glogo">🌸</div>
+    <h2>Lisa 入境游销售工作台</h2>
+    <p class="gsub">officialchinatravel.com · 请输入访问口令</p>
+    <form id="gateForm" onsubmit="return tryUnlock(event)">
+      <input id="gateInput" type="password" placeholder="访问口令" autocomplete="off" autofocus>
+      <button type="submit">进入工作台</button>
+      <div class="gerr" id="gateErr"></div>
+    </form>
+    <div class="ghint">仅授权访问 · 客资数据本地存储 · 如忘记口令联系 Lisa</div>
+  </div>
+</div>
 
 <header>
   <div class="inner">
@@ -761,11 +792,33 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
     数据源：外交部领事服务网《互免签证协定一览表》+ 国家移民管理局过境免签政策（截至 2025-06-12）· 整理 2026-08-18<br>
     <span id="wbver" style="color:var(--brand);font-weight:600">—</span>
     <span style="color:var(--muted)">· 若功能异常，先硬刷新（Cmd/Ctrl+Shift+R）；版本号对得上即正常</span>
+    <span style="color:var(--muted)">·</span>
+    <button class="lockbtn" onclick="lockWB()">🔒 锁定工作台</button>
   </footer>
   </div><!--/content-->
 </div><!--/shell-->
 
 <script>
+/* ===== 客户端访问门（口令：china888）===== */
+var WB_PW='china888';
+function gateUnlocked(){try{return localStorage.getItem('inboundWB_unlocked')==='1';}catch(e){return false;}}
+function showGate(){var g=document.getElementById('gate');if(g){g.classList.remove('hide');var i=document.getElementById('gateInput');if(i)setTimeout(function(){i.focus();},50);}}
+function hideGate(){var g=document.getElementById('gate');if(g)g.classList.add('hide');}
+function tryUnlock(e){e.preventDefault();
+  var v=document.getElementById('gateInput').value;
+  var err=document.getElementById('gateErr');
+  if(v===WB_PW){
+    try{localStorage.setItem('inboundWB_unlocked','1');}catch(ex){}
+    hideGate();err.textContent='';
+  }else{
+    err.textContent='口令不正确，请重试';
+    var c=document.querySelector('.gate .gcard');c.classList.remove('gshake');void c.offsetWidth;c.classList.add('gshake');
+    document.getElementById('gateInput').select();
+  }
+  return false;
+}
+function lockWB(){try{localStorage.removeItem('inboundWB_unlocked');}catch(e){}location.reload();}
+if(!gateUnlocked()){showGate();}else{hideGate();}
 function toggle(id){document.getElementById(id).classList.toggle('open');}
 const store={opt:{},routine:{}};
 function load(){try{const s=JSON.parse(localStorage.getItem('inboundWB')||'{}');if(s.opt)Object.assign(store.opt,s.opt);if(s.routine)Object.assign(store.routine,s.routine);}catch(e){}}
@@ -1883,7 +1936,7 @@ function scCopyZh(btn){
 }
 function fallback(txt,btn){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');scOk(btn);}catch(e){}document.body.removeChild(ta);}
 function scOk(btn){if(btn.dataset.lbl===undefined)btn.dataset.lbl=btn.textContent;btn.textContent='✅ 已复制';btn.classList.add('ok');setTimeout(function(){btn.textContent=btn.dataset.lbl;btn.classList.remove('ok');},1600);}
-var WB_BUILD='v2026.08.19 · build 502227d';
+var WB_BUILD='v2026.08.19 · build a81bc1d+gate';
 function setWbVer(){var v=document.getElementById('wbver');if(v)v.textContent='当前版本 '+WB_BUILD;}
 function scInit(){
  var tabs=document.getElementById('scTabs'); if(!tabs)return;
