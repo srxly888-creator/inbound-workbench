@@ -758,7 +758,9 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 
   <footer>
     入境游销售工作台 · 本地离线工具 · 政策口径以中国外交部 / 国家移民管理局最新公告及公司内部口径为准<br>
-    数据源：外交部领事服务网《互免签证协定一览表》+ 国家移民管理局过境免签政策（截至 2025-06-12）· 整理 2026-08-18
+    数据源：外交部领事服务网《互免签证协定一览表》+ 国家移民管理局过境免签政策（截至 2025-06-12）· 整理 2026-08-18<br>
+    <span id="wbver" style="color:var(--brand);font-weight:600">—</span>
+    <span style="color:var(--muted)">· 若功能异常，先硬刷新（Cmd/Ctrl+Shift+R）；版本号对得上即正常</span>
   </footer>
   </div><!--/content-->
 </div><!--/shell-->
@@ -1881,6 +1883,8 @@ function scCopyZh(btn){
 }
 function fallback(txt,btn){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');scOk(btn);}catch(e){}document.body.removeChild(ta);}
 function scOk(btn){if(btn.dataset.lbl===undefined)btn.dataset.lbl=btn.textContent;btn.textContent='✅ 已复制';btn.classList.add('ok');setTimeout(function(){btn.textContent=btn.dataset.lbl;btn.classList.remove('ok');},1600);}
+var WB_BUILD='v2026.08.19 · build 502227d';
+function setWbVer(){var v=document.getElementById('wbver');if(v)v.textContent='当前版本 '+WB_BUILD;}
 function scInit(){
  var tabs=document.getElementById('scTabs'); if(!tabs)return;
  var descBox=document.getElementById('scStageDesc');
@@ -1902,6 +1906,7 @@ function scInit(){
 }
 scInit();
 initRoutes();
+setWbVer();
 </script>
 <div class="coverLb" id="coverLb" onclick="if(event.target===this)closeCover()">
   <button class="lbClose" onclick="closeCover()" aria-label="close">×</button>
