@@ -962,6 +962,7 @@ var ROUTES=[
  {mkt:'广西',name:'漓境山水4日',d:4,price:'298–578',acc:'3/4/5钻',guide:'不含·需另加',days:['D1 抵达桂林，接机。两江四湖 + 象鼻山。','D2 漓江游船（兴坪）+ 阳朔西街。','D3 遇龙河竹筏 + 银子岩溶洞 + 十里画廊。','D4 世外桃源或冠岩，自由补逛后送机。']},
  {mkt:'广西',name:'桂林阳朔龙脊5日',d:5,price:'298–578',acc:'3/4/5钻',guide:'不含·需另加',days:['D1 抵达桂林，接机。象鼻山 + 两江四湖。','D2 漓江游船（兴坪）+ 阳朔西街。','D3 遇龙河竹筏 + 十里画廊 + 银子岩。','D4 龙脊梯田（金坑大寨/平安寨，灌水期如镜·秋收金黄），住梯田民宿。','D5 龙脊晨景 + 黄洛瑶寨（长发村），送桂林机。']},
  {mkt:'广东',name:'潮汕非遗文化5天',d:5,price:'358–548',acc:'3/4★',guide:'不含·需另加',img:'itineraries/img/广东-潮汕非遗文化5天.jpg',
+  chips:['潮州古城','牌坊街','广济桥','南澳岛','青澳湾','潮汕牛肉火锅','工夫茶'],
   highlights:['0购物 · 0加点 · 0额外停靠 · 0车上兜售','含首道大门票 + 酒店早餐 + 行程内用车','2-3人 5座车 ｜ 4-6人 7座商务/9座旅游 ｜ 7-8人 9座旅游','纯 VIP 小包团，慢节奏深体验，可定制'],
   days:[
     'D1 抵达潮汕 · ARRIVAL IN CHAOSHAN\n抵达潮汕机场/潮汕站，专车接站送酒店，办理入住，自由休息。',
@@ -971,6 +972,7 @@ var ROUTES=[
     'D5 送站离潮 · DEPARTURE\n专车送机/高铁站，行程结束。'
   ]},
  {mkt:'广东',name:'岭南名城深度游',d:5,price:'438–628',acc:'3/4钻',guide:'含',img:'itineraries/img/广东-岭南名城深度游5天.jpg',
+  chips:['沙面岛','永庆坊','上下九','圣心大教堂','广州塔','珠江夜游','佛山祖庙','岭南天地','逢简水乡','清晖园','白云山'],
   highlights:['0购物 · 0加点 · 0额外停靠 · 0车上兜售','含首道大门票 + 酒店早餐 + 行程内用车','2-3人 5座车 ｜ 4-6人 7座商务/9座旅游 ｜ 7-8人 9座旅游','纯 VIP 小包团，慢节奏深体验，可定制'],
   days:[
     'D1 抵达广州 · ARRIVE IN GUANGZHOU\n机场/高铁站专车接站送酒店，办理入住。沙面岛 + 上下九步行街 + 永庆坊 + 大佛寺。',
@@ -980,6 +982,7 @@ var ROUTES=[
     'D5 广州自然+送站 · GUANGZHOU NATURE TOUR & DEPARTURE\n白云山（羊城第一秀·摩星岭）+ 越秀公园（镇海楼/五羊石像），专车送机/高铁站。'
   ]},
  {mkt:'广东',name:'广深双城4天',d:4,price:'458–598',acc:'3/4钻',guide:'含',img:'itineraries/img/广东-广深双城4天.jpg',
+  chips:['沙面岛','永庆坊','圣心大教堂','广州塔','珠江夜游','莲花山公园','市民中心','锦绣中华民俗村','深圳人才公园'],
   highlights:['0购物 · 0加点 · 0额外停靠 · 0车上兜售','含首道大门票 + 酒店早餐 + 行程内用车','2-3人 5座车 ｜ 4-6人 7座商务/9座旅游 ｜ 7-8人 9座旅游','纯 VIP 小包团，慢节奏深体验，可定制'],
   days:[
     'D1 抵达广州 · ARRIVE IN GUANGZHOU\n机场/高铁站专车接站送酒店，办理入住。沙面岛 + 上下九步行街 + 永庆坊 + 大佛寺。',
@@ -1044,7 +1047,7 @@ function renderRoutes(){
   var list=ROUTES.filter(function(r){
     if(rMkt!=='全部'&&r.mkt!==rMkt)return false;
     if(!q)return true;
-    var hay=(r.name+' '+r.mkt+' '+(HL[r.mkt]||[]).join(' ')).toLowerCase();
+    var hay=(r.name+' '+r.mkt+' '+((r.chips||HL[r.mkt])||[]).join(' ')).toLowerCase();
     return hay.indexOf(q)>=0;
   });
   var g=document.getElementById('rGrid');
@@ -1052,7 +1055,7 @@ function renderRoutes(){
   document.getElementById('rEmpty').style.display='none';
   g.innerHTML=list.map(function(r,i){
     var priceTxt=(r.price&&r.price.indexOf('待')<0)?('$'+r.price+' 美元/人'):'价格待核（按人数核算）';
-    var hl=HL[r.mkt]||[];
+    var hl=r.chips||HL[r.mkt]||[];
     var tags=hl.slice(0,3).map(function(t){return '<span class="rtag">'+esc(t)+'</span>';}).join('')
       +'<span class="rtag g">0购物</span>'
       +(r.guide.indexOf('含')>=0?'<span class="rtag g">含英文导游</span>':'');
