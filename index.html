@@ -377,9 +377,9 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
           <option>询盘</option><option>需求确认</option><option>报价中</option><option>跟进逼单</option><option>已成交</option><option>已流失</option>
         </select></div>
         <div><label>意向</label><select id="f_level"><option>A</option><option>B</option><option>C</option></select></div>
-        <div><label>下次跟进</label><input id="f_next" type="date"></div>
-        <div><label>添加日期</label><input id="f_added" type="date" readonly title="自动填今天，可手动调整"></div>
-        <div><label>成交日期</label><input id="f_closed" type="date" title="成交后填上，自动从「待跟进」中移出"></div>
+        <div><label>下次跟进</label><input id="f_next" type="datetime-local" title="默认 = 明天 10:00，可改成任意日期+时间"></div>
+        <div><label>添加时间</label><input id="f_added" type="datetime-local" title="新增时自动填"刚才"，可手动调到任意时刻（补录历史客资用）"></div>
+        <div><label>成交时间</label><input id="f_closed" type="datetime-local" title="成交后填上（含几点），自动从「待跟进」中移出"></div>
         <div><label>联系方式</label><input id="f_contact" placeholder="邮箱 / 微信"></div>
         <div style="grid-column:1/-1"><label>备注（忌口 / 特殊需求）</label><input id="f_note" placeholder="清真 / 素食 / 过敏等"></div>
       </div>
@@ -402,7 +402,7 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
       <div style="overflow-x:auto">
         <table>
           <thead><tr>
-            <th>姓名</th><th>国籍</th><th>人数/天数</th><th>目的地</th><th>阶段</th><th>意向</th><th>下次跟进</th><th>添加日期</th><th>成交日期</th><th>联系方式</th><th>备注</th><th>操作</th>
+            <th>姓名</th><th>国籍</th><th>人数/天数</th><th>目的地</th><th>阶段</th><th>意向</th><th>下次跟进</th><th>添加时间</th><th>成交时间</th><th>联系方式</th><th>备注</th><th>操作</th>
           </tr></thead>
           <tbody id="leadBody"></tbody>
         </table>
@@ -779,12 +779,16 @@ document.querySelectorAll('a[href^="#mod"]').forEach(a=>{
 
 load();bind();loadLeads();renderAll();
 
-try{document.getElementById('f_added').value=todayStr();}catch(e){}
+try{document.getElementById('f_added').value=nowStr();document.getElementById('f_next').value=defaultNext();}catch(e){}
 
 /* ===== 今日作战 / 客资追踪器（localStorage 存储） ===== */
 var LEADS_KEY='inboundWB_leads', LEADS_INIT='inboundWB_leads_init', leads=[];
 function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
 function todayStr(){var d=new Date();d.setHours(0,0,0,0);return d.toISOString().slice(0,10);}
+function nowStr(){var d=new Date();function p(n){return String(n).padStart(2,'0');}return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'T'+p(d.getHours())+':'+p(d.getMinutes());}
+function defaultNext(){var d=new Date();d.setDate(d.getDate()+1);d.setHours(10,0,0,0);function p(n){return String(n).padStart(2,'0');}return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'T'+p(d.getHours())+':'+p(d.getMinutes());}
+function fmtDT(s){if(!s)return '-';s=String(s).replace('T',' ');return s.slice(5,16);}
+function fmtShort(s){if(!s)return '-';var d=String(s).slice(0,10),t=String(s).slice(11,16);return d.slice(5)+' '+t;}
 function dstr(off){var d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+off);return d.toISOString().slice(0,10);}
 function addDaysStr(s,n){var d=new Date(s+'T00:00:00');d.setDate(d.getDate()+n);return d.toISOString().slice(0,10);}
 function esc(s){return (s==null?'':String(s)).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];});}
@@ -802,7 +806,7 @@ function loadLeads(){
 function saveLeads(){localStorage.setItem(LEADS_KEY,JSON.stringify(leads));}
 function classify(l){
   if(l.stage==='已成交'||l.stage==='已流失')return 'done';
-  var t=todayStr(),n=l.next||'';
+  var t=todayStr(),n=(l.next||'').slice(0,10);
   if(n && n<t)return 'over';
   if(n===t)return 'today';
   if(n>t && n<=addDaysStr(t,2))return 'soon';
@@ -833,14 +837,18 @@ function renderUrgent(){
     var div=document.createElement('div');div.className='ut'+(x.c==='over'?' over':'');
     div.innerHTML='<span class="when">'+when+'</span>'
       +'<span class="who">'+esc(l.name)+'（'+esc(l.country||'-')+'）</span>'
-      +'<span class="meta">'+esc(l.dest||'-')+' · '+esc(l.stage)+' · 下次 '+esc(l.next||'-')+'</span>'
+      +'<span class="meta">'+esc(l.dest||'-')+' · '+esc(l.stage)+' · 下次 '+esc(fmtShort(l.next))+'</span>'
       +'<span class="act"><button class="btn primary mini" onclick="markDone(\''+l.id+'\')">已跟进 +3天</button></span>';
     box.appendChild(div);
   });
 }
 function markDone(id){
   var l=leads.find(function(x){return x.id===id;});if(!l)return;
-  l.next=addDaysStr(todayStr(),3);saveLeads();renderAll();
+  var base=(l.next&&l.next.slice(0,10))||todayStr();
+  if(base<todayStr())base=todayStr();
+  var d=new Date(base+'T00:00:00');d.setDate(d.getDate()+3);d.setHours(10,0,0,0);function p(n){return String(n).padStart(2,'0');}
+  l.next=d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'T'+p(d.getHours())+':'+p(d.getMinutes());
+  saveLeads();renderAll();
 }
 function renderTable(){
   var tb=document.getElementById('leadBody');if(!tb)return;tb.innerHTML='';
@@ -853,9 +861,9 @@ function renderTable(){
       +'<td>'+esc(l.dest||'')+'</td>'
       +'<td><span class="stage">'+esc(l.stage)+'</span></td>'
       +'<td class="lvl '+esc(l.level)+'">'+esc(l.level)+'</td>'
-      +'<td'+(c==='over'?' style="color:var(--red);font-weight:600"':'')+'>'+esc(l.next||'-')+'</td>'
-      +'<td>'+esc(l.addedAt||'-')+'</td>'
-      +'<td>'+(l.closedAt?'<span style="color:#0a8a4a;font-weight:600">'+esc(l.closedAt)+'</span>':'-')+'</td>'
+      +'<td'+(c==='over'?' style="color:var(--red);font-weight:600"':'')+'>'+esc(fmtDT(l.next))+'</td>'
+      +'<td>'+esc(fmtDT(l.addedAt))+'</td>'
+      +'<td>'+(l.closedAt?'<span style="color:#0a8a4a;font-weight:600">'+esc(fmtDT(l.closedAt))+'</span>':'-')+'</td>'
       +'<td>'+esc(l.contact||'')+'</td>'
       +'<td>'+esc(l.note||'')+'</td>'
       +'<td><div class="op"><button class="btn ghost mini" onclick="markDone(\''+l.id+'\')">已跟进</button>'
@@ -876,7 +884,7 @@ function addLead(){
   h.textContent='已建档：'+name+'。建议积累到 30 条时点「导出备份」留底。';
   show('today');
 }
-function clearForm(){['f_name','f_country','f_people','f_period','f_days','f_dest','f_next','f_contact','f_note','f_closed'].forEach(function(i){document.getElementById(i).value='';});document.getElementById('f_added').value=todayStr();}
+function clearForm(){['f_name','f_country','f_people','f_period','f_days','f_dest','f_next','f_contact','f_note','f_closed'].forEach(function(i){document.getElementById(i).value='';});document.getElementById('f_added').value=nowStr();document.getElementById('f_next').value=defaultNext();}
 function deleteLead(id){if(confirm('确认删除这条客资？')){leads=leads.filter(function(x){return x.id!==id;});saveLeads();renderAll();}}
 function editLead(id){
   var l=leads.find(function(x){return x.id===id;});if(!l)return;
@@ -900,7 +908,7 @@ function updateTopAlert(){
 }
 function download(content,name,type){var b=new Blob([content],{type:type+';charset=utf-8'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);}
 function exportCSV(){
-  var head=['姓名','国籍','人数','月份/日期','天数','目的地','阶段','意向','下次跟进','添加日期','成交日期','联系方式','备注'];
+  var head=['姓名','国籍','人数','月份/日期','天数','目的地','阶段','意向','下次跟进','添加时间','成交时间','联系方式','备注'];
   var rows=leads.map(function(l){return [l.name,l.country,l.people,l.period,l.days,l.dest,l.stage,l.level,l.next,l.addedAt,l.closedAt,l.contact,l.note];});
   var csv='\uFEFF'+head.join(',')+'\n'+rows.map(function(r){return r.map(function(c){c=c==null?'':String(c);if(/[",\n]/.test(c))c='"'+c.replace(/"/g,'""')+'"';return c;}).join(',');}).join('\n');
   download(csv,'客资追踪_'+todayStr()+'.csv','text/csv');
@@ -1001,7 +1009,7 @@ var ROUTES=[
 ];
 ROUTES.forEach(function(r){r.img=r.mkt+'-'+r.name;});
 var rMkt='全部';
-function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function esc(s){return (s==null?'':String(s)).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function dayPlan(d,mkt){
   var a=[];
   a.push('D1 抵达'+mkt+'，专车接机/站，入住酒店，自由活动（休整 / 倒时差）。');
@@ -1507,7 +1515,15 @@ function practiceReveal(){ var a=document.getElementById('pa'); if(a)a.classList
 function practiceResult(remembered){ var p=spotQueue[spotIdx]; if(p){ spotMastery[p.id]=remembered; spotSave(); } spotIdx++; renderPracticeCard(); renderSpotStats(); }
 function resetMastery(){ if(confirm('确认清空所有「已掌握」和星级评分？打卡记录会保留。')){ spotMastery={}; spotStars={}; spotSave(); renderSpots(); renderSpotStats(); } }
 
-spotLoad(); renderTabs(); renderSpots(); renderSpotStats();
+function initSpots(){
+  try{ spotLoad(); renderTabs(); renderSpots(); renderSpotStats(); }
+  catch(e){
+    var box=document.getElementById('spotList');
+    if(box) box.innerHTML='<div class="note warn">⚠️ 英语陪练面板加载失败：'+(e&&e.message?e.message:e)+'<br>请尝试 <b>Ctrl/Cmd + Shift + R</b> 硬刷新，或清除浏览器缓存后重试。</div>';
+  }
+}
+initSpots();
+window.addEventListener && window.addEventListener('load', function(){ setTimeout(initSpots, 200); });
 
 /* ===== SCRIPTS · 谈单话术库 ===== */
 var SCRIPTS=[
