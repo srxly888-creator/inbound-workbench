@@ -346,6 +346,11 @@ footer{color:var(--muted);font-size:12px;text-align:center;margin-top:30px;paddi
 .gate .ghint{color:#b89aa3;font-size:11.5px;margin-top:16px;line-height:1.5}
 .lockbtn{cursor:pointer;background:none;border:0;color:var(--muted);font-size:12px;text-decoration:underline;padding:2px 4px}
 .lockbtn:hover{color:var(--brand)}
+/* 线路双版本切换（拼团/独立） */
+.rvtabs{display:flex;gap:6px;padding:10px 10px 0}
+.rvtab{flex:1;background:#fff;border:1.5px solid var(--line);border-radius:8px;padding:7px 4px;font-size:12.5px;font-weight:600;cursor:pointer;color:var(--muted);transition:.15s;text-align:center}
+.rvtab:hover{border-color:var(--brand);color:var(--brand)}
+.rvtab.on{background:var(--brand);color:#fff;border-color:var(--brand)}
 </style>
 <meta name="robots" content="noindex, nofollow">
 </head>
@@ -1116,6 +1121,11 @@ var ROUTES=[
  {mkt:'福建',name:'厦门泉州5日',d:5,price:'待核',acc:'—',guide:'不含·需另加',days:['D1 抵达厦门，接机入住。晚上中山路步行街 + 鹭江夜游。','D2 厦门：鼓浪屿（万国建筑/日光岩/菽庄花园），住厦门。','D3 厦门：南普陀寺 + 厦门大学 + 环岛路 + 曾厝垵，下午赴泉州。','D4 泉州：开元寺（东西塔）+ 清净寺 + 蟳埔村（簪花围·海丝起点），住泉州。','D5 泉州：洛阳桥 + 海外交通史博物馆，送机。'],chips:['中山路','鹭江夜游','鼓浪屿','日光岩','菽庄花园','南普陀寺','厦门大学','环岛路','曾厝垵','开元寺','东西塔','清净寺','蟳埔村','洛阳桥','海外交通史博物馆']},
 ];
 ROUTES.forEach(function(r){r.img=r.mkt+'-'+r.name;});
+/* 双版本（拼团/独立）支持：img2/price2/acc2/guide2 任一存在即启用切换；imgLabel/img2Label 可自定义标签，默认 拼团/独立 */
+var rVar={};
+function vOf(r){return rVar[r.name]===1?1:0;}
+function vf(r,f){var v=vOf(r);return (v===1 && r[f+'2']!=null && r[f+'2']!=='')?r[f+'2']:r[f];}
+function switchVariant(name,idx){rVar[name]=idx;renderRoutes();}
 var rMkt='全部';
 function dayPlan(d,mkt){
   var a=[];
@@ -1143,11 +1153,12 @@ function renderRoutes(){
   if(!list.length){g.innerHTML='';document.getElementById('rEmpty').style.display='block';return;}
   document.getElementById('rEmpty').style.display='none';
   g.innerHTML=list.map(function(r,i){
-    var priceTxt=(r.price&&r.price.indexOf('待')<0)?('$'+r.price+' 美元/人'):'价格待核（按人数核算）';
+    var img=vf(r,'img'),price=vf(r,'price'),acc=vf(r,'acc'),guide=vf(r,'guide');
+    var priceTxt=(price&&price.indexOf('待')<0)?('$'+price+' 美元/人'):'价格待核（按人数核算）';
     var hl=r.chips||HL[r.mkt]||[];
     var tags=hl.slice(0,3).map(function(t){return '<span class="rtag">'+esc(t)+'</span>';}).join('')
       +'<span class="rtag g">0购物</span>'
-      +(r.guide.indexOf('含')>=0?'<span class="rtag g">含英文导游</span>':'');
+      +(guide.indexOf('含')>=0?'<span class="rtag g">含英文导游</span>':'');
     var hasDays=r.days&&r.days.length;
     var dayTxt=hasDays?r.days.join('\n'):dayPlan(r.d,r.mkt);
     var dayHead=hasDays?'逐日行程（草案·待你核实）':'逐日行程框架（待从金山文档补充具体景点）';
@@ -1156,13 +1167,23 @@ function renderRoutes(){
       +'<h4>报价</h4><ul><li>'+priceTxt+'</li><li>按 2–3人 / 4–5人 / 6–8人 三档：3钻低价 ↔ 顶档高价取整</li></ul>'
       +'<h4>目的地亮点</h4><ul>'+hl.map(function(t){return '<li>'+esc(t)+'</li>';}).join('')+'</ul>'
       +'<div class="warn">统一卖点：全程 0 购物 0 自费 0 加点 0 车销，VIP 小包团慢节奏。报价<b>不含大交通</b>（机票/高铁）；'
-      +(r.guide.indexOf('含')>=0?'本线<b>含英文导游</b>。':'英文导游默认不含，<b>需另加</b>。')+'</div>';
+      +(guide.indexOf('含')>=0?'本线<b>含英文导游</b>。':'英文导游默认不含，<b>需另加</b>。')+'</div>';
+    var vtabs='';
+    if(r.img2){
+      var v=vOf(r);
+      var l0=esc(r.imgLabel||'拼团'),l1=esc(r.img2Label||'独立');
+      vtabs='<div class="rvtabs">'
+        +'<button class="rvtab'+(v===0?' on':'')+'" onclick="switchVariant(\''+esc(r.name)+'\',0)">'+l0+'</button>'
+        +'<button class="rvtab'+(v===1?' on':'')+'" onclick="switchVariant(\''+esc(r.name)+'\',1)">'+l1+'</button>'
+        +'</div>';
+    }
     return '<div class="rcard">'
-      +'<div class="cover"><div class="ph"><b>待补封面图</b>ChatGPT 生成后放入<br>itineraries/img/'+esc(r.img)+'.jpg</div>'
-      +'<img src="itineraries/img/'+esc(r.img)+'.jpg" alt="'+esc(r.name)+'" title="点击放大 / 复制图片" style="cursor:zoom-in" onclick="openCover(this.src,this.alt)" onerror="this.remove()"></div>'
+      +vtabs
+      +'<div class="cover"><div class="ph"><b>待补封面图</b>ChatGPT 生成后放入<br>itineraries/img/'+esc(img)+'.jpg</div>'
+      +'<img src="itineraries/img/'+esc(img)+'.jpg" alt="'+esc(r.name)+'" title="点击放大 / 复制图片" style="cursor:zoom-in" onclick="openCover(this.src,this.alt)" onerror="this.remove()"></div>'
       +'<div class="body"><span class="rmkt">'+esc(r.mkt)+'</span>'
       +'<div class="rname">'+esc(r.name)+'</div>'
-      +'<div class="rmeta"><span>⏱ '+r.d+' 天</span><span>🏨 '+esc(r.acc)+'</span><span>🗣 '+esc(r.guide)+'</span></div>'
+      +'<div class="rmeta"><span>⏱ '+r.d+' 天</span><span>🏨 '+esc(acc)+'</span><span>🗣 '+esc(guide)+'</span></div>'
       +'<div class="rprice">'+priceTxt+'</div>'
       +'<div class="rtags">'+tags+'</div>'
       +'<div class="rbtnrow"><button class="ropen" onclick="var d=document.getElementById(\'rd'+i+'\');if(d)d.classList.toggle(\'open\')">查看行程 / 报价 ▾</button>'
@@ -1220,17 +1241,19 @@ function findRoute(btn){
 }
 function routeText(r){
   var days=(r.days&&r.days.length)?r.days:dayPlan(r.d,r.mkt);
-  var priceTxt=(r.price&&r.price.indexOf('待')<0)?('USD '+r.price+'/人'):'价格待核（按人数核算）';
+  var price=vf(r,'price'),acc=vf(r,'acc'),guide=vf(r,'guide');
+  var priceTxt=(price&&price.indexOf('待')<0)?('USD '+price+'/人'):'价格待核（按人数核算）';
   var hl=r.chips||HL[r.mkt]||[];
   var L=[];
   L.push('🌟 '+r.name+' · '+r.d+' 天 · '+r.mkt);
+  if(r.img2){L.push('👥 版本：'+(vOf(r)===1?(r.img2Label||'独立'):(r.imgLabel||'拼团')));}
   L.push('');
   L.push('📅 行程：');
   days.forEach(function(d){L.push('  '+d.replace(/\n/g,' · ').trim());});
   L.push('');
   L.push('💰 价格：'+priceTxt+'（按人数分档）');
-  L.push('🏨 住宿：'+r.acc);
-  L.push('🗣 向导：'+r.guide);
+  L.push('🏨 住宿：'+acc);
+  L.push('🗣 向导：'+guide);
   if(hl.length)L.push('✨ 亮点：'+hl.join('、'));
   L.push('🍲 统一卖点：全程 0 购物 0 自费 0 加点 0 车销，VIP 小包团慢节奏');
   L.push('— officialchinatravel.com');
@@ -1256,12 +1279,13 @@ function buildLongImage(btn){
   var img=new Image();
   img.onload=function(){composeLong(r,img);};
   img.onerror=function(){composeLong(r,null);};
-  img.src='itineraries/img/'+r.img+'.jpg';
+  img.src='itineraries/img/'+vf(r,'img')+'.jpg';
 }
 function composeLong(r,img){
   var W=1080,pad=48,brand='#e64980';
   var days=(r.days&&r.days.length)?r.days:dayPlan(r.d,r.mkt);
-  var priceTxt=(r.price&&r.price.indexOf('待')<0)?('USD '+r.price+'/人'):'价格待核（按人数核算）';
+  var _p=vf(r,'price'),_a=vf(r,'acc'),_g=vf(r,'guide');
+  var priceTxt=(_p&&_p.indexOf('待')<0)?('USD '+_p+'/人'):'价格待核（按人数核算）';
   var hl=r.chips||HL[r.mkt]||[];
   function wrapC(ctx,text,x,y,maxW,lh){
     var chars=(''+(text||'')).split('');var line='';
@@ -1287,7 +1311,7 @@ function composeLong(r,img){
       y+=ih+pad;
     }
     ctx.fillStyle='#2a2330';ctx.font='600 26px sans-serif';ctx.textBaseline='alphabetic';
-    if(!measureOnly)ctx.fillText(r.d+' 天 · '+r.mkt+' · '+r.acc+' · '+r.guide,pad,y);
+    if(!measureOnly)ctx.fillText(r.d+' 天 · '+r.mkt+' · '+_a+' · '+_g,pad,y);
     y+=40;
     ctx.fillStyle=brand;ctx.font='700 28px sans-serif';
     if(!measureOnly)ctx.fillText('💰 '+priceTxt,pad,y);
@@ -1936,7 +1960,7 @@ function scCopyZh(btn){
 }
 function fallback(txt,btn){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');scOk(btn);}catch(e){}document.body.removeChild(ta);}
 function scOk(btn){if(btn.dataset.lbl===undefined)btn.dataset.lbl=btn.textContent;btn.textContent='✅ 已复制';btn.classList.add('ok');setTimeout(function(){btn.textContent=btn.dataset.lbl;btn.classList.remove('ok');},1600);}
-var WB_BUILD='v2026.08.19 · build c622d93+chips40';
+var WB_BUILD='v2026.08.19 · build e84c926+variant';
 function setWbVer(){var v=document.getElementById('wbver');if(v)v.textContent='当前版本 '+WB_BUILD;}
 function scInit(){
  var tabs=document.getElementById('scTabs'); if(!tabs)return;
