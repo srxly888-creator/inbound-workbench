@@ -1122,7 +1122,7 @@ var ROUTES=[
 
 /* ===== 北京·西安·大理 11天 三城联程（完整连续·过渡日衔接·不可切片）===== */
 {mkt:'北京·西安·大理',name:'北京西安大理11天私人定制',d:11,price:'待核(按人数)',acc:'3/4钻',guide:'不含·需另加',
- highlights:['0购物 · 0加点 · 0额外停靠 · 0车销','含行程内用车 + 酒店早餐 + 首道大门票（以实际报价为准）','北京/西安/云南三地专车接送站；城际大交通自理，亦可委托我方代订（京→西约¥515、西→昆约¥500–800、昆→大约¥145、大→丽约¥48–80、丽→昆约¥220，以实际出票为准）','过渡当晚直接入住下一城酒店（北京→西安 / 西安→昆明），出发送站与目的地接站全程我方负责','西安段参考：3钻 2-3人¥2480/4-5人¥2280/6-8人¥2080；4钻 2-3人¥2580/4-5人¥2380/6-8人¥2180'],
+ highlights:['0购物 · 0加点 · 0额外停靠 · 0车销','含行程内用车 + 酒店早餐 + 景点首道大门票（故宫联票¥80·慕田峪¥45·恭王府¥40·景山¥2·华清宫¥120·兵马俑¥120·大雁塔¥65·陕历博免费·三塔¥75·玉龙雪山进山¥120+大索道¥140，其余街区/古城免费；缆车/电瓶车/演出票自理）。门票为2026年官方公示首道大门票，随淡旺季浮动，以实际购票为准','北京/西安/云南三地专车接送站；城际大交通自理，亦可委托我方代订（京→西约¥515、西→昆约¥500–800、昆→大约¥145、大→丽约¥48–80、丽→昆约¥220，以实际出票为准）','过渡当晚直接入住下一城酒店（北京→西安 / 西安→昆明），出发送站与目的地接站全程我方负责','西安段参考：3钻 2-3人¥2480/4-5人¥2280/6-8人¥2080；4钻 2-3人¥2580/4-5人¥2380/6-8人¥2180'],
  days:[
   'D1 抵达北京 · 天安门广场 → 故宫博物院 → 景山公园 · ARRIVE & IMPERIAL AXIS\n温哥华飞抵北京，专车接机/站，入住酒店后直接开启行程：天安门广场、故宫博物院（含珍宝馆·钟表馆），登景山公园俯瞰紫禁城全景。当地专车包车（含）。',
   'D2 慕田峪长城 → 鸟巢水立方 → 恭王府 → 北京送站（北京动车站）· GREAT WALL & SEND-OFF\n慕田峪长城（建议缆车上下），下午外观鸟巢、水立方，逛恭王府；傍晚我方专车送站至北京动车站，乘高铁赴西安，当晚抵达并入住西安酒店（我方负责西安接站）。北京→西安高铁票自理（二等座约¥515），接送站由我方全程安排。',
@@ -1978,7 +1978,7 @@ function scCopyZh(btn){
 }
 function fallback(txt,btn){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');scOk(btn);}catch(e){}document.body.removeChild(ta);}
 function scOk(btn){if(btn.dataset.lbl===undefined)btn.dataset.lbl=btn.textContent;btn.textContent='✅ 已复制';btn.classList.add('ok');setTimeout(function(){btn.textContent=btn.dataset.lbl;btn.classList.remove('ok');},1600);}
-var WB_BUILD='v2026.08.20 · build 京陕滇大交通预估价';
+var WB_BUILD='v2026.08.20 · build 京陕滇门票明细';
 function setWbVer(){var v=document.getElementById('wbver');if(v)v.textContent='当前版本 '+WB_BUILD;}
 function scInit(){
  var tabs=document.getElementById('scTabs'); if(!tabs)return;
